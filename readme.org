@@ -1,0 +1,18 @@
+#+Title: Mestrado
+
+* O que estou fazendo
+No momento, minhas atividades estão divididas em duas fronts:
+- Projeto IC :: a ser entregue em Set/Out sobre dominação romana. [0%]
+  - [ ] Projeto
+  - [ ] Carta de apresentação
+  - [ ] Currículo
+  - [-] Histórico escolar
+  - [ ] Cartas de recomendação: Prof Rafael, Prof Lehilton e Prof Fábio.
+
+- Projeto FAPESP :: a ser entregue até Nov/Dez sobre o tema que vou fazer no mestrado.
+
+Por enquanto, gostaria de fazer um mestrado em PLI mas a sobre qual problema ainda permanece em aberto:
+- Inventory Routing :: veja [cite:@coelho2013ThirtyYearsInventory]
+- Graph Coloring :: ?
+
+* Reuniões

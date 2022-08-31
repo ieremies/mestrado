@@ -1,0 +1,80 @@
+#+Title: Problema de Dominação Romana
+#+author: Ieremies Romero
+
+#+options: toc:nil
+
+# Mostrar que eu tenho um objetivo claro do que quero fazer
+# Que eu tenho cultura, que eu sei do que eu to falando
+# Motivação do pq estudar
+
+#+begin_abstract
+A Dominação Romana é um problema proposto por [cite:@stewart1999DefendRomanEmpire] em que desejamos defender o império romano dispondo de um certo número de legiões. Para isso, cada cidade deve ser assegurada de forma que uma legião alocada ou seja vizinha de outra que possua duas legiões. Assim, deseja-se minimizar a quantidade de legiões distribuídas sem abdicar da segurança do império.
+
+Neste projeto, utilizaremos a técnica de Programação Linear Inteira (PLI) para modelar o problema. Objetivamos propor novos modelos de PLI para domição romana e suas vairantes, explorando técnicas como branch-cut, branch-price e ferramental moderno de PLI.
+#+end_abstract
+
+* Introdução
+** Motivação histórica
+:PROPERTIES:
+:ID:       7f0c2fd1-ace0-4f61-b2ca-58a004a599d0
+:END:
+Durante a Segunda Guerra Mundial, General Douglas MacArthur propôs uma estratégia de movimentação que consistia em avançar suas tropas de uma ilha para outra apenas quando ele poderia deixar para trás um número suficiente de tropas (*FONTE*). Ele não foi o primeiro a utilizar dessa estratégia: segundo [cite:@stewart1999DefendRomanEmpire], referências históricas apontam que o Imperador Constantino, no quarto século A.C., aplicou estratégia similar para defender o Império Romano de invasões dos povos ditos "bárbaros".
+
+Para exemplificar o seu uso, considere o mapa do Império Romano simplificado na Figura [[fig:mapa]]. Nesse exemplo, o imperador possui 4 legiões para serem distribuídas pelo território e ele deseja fazê-lo de forma que todas as cidades sejam consideradas seguras. Uma região é dita segura, ou coberta, se há uma legião em seu território ou se está conectada a outra região com duas legiões.
+
+#+name: fig:mapa
+#+caption: Representação do mapa do Império Romano usada como ilustração do problem, inspirada de [cite:@stewart1999DefendRomanEmpire].
+#+attr_latex: :scale 0.3
+[[attachment:_20220817_122014screenshot.png]]
+
+# Motivação mais atual
+Nos tempos atuais, os problemas de dominação ganharam novos propósitos: cobertura de serviços essenciais ou de emergência, QUE MAIS?...
+
+** Modelo matemático
+Para um grafo $G = (V, E)$, dizemos que a *vizinhança aberta* $N(v)$ de um vértice $v$ é definida como o conjunto de vértices adjacentes a $v$ em $G$, ou seja, $N(v) = \{u|(u, v) ∈ E\}$. Similarmente, dizemos que a *vizinhança fechada* $N[v]$ de um vértice $v$ é a vizinhança aberta incluindo o próprio $v$, ou seja, $N[v] = N(v) ∪ \{v\}$. Para um conjunto de vértices $s$, a vizinhança aberta desse conjunto é a união das vizinhanças abertas de cada um dos seus vértices (o respectivo pode ser dito para a vizinhança fechada). Um *conjunto dominante* de um grafo $G$ é um subconjunto de vértices $D$ tal que a vizinhança fechada de $D$ é o próprio conjunto $V$ . Por sua vez, o *número de dominação* de um grafo $G$, dito $\gamma(G)$, é a cardinalidade do menor conjunto dominante do grafo $G$.
+
+O problema de dominação romana é definido em um grafo $G = (V, E)$ simples, finito e não-direcionado, no qual cada vértice representa uma cidade ou região do império e as arestas são as conexões entre elas [cite:@cockayne2004RomanDominationGraphs]. Diremos que uma *função de dominação romana* é uma função $f : V \to z{0, 1, 2\}$ na qual $f(v)$ indica a quantidade de legiões naquela região,de forma que, para qualquer v tal que $f(v) = 0$, deve existir $u$ vizinho a $v$ cujo $f(u) = 2$. Definimos o *número de dominação romana* total de um grafo $G$ como o menor valor $f(v), \forall v \in V$, tal que f é uma função de dominação romana do grafo G.
+
+** Revisão bibliográfica
+Após a descrição do problema por [cite:@stewart1999DefendRomanEmpire], [cite:@revelle2000DefendensImperiumRomanum] apresentaram o desenvolvimento inicial em teoria de grafos. Além disso, [cite:@cockayne2004RomanDominationGraphs] apresentou alguns resultados importantes de teoria de grafos sobre o problema, como limitantes e propriedades da função de dominação romana, os quais foram estendidos e aprimorados por [cite:@2006NoteRomanDomination], [cite:@favaron2009RomanDominationNumber], [cite:@mobaraky2008BoundsRomanDomination]. [cite:@klobucar2014ResultsRomanDomination] demonstraram que algumas classes especiais de grafos podem ser resolvidas em tempo linear, mas, no caso geral, o problema é NP-difícil ([cite:@dreyerApplicationsVariationsDomination]; [cite:@klobucar2014ResultsRomanDomination]; [cite:@shang2007RomanDominationProblem]).
+
+[cite:@ivanovic2016ImprovedMixedInteger] utilizaram /Variable Neightborhood Search/ (VNS) no mesmo problema, obtendo resultados interessantes para as instâncias propostas por [cite:@curroRomanDominationProblem]. Essa meta-heurística parte da ideia de que soluções ótimas são encontradas "próximas" de boas soluções, assim utilizando busca local e algumas técnicas, como perturbação,\todo{tá ruim isso} para escapar de mínimos locais e intensificar a procura.
+
+Já [cite:@khandelwalRomanDominationGraphs2021] utilizaram algoritmos genéticos no problema de dominação romana, uma ideia que toma de inspiração da evolução das espécies observadas na natureza. Partindo de um conjunto de soluções, realizamos "cruzamentos" das melhores para produzir novas gerações. A cada uma, induzimos "mutações" aleatórias que alteram certos pontos das soluções, espelhando a realidade e tentando evitar cair em mínimos locais.
+
+# Comentar sobre as dominações romana fraca e os papers recentes de PO nisso.
+# Existem resultado e que tipo (teoria do jogos)
+# Em termos de meta-heu, apenas o mais pŕoximo
+# Em termos de PLI tudo, incluindo variações e dominação clássica
+# è importante dizer como as cisas se comparam.
+# levantar furos, pontos que ainda estão abertas.
+
+* Metodologia
+
+** Programação linear
+- Definição de PL
+Programação Linear é uma técnica de optimização de problemas a partir da modelagem dos mesmos por meio de programas lineares. Nestes, definimos uma função objetivo, a qual queremos maximizar ou minizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares). \todo{esse tipo de definição eu tiro da onde?} Todo programa linear pode ser escrito em sua forma canônica:
+\begin{align*}
+\text{maximize }  &cx \\
+\text{sujeito a } &Ax \leq b \\
+                  &x \in \mathbb{R}_+
+\end{align*}
+
+Perceba que maximizar uma função é o mesmo que minimizar a mesma com sinal oposto.
+
+Para resolver esse tipo de programa, conhecemos algorítmos como o /simplex/ que, apesar de ser uma algorítmo exponencial, é capaz de resolver a maior parte dos problemas em tempo polinomial.
+
+Para alguns problemas, como o de dominação romana, não faz sentido falar em soluções fracionárias, afinal não conseguimos "alocar meia legião". \todo{é necessário colocar coisas como "Em 1948 fulaninho propos para o problema X essa nova abordagem blah?"} Para isso, restringimos as variáveis aos inteiros, fazendo assim um Programa Linear Inteiro.
+
+O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente ainda mais complexo.
+- Definição de PLI
+- atual modelo para dominação romana
+- citar a ideia do "ferramental moderno de PLI"
+
+* Objetivos
+Dizer claramente qual o objetivo da pesquisa: propor novos modelos de pli para domi romana e suas vairantes explorando técnicas como branch-cut branch-price e ferramental moderno de PLI.
+
+Os algo serão comparados com as instâncias da literatura e, se necessário novas instâncias serão geradas.
+
+Analizar com o Performance profile
+#+PRINT_BIBLIOGRAPHY:

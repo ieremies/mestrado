@@ -1,0 +1,105 @@
+% Created 2022-08-31 qua 15:40
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{todonotes}
+\usepackage[portuges]{babel}
+\usepackage{amsthm}
+\author{Ieremies Romero}
+\date{\today}
+\title{Problema de Dominação Romana}
+\hypersetup{
+ pdfauthor={Ieremies Romero},
+ pdftitle={Problema de Dominação Romana},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.1 (Org mode 9.6)}, 
+ pdflang={Portuges}}
+\usepackage{biblatex}
+\addbibresource{~/arq/bib.bib}
+\begin{document}
+
+\maketitle
+\begin{abstract}
+A Dominação Romana é um problema proposto por \autocite{stewart1999DefendRomanEmpire} em que desejamos defender o império romano dispondo de um certo número de legiões. Para isso, cada cidade deve ser assegurada de forma que uma legião alocada ou seja vizinha de outra que possua duas legiões. Assim, deseja-se minimizar a quantidade de legiões distribuídas sem abdicar da segurança do império.
+
+Neste projeto, utilizaremos a técnica de Programação Linear Inteira (PLI) para modelar o problema. Objetivamos propor novos modelos de PLI para domição romana e suas vairantes, explorando técnicas como branch-cut, branch-price e ferramental moderno de PLI.
+\end{abstract}
+
+\section{Introdução}
+\label{sec:orgfa357c9}
+\subsection{Motivação histórica}
+\label{sec:org56d74b8}
+Durante a Segunda Guerra Mundial, General Douglas MacArthur propôs uma estratégia de movimentação que consistia em avançar suas tropas de uma ilha para outra apenas quando ele poderia deixar para trás um número suficiente de tropas (\textbf{FONTE}). Ele não foi o primeiro a utilizar dessa estratégia: segundo \autocite{stewart1999DefendRomanEmpire}, referências históricas apontam que o Imperador Constantino, no quarto século A.C., aplicou estratégia similar para defender o Império Romano de invasões dos povos ditos "bárbaros".
+
+Para exemplificar o seu uso, considere o mapa do Império Romano simplificado na Figura \ref{fig:mapa}. Nesse exemplo, o imperador possui 4 legiões para serem distribuídas pelo território e ele deseja fazê-lo de forma que todas as cidades sejam consideradas seguras. Uma região é dita segura, ou coberta, se há uma legião em seu território ou se está conectada a outra região com duas legiões.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.3]{/home/ieremies/org/.attach/7f/0c2fd1-ace0-4f61-b2ca-58a004a599d0/_20220817_122014screenshot.png}
+\caption{\label{fig:mapa}Representação do mapa do Império Romano usada como ilustração do problem, inspirada de \autocite{stewart1999DefendRomanEmpire}.}
+\end{figure}
+
+Nos tempos atuais, os problemas de dominação ganharam novos propósitos: cobertura de serviços essenciais ou de emergência, QUE MAIS?\ldots{}
+
+\subsection{Modelo matemático}
+\label{sec:org5e84075}
+Para um grafo \(G = (V, E)\), dizemos que a \textbf{vizinhança aberta} \(N(v)\) de um vértice \(v\) é definida como o conjunto de vértices adjacentes a \(v\) em \(G\), ou seja, \(N(v) = \{u|(u, v) ∈ E\}\). Similarmente, dizemos que a \textbf{vizinhança fechada} \(N[v]\) de um vértice \(v\) é a vizinhança aberta incluindo o próprio \(v\), ou seja, \(N[v] = N(v) ∪ \{v\}\). Para um conjunto de vértices \(s\), a vizinhança aberta desse conjunto é a união das vizinhanças abertas de cada um dos seus vértices (o respectivo pode ser dito para a vizinhança fechada). Um \textbf{conjunto dominante} de um grafo \(G\) é um subconjunto de vértices \(D\) tal que a vizinhança fechada de \(D\) é o próprio conjunto \(V\) . Por sua vez, o \textbf{número de dominação} de um grafo \(G\), dito \(\gamma(G)\), é a cardinalidade do menor conjunto dominante do grafo \(G\).
+
+O problema de dominação romana é definido em um grafo \(G = (V, E)\) simples, finito e não-direcionado, no qual cada vértice representa uma cidade ou região do império e as arestas são as conexões entre elas \autocite{cockayne2004RomanDominationGraphs}. Diremos que uma \textbf{função de dominação romana} é uma função \(f : V \to z{0, 1, 2\}\) na qual \(f(v)\) indica a quantidade de legiões naquela região,de forma que, para qualquer v tal que \(f(v) = 0\), deve existir \(u\) vizinho a \(v\) cujo \(f(u) = 2\). Definimos o \textbf{número de dominação romana} total de um grafo \(G\) como o menor valor \(f(v), \forall v \in V\), tal que f é uma função de dominação romana do grafo G.
+
+\subsection{Revisão bibliográfica}
+\label{sec:orgcabc285}
+Após a descrição do problema por \autocite{stewart1999DefendRomanEmpire}, \autocite{revelle2000DefendensImperiumRomanum} apresentaram o desenvolvimento inicial em teoria de grafos. Além disso, \autocite{cockayne2004RomanDominationGraphs} apresentou alguns resultados importantes de teoria de grafos sobre o problema, como limitantes e propriedades da função de dominação romana, os quais foram estendidos e aprimorados por \autocite{2006NoteRomanDomination}, \autocite{favaron2009RomanDominationNumber}, \autocite{mobaraky2008BoundsRomanDomination}. \autocite{klobucar2014ResultsRomanDomination} demonstraram que algumas classes especiais de grafos podem ser resolvidas em tempo linear, mas, no caso geral, o problema é NP-difícil (\autocite{dreyerApplicationsVariationsDomination}; \autocite{klobucar2014ResultsRomanDomination}; \autocite{shang2007RomanDominationProblem}).
+
+\autocite{ivanovic2016ImprovedMixedInteger} utilizaram \emph{Variable Neightborhood Search} (VNS) no mesmo problema, obtendo resultados interessantes para as instâncias propostas por \autocite{curroRomanDominationProblem}. Essa meta-heurística parte da ideia de que soluções ótimas são encontradas "próximas" de boas soluções, assim utilizando busca local e algumas técnicas, como perturbação,\todo{tá ruim isso} para escapar de mínimos locais e intensificar a procura.
+
+Já \autocite{khandelwalRomanDominationGraphs2021} utilizaram algoritmos genéticos no problema de dominação romana, uma ideia que toma de inspiração da evolução das espécies observadas na natureza. Partindo de um conjunto de soluções, realizamos "cruzamentos" das melhores para produzir novas gerações. A cada uma, induzimos "mutações" aleatórias que alteram certos pontos das soluções, espelhando a realidade e tentando evitar cair em mínimos locais.
+
+\section{Metodologia}
+\label{sec:orgcdb0564}
+
+\subsection{Programação linear}
+\label{sec:org25227d8}
+\begin{itemize}
+\item Definição de PL
+\end{itemize}
+Programação Linear é uma técnica de optimização de problemas a partir da modelagem dos mesmos por meio de programas lineares. Nestes, definimos uma função objetivo, a qual queremos maximizar ou minizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares). \todo{esse tipo de definição eu tiro da onde?} Todo programa linear pode ser escrito em sua forma canônica:
+\begin{align*}
+\text{maximize }  &cx \\
+\text{sujeito a } &Ax \leq b \\
+                  &x \in \mathbb{R}_+
+\end{align*}
+
+Perceba que, maximizar uma função objetivo é o mesmo que minimizar a mesma com sinal oposto.
+
+Para resolver esse tipo de programa, conhecemos algorítmos como o \emph{simplex} que, apesar de ser uma algorítmo exponencial, é capaz de resolver a maior parte dos problemas em tempo polinomial.
+
+Para alguns problemas, como o de dominação romana, não faz sentido falar em soluções fracionárias, afinal não conseguimos "alocar meia legião". \todo{é necessário colocar coisas como "Em 1948 fulaninho propos para o problema X essa nova abordagem blah?"} Para isso, restringimos as variáveis aos inteiros, fazendo assim um Programa Linear Inteiro.
+
+O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente ainda mais complexo.
+\begin{itemize}
+\item Definição de PLI
+\item atual modelo para dominação romana
+\item citar a ideia do "ferramental moderno de PLI"
+\end{itemize}
+
+\section{Objetivos}
+\label{sec:org394797d}
+Dizer claramente qual o objetivo da pesquisa: propor novos modelos de pli para domi romana e suas vairantes explorando técnicas como branch-cut branch-price e ferramental moderno de PLI.
+
+Os algo serão comparados com as instâncias da literatura e, se necessário novas instâncias serão geradas.
+
+Analizar com o Performance profile
+\printbibliography
+\end{document}
