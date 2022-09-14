@@ -1,4 +1,4 @@
-% Created 2022-09-13 ter 12:58
+% Created 2022-09-14 qua 15:15
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -42,27 +42,25 @@ Objetivamos propor novos modelos de PLI para dominação romana e suas variantes
 \end{abstract}
 
 \section{Introdução}
-\label{sec:org3375f23}
-\subsection{Motivação histórica}
-\label{sec:org316761a}
-Durante a Segunda Guerra Mundial, General Douglas MacArthur propôs uma estratégia de movimentação que consistia em avançar suas tropas de uma ilha para outra apenas quando ele poderia deixar para trás um número suficiente de tropas (\autocite{Stewart1999DefendRomanEmpire}).
+\label{sec:orge42ade3}
+Durante a Segunda Guerra Mundial, General Douglas MacArthur propôs uma estratégia de movimentação que consistia em avançar suas tropas de uma ilha para outra apenas quando ele poderia deixar para trás um número suficiente de tropas (\autocite{Stewart1999DefendRomanEmpire}). \todo{talvez eu só tire essa frase}
 Ele não foi o primeiro a utilizar dessa estratégia: segundo \textcite{Stewart1999DefendRomanEmpire}, referências históricas apontam que o Imperador Constantino, no quarto século A.C., aplicou estratégia similar para defender o Império Romano de invasões dos povos ditos "bárbaros".\todo{aqui têm refs de refs}
 
 Para exemplificar o seu uso, considere o mapa do Império Romano simplificado na Figura \ref{fig:mapa}.
-Nesse exemplo, o imperador possui 4 legiões para serem distribuídas pelo território e ele deseja fazê-lo de forma que todas as cidades sejam consideradas seguras.
+Nesse exemplo, o imperador possui \(4\) legiões para serem distribuídas pelo território e ele deseja fazê-lo de forma que todas as cidades sejam consideradas seguras.
 Uma região é dita segura, ou coberta, se há uma legião em seu território ou se está conectada a outra região com duas legiões.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[scale=0.3]{/home/ieremies/org/.attach/7f/0c2fd1-ace0-4f61-b2ca-58a004a599d0/_20220817_122014screenshot.png}
+\includegraphics[scale=0.3]{/home/ieremies/proj/mest/proposta-ic/_20220817_122014screenshot.png}
 \caption{\label{fig:mapa}Representação do mapa do Império Romano usada como ilustração do problem, inspirada de \textcite{Stewart1999DefendRomanEmpire}.}
 \end{figure}
 
-As aplicações vão além do universo militar: ao alocar estações de serviços de emergência, uma lógica similar à "segurança", acima descrita, é muito útil \autocite{GhaffariHadigheh2019Romandominationproblem}. Além disso, redes sem fio "ad hoc", \autocite{Wu2000Dominationitsapplications} \todo{completar}.
+As aplicações vão além do universo militar: ao alocar estações de serviços de emergência, uma lógica similar à "segurança", acima descrita, é muito útil \autocite{GhaffariHadigheh2019Romandominationproblem}. Além disso, redes sem fio "ad hoc", onde um conjunto de usuários com conexões sem fio formam uma rede temporária, sem necessidade de autoridade central, constituem um outro bom exemplo \autocite{Wu2000Dominationitsapplications} \todo{completar}.
 
 
 \subsection{Modelo matemático}
-\label{sec:orgcac6fc5}
+\label{sec:org39568a7}
 Para um grafo \(G = (V, E)\), dizemos que a \textbf{vizinhança aberta} \(N(v)\) de um vértice \(v\) é definida como o conjunto de vértices adjacentes a \(v\) em \(G\), ou seja, \(N(v) = \{u|(u, v) \in E\}\).
 Similarmente, dizemos que a \textbf{vizinhança fechada} \(N[v]\) de um vértice \(v\) é a vizinhança aberta incluindo o próprio \(v\), ou seja, \(N[v] = N(v) \cup \{v\}\).
 Para um conjunto de vértices \(s\), a vizinhança aberta desse conjunto é a união das vizinhanças abertas de cada um dos seus vértices (o respectivo pode ser dito para a vizinhança fechada).
@@ -74,7 +72,7 @@ Diremos que uma \textbf{função de dominação romana} é uma função \(f : V 
 Definimos o \textbf{número de dominação romana} total de um grafo \(G\) como o menor valor \(f(v), \forall v \in V\), tal que f é uma função de dominação romana do grafo G.
 
 \subsection{Revisão bibliográfica}
-\label{sec:orgb4834d2}
+\label{sec:org5b6875c}
 Após a descrição inicial do problema, \textcite{ReVelle2000DefendensImperiumRomanum} apresentaram o desenvolvimento inicial em teoria de grafos.
 Além disso, \textcite{Cockayne2004Romandominationgraphs} apresentaram alguns resultados importantes de teoria de grafos sobre o problema, como limitantes e propriedades da função de dominação romana, os quais foram estendidos e aprimorados por \textcite{Xing2006noteRomandomination}, \textcite{Favaron2009Romandominationnumber}, \textcite{Mobaraky2008BoundsRomanDomination}.
 Algumas classes especiais de grafos podem ser resolvidas em tempo linear, mas, no caso geral, o problema é NP-difícil (\autocite{Dreyer2000Applicationsvariationsdomination,Klobucar2014SomeresultsRoman,Shang2007RomanDominationProblem}).
@@ -87,24 +85,19 @@ Partindo de um conjunto de soluções, realizamos "cruzamentos" das melhores par
 A cada uma, induzimos "mutações" aleatórias que alteram certos pontos das soluções, espelhando a realidade e tentando evitar cair em mínimos locais.
 
 \section{Metodologia}
-\label{sec:orge63a0a7}
+\label{sec:org16fd295}
 
-\subsection{Programação linear}
-\label{sec:org42ce7bc}
-\begin{itemize}
-\item Definição de PL
-\end{itemize}
-Programação Linear é uma técnica de optimização de problemas a partir da modelagem dos mesmos por meio de programas lineares.
-Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares). \todo{citar um bom livro} Todo programa linear pode ser escrito em sua forma canônica:
-\begin{align*}
-\text{maximize }  &cx \\
-\text{sujeito a } &Ax \leq b \\
-                  &x \in \mathbb{R}_+
-\end{align*}
+\textbf{Programação Linear} é uma técnica de otimização de problemas a partir da modelagem dos mesmos em \textbf{programas lineares}.
+Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) \autocite{Chvatal1983LinearProgramming} . Todo programa linear pode ser escrito em sua forma canônica:
+\begin{alignat*}{4}
+& \omit\rlap{maximize  $\displaystyle cx$} \\
+& \mbox{sujeito a}&& \quad & Ax & \leq b  & \quad &  \\
+&                 &&       & x               & \in \mathbb{R}_+ &      &
+\end{alignat*}
 
 Perceba que maximizar uma função é o mesmo que minimizar a mesma com sinal oposto.
 
-Para resolver esse tipo de programa, conhecemos o algoritmo \emph{simplex} que, apesar de ser exponencial \todo{impreciso}, no caso médio possui comportamento polinomial.
+Para encontrar soluções viáveis com valores ótimos, conhecemos o algoritmo \textbf{simplex} que, apesar de ter complexidade exponencial, no caso médio possui comportamento polinomial.
 
 Pega o PL na forma padrão, adiciona as variáveis de folga, ou seja, a diferença das inequações. Estas variáveis adicionadas são chamadas de básicas enquanto as demais de não básicas. Uma vez feito isso, iteramos :
 \begin{enumerate}
@@ -114,55 +107,44 @@ Pega o PL na forma padrão, adiciona as variáveis de folga, ou seja, a diferen�
 \item Selecione a variável não-básica com maior coeficiente positivo.
 \item Aumente seu valor o máximo possível
 \item Ache a restrição mais justa, que limita o passo anterior.
-\item Inverte as posições da variávei não-básica escolhida no passo 1 com a variável básica da restrição do passo 3.
+\item Inverte as posições da variável não-básica escolhida no passo 1 com a variável básica da restrição do passo 3.
 \item Repita até não existir nenhuma variável que satisfaça o passo 1.
 \end{enumerate}
 \end{enumerate}
 
-Para alguns problemas, como o de dominação romana, não faz sentido falar em soluções fracionárias, afinal não conseguimos "alocar meia legião". \todo{cite um bom livro}
-Para isso, restringimos as variáveis aos inteiros, fazendo assim um \textbf{Programa Linear Inteiro}.
+Para alguns problemas, como o de dominação romana, não faz sentido falar em soluções fracionárias, afinal não conseguimos "alocar meia legião".
+Para isso, restringimos as variáveis aos inteiros, fazendo assim um \textbf{Programa Linear Inteiro}. Caso apenas um subconjunto das variáveis possuam a restrição de integralidade, chamamos esse programa de misto.
 
-O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente ainda mais complexo.
+\textcite{Ivanovic2016Improvedmixedinteger} propôs duas formulações, como a descrita a baixo, para o problema de dominação romana.
+Nesta, para cada vértice \(i\), existem duas variáveis associadas: \(x_i\) real não-negativa e \(y_i\) binária.
 \begin{itemize}
-\item atual modelo para dominação romana
+\item Se \(x_i < 1\) e \(y_i = 0\), então \(f(i) = 0\).
+\item Se \(x_i \geq 1\), então \(f(i) = 1\).
+\item Se \(y_i = 1\), então \(f(i) = 2\).
 \end{itemize}
-\begin{multicols}{2}
-$$
-x_i=\left\{\begin{array}{ll}
-1, & f(i) \geqslant 1 \\
-0, & \text { otherwise }
-\end{array} \quad y_i= \begin{cases}1, & f(i)=2 \\
-0, & \text { otherwise. }\end{cases}\right.
-$$
-\begin{alignat}{4}
-(\mathcal{RR}) \quad & \omit\rlap{minimize  $\displaystyle \sum_{i \in V} x_i+\sum_{i \in V} y_i$} \\
-& \mbox{sujeito a}&& \quad & x_i+\sum_{j \in N_i} y_j & \geq 1  & \quad & i \in V \\
-&                 &&       & y_i                    & \leq x_i &        & i \in V \\
-&                 &&       & x_i, y_i               & \in\{0,1\} &      & i \in V
-\end{alignat}
-$$
-x_i=\left\{\begin{array}{ll}
-1, & f(i)=1 \\
-0, & \text { otherwise }
-\end{array} \quad y_i= \begin{cases}1, & f(i)=2 \\
-0, & \text { otherwise. }\end{cases}\right.
-$$
-\begin{alignat}{4}
-(\mathcal{BVV}) \quad & \omit\rlap{minimize  $\displaystyle \sum_{i \in V} x_i+2\sum_{i \in V} y_i$} \\
+
+\begin{alignat*}{4}
+& \omit\rlap{minimize  $\displaystyle \sum_{i \in V} x_i+2\sum_{i \in V} y_i$} \\
 & \mbox{sujeito a}&& \quad & x_i+y_i+\sum_{j \in N_i} y_j & \geq 1  & \quad & i \in V \\
-&                 &&       & x_i + y_i                    & \leq x_i &        & i \in V \\
-&                 &&       & x_i, y_i               & \in\{0,1\} &      & i \in V
-\end{alignat}
-\end{multicols}
-\begin{itemize}
-\item citar a ideia do "ferramental moderno de PLI"
-\end{itemize}
+&                 &&       & x_i               & \in \mathbb{R}_+ &      & i \in V \\
+&                 &&       & y_i               & \in \{0,1\}      &      & i \in V
+\end{alignat*}
 
+Perceba que soluções onde \(x_i > 1\) e \(y_i = 1\) são viáveis, mas \textcite{Ivanovic2016Improvedmixedinteger} mostra que elas não serão ótimas.
+
+O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente ainda mais complexo. Para encontramos boas soluções viáveis para esse tipo de programa, algoritmos como o simplex não são o suficiente. Para isso, utilizamos técnicas como \textbf{branch-and-bound}, que consiste em dividir o problema em subproblemas menores e, durante o percurso\todo{percurso?}, encontrar limitantes que permitam diminuir o espaço de busca.
+
+Variações como \textbf{branch-and-cut}, na qual, ao atingir soluções não inteiras na relaxação linear usando o simplex, utilizamos algoritmos de plano de cortes para adicionar mais restrições até a solução fornecida pelo simplex na RL for inteira.
+Já para \textbf{branch-and-price}, essa técnica advém da observação que, para grandes problemas, grande parte das variáveis permanecem nulas entre as interações do \emph{branch-and-bound}.
+Assim podemos inseri-las conforme progredimos na nossa busca utilizando técnicas de geração de colunas.
+\todo{fonte?}
 \section{Objetivos}
-\label{sec:orgff6a726}
+\label{sec:org2fa2e9c}
+Neste projeto, objetivamos propor novos modelos de PLI para dominação romaana e suas variantes explorando técnicas como \textbf{branch-and-cut} e \textbf{branch-and-price}. Além disso, estudaremos a possibilidade de novos cortes e limitantes para as formulações.
+
 Os algoritmos e modelos propostos serão comparados com as instâncias presentes na literatura, como em \textcite{Curro2014RomanDominationProblem} e, se necessário novas instâncias poderão ser geradas.
 
-Os resultados dos experimentos computacionais serão comparados utilizando técnicas como \emph{Performance Profile} demonstrado por \textcite{Dolan2002Benchmarkingoptimizationsoftware}.
+Os resultados dos experimentos computacionais serão comparados utilizando técnicas como \textbf{Performance Profile} demonstrado por \textcite{Dolan2002Benchmarkingoptimizationsoftware}.
 
 \printbibliography
 \end{document}
