@@ -1,7 +1,8 @@
 #+Title: Problema de Dominação Romana
-#+author: Ieremies Romero
-#+options: toc:nil
+#+author: Ieremies Vieira da Fonseca Romero
+#+options: toc:nil date:nil
 #+latex_header: \usepackage[a4paper, total={6in, 8in}]{geometry}
+#+latex_header: \usepackage{multicol}
 
 # Mostrar que eu tenho um objetivo claro do que quero fazer
 # Que eu tenho cultura, que eu sei do que eu to falando
@@ -34,7 +35,8 @@ Uma região é dita segura, ou coberta, se há uma legião em seu território ou
 [[attachment:_20220817_122014screenshot.png]]
 
 # Motivação mais atual
-Nos tempos atuais, os problemas de dominação ganharam novos propósitos: cobertura de serviços essenciais ou de emergência, QUE MAIS?...
+As aplicações vão além do universo militar: ao alocar estações de serviços de emergência, uma lógica similar à "segurança", acima descrita, é muito útil [cite:@GhaffariHadigheh2019Romandominationproblem]. Além disso, redes sem fio "ad hoc", [cite:@Wu2000Dominationitsapplications] \todo{completar}.
+
 
 ** Modelo matemático
 Para um grafo $G = (V, E)$, dizemos que a *vizinhança aberta* $N(v)$ de um vértice $v$ é definida como o conjunto de vértices adjacentes a $v$ em $G$, ou seja, $N(v) = \{u|(u, v) \in E\}$.
@@ -82,12 +84,48 @@ Perceba que maximizar uma função é o mesmo que minimizar a mesma com sinal op
 
 Para resolver esse tipo de programa, conhecemos o algoritmo /simplex/ que, apesar de ser exponencial \todo{impreciso}, no caso médio possui comportamento polinomial.
 
+Pega o PL na forma padrão, adiciona as variáveis de folga, ou seja, a diferença das inequações. Estas variáveis adicionadas são chamadas de básicas enquanto as demais de não básicas. Uma vez feito isso, iteramos :
+1. Acha uma solução viável
+2. Pivota até achar uma solução ótima
+   1. Selecione a variável não-básica com maior coeficiente positivo.
+   2. Aumente seu valor o máximo possível
+   3. Ache a restrição mais justa, que limita o passo anterior.
+   4. Inverte as posições da variávei não-básica escolhida no passo 1 com a variável básica da restrição do passo 3.
+   5. Repita até não existir nenhuma variável que satisfaça o passo 1.
+
 Para alguns problemas, como o de dominação romana, não faz sentido falar em soluções fracionárias, afinal não conseguimos "alocar meia legião". \todo{cite um bom livro}
 Para isso, restringimos as variáveis aos inteiros, fazendo assim um *Programa Linear Inteiro*.
 
 O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente ainda mais complexo.
-- Definição de PLI
 - atual modelo para dominação romana
+\begin{multicols}{2}
+$$
+x_i=\left\{\begin{array}{ll}
+1, & f(i) \geqslant 1 \\
+0, & \text { otherwise }
+\end{array} \quad y_i= \begin{cases}1, & f(i)=2 \\
+0, & \text { otherwise. }\end{cases}\right.
+$$
+\begin{alignat}{4}
+(\mathcal{RR}) \quad & \omit\rlap{minimize  $\displaystyle \sum_{i \in V} x_i+\sum_{i \in V} y_i$} \\
+& \mbox{sujeito a}&& \quad & x_i+\sum_{j \in N_i} y_j & \geq 1  & \quad & i \in V \\
+&                 &&       & y_i                    & \leq x_i &        & i \in V \\
+&                 &&       & x_i, y_i               & \in\{0,1\} &      & i \in V
+\end{alignat}
+$$
+x_i=\left\{\begin{array}{ll}
+1, & f(i)=1 \\
+0, & \text { otherwise }
+\end{array} \quad y_i= \begin{cases}1, & f(i)=2 \\
+0, & \text { otherwise. }\end{cases}\right.
+$$
+\begin{alignat}{4}
+(\mathcal{BVV}) \quad & \omit\rlap{minimize  $\displaystyle \sum_{i \in V} x_i+2\sum_{i \in V} y_i$} \\
+& \mbox{sujeito a}&& \quad & x_i+y_i+\sum_{j \in N_i} y_j & \geq 1  & \quad & i \in V \\
+&                 &&       & x_i + y_i                    & \leq x_i &        & i \in V \\
+&                 &&       & x_i, y_i               & \in\{0,1\} &      & i \in V
+\end{alignat}
+\end{multicols}
 - citar a ideia do "ferramental moderno de PLI"
 
 * Objetivos

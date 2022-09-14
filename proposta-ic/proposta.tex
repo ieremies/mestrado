@@ -1,4 +1,4 @@
-% Created 2022-09-13 ter 09:04
+% Created 2022-09-13 ter 12:58
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -16,11 +16,12 @@
 \usepackage[portuges]{babel}
 \usepackage{amsthm}
 \usepackage[a4paper, total={6in, 8in}]{geometry}
-\author{Ieremies Romero}
-\date{\today}
+\usepackage{multicol}
+\author{Ieremies Vieira da Fonseca Romero}
+\date{}
 \title{Problema de Dominação Romana}
 \hypersetup{
- pdfauthor={Ieremies Romero},
+ pdfauthor={Ieremies Vieira da Fonseca Romero},
  pdftitle={Problema de Dominação Romana},
  pdfkeywords={},
  pdfsubject={},
@@ -41,9 +42,9 @@ Objetivamos propor novos modelos de PLI para dominação romana e suas variantes
 \end{abstract}
 
 \section{Introdução}
-\label{sec:orgd452167}
+\label{sec:org3375f23}
 \subsection{Motivação histórica}
-\label{sec:orgc46685d}
+\label{sec:org316761a}
 Durante a Segunda Guerra Mundial, General Douglas MacArthur propôs uma estratégia de movimentação que consistia em avançar suas tropas de uma ilha para outra apenas quando ele poderia deixar para trás um número suficiente de tropas (\autocite{Stewart1999DefendRomanEmpire}).
 Ele não foi o primeiro a utilizar dessa estratégia: segundo \textcite{Stewart1999DefendRomanEmpire}, referências históricas apontam que o Imperador Constantino, no quarto século A.C., aplicou estratégia similar para defender o Império Romano de invasões dos povos ditos "bárbaros".\todo{aqui têm refs de refs}
 
@@ -57,10 +58,11 @@ Uma região é dita segura, ou coberta, se há uma legião em seu território ou
 \caption{\label{fig:mapa}Representação do mapa do Império Romano usada como ilustração do problem, inspirada de \textcite{Stewart1999DefendRomanEmpire}.}
 \end{figure}
 
-Nos tempos atuais, os problemas de dominação ganharam novos propósitos: cobertura de serviços essenciais ou de emergência, QUE MAIS?\ldots{}
+As aplicações vão além do universo militar: ao alocar estações de serviços de emergência, uma lógica similar à "segurança", acima descrita, é muito útil \autocite{GhaffariHadigheh2019Romandominationproblem}. Além disso, redes sem fio "ad hoc", \autocite{Wu2000Dominationitsapplications} \todo{completar}.
+
 
 \subsection{Modelo matemático}
-\label{sec:orgbeb842e}
+\label{sec:orgcac6fc5}
 Para um grafo \(G = (V, E)\), dizemos que a \textbf{vizinhança aberta} \(N(v)\) de um vértice \(v\) é definida como o conjunto de vértices adjacentes a \(v\) em \(G\), ou seja, \(N(v) = \{u|(u, v) \in E\}\).
 Similarmente, dizemos que a \textbf{vizinhança fechada} \(N[v]\) de um vértice \(v\) é a vizinhança aberta incluindo o próprio \(v\), ou seja, \(N[v] = N(v) \cup \{v\}\).
 Para um conjunto de vértices \(s\), a vizinhança aberta desse conjunto é a união das vizinhanças abertas de cada um dos seus vértices (o respectivo pode ser dito para a vizinhança fechada).
@@ -72,7 +74,7 @@ Diremos que uma \textbf{função de dominação romana} é uma função \(f : V 
 Definimos o \textbf{número de dominação romana} total de um grafo \(G\) como o menor valor \(f(v), \forall v \in V\), tal que f é uma função de dominação romana do grafo G.
 
 \subsection{Revisão bibliográfica}
-\label{sec:orgb009a5b}
+\label{sec:orgb4834d2}
 Após a descrição inicial do problema, \textcite{ReVelle2000DefendensImperiumRomanum} apresentaram o desenvolvimento inicial em teoria de grafos.
 Além disso, \textcite{Cockayne2004Romandominationgraphs} apresentaram alguns resultados importantes de teoria de grafos sobre o problema, como limitantes e propriedades da função de dominação romana, os quais foram estendidos e aprimorados por \textcite{Xing2006noteRomandomination}, \textcite{Favaron2009Romandominationnumber}, \textcite{Mobaraky2008BoundsRomanDomination}.
 Algumas classes especiais de grafos podem ser resolvidas em tempo linear, mas, no caso geral, o problema é NP-difícil (\autocite{Dreyer2000Applicationsvariationsdomination,Klobucar2014SomeresultsRoman,Shang2007RomanDominationProblem}).
@@ -85,10 +87,10 @@ Partindo de um conjunto de soluções, realizamos "cruzamentos" das melhores par
 A cada uma, induzimos "mutações" aleatórias que alteram certos pontos das soluções, espelhando a realidade e tentando evitar cair em mínimos locais.
 
 \section{Metodologia}
-\label{sec:orge8c6eb8}
+\label{sec:orge63a0a7}
 
 \subsection{Programação linear}
-\label{sec:org2831ddf}
+\label{sec:org42ce7bc}
 \begin{itemize}
 \item Definição de PL
 \end{itemize}
@@ -104,18 +106,60 @@ Perceba que maximizar uma função é o mesmo que minimizar a mesma com sinal op
 
 Para resolver esse tipo de programa, conhecemos o algoritmo \emph{simplex} que, apesar de ser exponencial \todo{impreciso}, no caso médio possui comportamento polinomial.
 
+Pega o PL na forma padrão, adiciona as variáveis de folga, ou seja, a diferença das inequações. Estas variáveis adicionadas são chamadas de básicas enquanto as demais de não básicas. Uma vez feito isso, iteramos :
+\begin{enumerate}
+\item Acha uma solução viável
+\item Pivota até achar uma solução ótima
+\begin{enumerate}
+\item Selecione a variável não-básica com maior coeficiente positivo.
+\item Aumente seu valor o máximo possível
+\item Ache a restrição mais justa, que limita o passo anterior.
+\item Inverte as posições da variávei não-básica escolhida no passo 1 com a variável básica da restrição do passo 3.
+\item Repita até não existir nenhuma variável que satisfaça o passo 1.
+\end{enumerate}
+\end{enumerate}
+
 Para alguns problemas, como o de dominação romana, não faz sentido falar em soluções fracionárias, afinal não conseguimos "alocar meia legião". \todo{cite um bom livro}
 Para isso, restringimos as variáveis aos inteiros, fazendo assim um \textbf{Programa Linear Inteiro}.
 
 O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente ainda mais complexo.
 \begin{itemize}
-\item Definição de PLI
 \item atual modelo para dominação romana
+\end{itemize}
+\begin{multicols}{2}
+$$
+x_i=\left\{\begin{array}{ll}
+1, & f(i) \geqslant 1 \\
+0, & \text { otherwise }
+\end{array} \quad y_i= \begin{cases}1, & f(i)=2 \\
+0, & \text { otherwise. }\end{cases}\right.
+$$
+\begin{alignat}{4}
+(\mathcal{RR}) \quad & \omit\rlap{minimize  $\displaystyle \sum_{i \in V} x_i+\sum_{i \in V} y_i$} \\
+& \mbox{sujeito a}&& \quad & x_i+\sum_{j \in N_i} y_j & \geq 1  & \quad & i \in V \\
+&                 &&       & y_i                    & \leq x_i &        & i \in V \\
+&                 &&       & x_i, y_i               & \in\{0,1\} &      & i \in V
+\end{alignat}
+$$
+x_i=\left\{\begin{array}{ll}
+1, & f(i)=1 \\
+0, & \text { otherwise }
+\end{array} \quad y_i= \begin{cases}1, & f(i)=2 \\
+0, & \text { otherwise. }\end{cases}\right.
+$$
+\begin{alignat}{4}
+(\mathcal{BVV}) \quad & \omit\rlap{minimize  $\displaystyle \sum_{i \in V} x_i+2\sum_{i \in V} y_i$} \\
+& \mbox{sujeito a}&& \quad & x_i+y_i+\sum_{j \in N_i} y_j & \geq 1  & \quad & i \in V \\
+&                 &&       & x_i + y_i                    & \leq x_i &        & i \in V \\
+&                 &&       & x_i, y_i               & \in\{0,1\} &      & i \in V
+\end{alignat}
+\end{multicols}
+\begin{itemize}
 \item citar a ideia do "ferramental moderno de PLI"
 \end{itemize}
 
 \section{Objetivos}
-\label{sec:orgc05202c}
+\label{sec:orgff6a726}
 Os algoritmos e modelos propostos serão comparados com as instâncias presentes na literatura, como em \textcite{Curro2014RomanDominationProblem} e, se necessário novas instâncias poderão ser geradas.
 
 Os resultados dos experimentos computacionais serão comparados utilizando técnicas como \emph{Performance Profile} demonstrado por \textcite{Dolan2002Benchmarkingoptimizationsoftware}.
