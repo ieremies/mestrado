@@ -10,11 +10,11 @@
 
 #+begin_abstract
 A Dominação Romana é um problema proposto por [cite/text:@Stewart1999DefendRomanEmpire] em que desejamos defender o império romano dispondo de um certo número de legiões.
-Para isso, cada cidade deve ser assegurada de forma que uma legião alocada ou seja vizinha de outra que possua duas legiões.
+Para isso, cada cidade deve ser assegurada de forma que uma legião alocada, ou seja, vizinha de outra que possua duas legiões.
 Assim, deseja-se minimizar a quantidade de legiões distribuídas sem abdicar da segurança do império.
 
 Neste projeto, utilizaremos a técnica de Programação Linear Inteira (PLI) para modelar o problema.
-Objetivamos propor novos modelos de PLI para dominação romana e suas variantes, explorando técnicas como branch-cut, branch-price e ferramental moderno de PLI.
+Objetivamos propor novos modelos de PLI para dominação romana e suas variantes, explorando técnicas como /branch-cut/, /branch-price/ e ferramental moderno de PLI.
 #+end_abstract
 
 * Introdução
@@ -32,7 +32,7 @@ Uma região é dita segura, ou coberta, se há uma legião em seu território ou
 
 # Motivação mais atual
 As aplicações vão além do universo militar: ao alocar estações de serviços de emergência, uma lógica similar à "segurança", acima descrita, é muito útil [cite:@GhaffariHadigheh2019Romandominationproblem].
-Além disso, redes sem fio "ad hoc", onde um conjunto de usuários com conexões sem fio formam uma rede temporária, sem necessidade de autoridade central ou infraestrutura permanente, constituem um outro bom exemplo [cite:@Wu2000Dominationitsapplications].
+Além disso, redes sem fio "ad hoc", onde um conjunto de usuários com conexões sem fio formam uma rede temporária, sem necessidade de autoridade central ou infraestrutura permanente, constituem outro bom exemplo [cite:@Wu2000Dominationitsapplications].
 
 
 ** Modelo matemático

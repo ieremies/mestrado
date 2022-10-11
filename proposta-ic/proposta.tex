@@ -1,4 +1,4 @@
-% Created 2022-10-11 Tue 08:37
+% Created 2022-10-11 Tue 12:42
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -34,15 +34,15 @@
 \maketitle
 \begin{abstract}
 A Dominação Romana é um problema proposto por \textcite{Stewart1999DefendRomanEmpire} em que desejamos defender o império romano dispondo de um certo número de legiões.
-Para isso, cada cidade deve ser assegurada de forma que uma legião alocada ou seja vizinha de outra que possua duas legiões.
+Para isso, cada cidade deve ser assegurada de forma que uma legião alocada, ou seja, vizinha de outra que possua duas legiões.
 Assim, deseja-se minimizar a quantidade de legiões distribuídas sem abdicar da segurança do império.
 
 Neste projeto, utilizaremos a técnica de Programação Linear Inteira (PLI) para modelar o problema.
-Objetivamos propor novos modelos de PLI para dominação romana e suas variantes, explorando técnicas como branch-cut, branch-price e ferramental moderno de PLI.
+Objetivamos propor novos modelos de PLI para dominação romana e suas variantes, explorando técnicas como \emph{branch-cut}, \emph{branch-price} e ferramental moderno de PLI.
 \end{abstract}
 
 \section{Introdução}
-\label{sec:org4415860}
+\label{sec:org65b1d29}
 Durante a Segunda Guerra Mundial, General Douglas MacArthur propôs uma estratégia de movimentação que consistia em avançar suas tropas de uma ilha para outra apenas quando ele poderia deixar para trás um número suficiente de tropas (\autocite{Stewart1999DefendRomanEmpire}).
 Ele não foi o primeiro a utilizar dessa estratégia: segundo \textcite{Stewart1999DefendRomanEmpire}, referências históricas apontam que o Imperador Constantino, no quarto século A.C., aplicou estratégia similar para defender o Império Romano de invasões dos povos ditos "bárbaros".
 
@@ -57,11 +57,11 @@ Uma região é dita segura, ou coberta, se há uma legião em seu território ou
 \end{figure}
 
 As aplicações vão além do universo militar: ao alocar estações de serviços de emergência, uma lógica similar à "segurança", acima descrita, é muito útil \autocite{GhaffariHadigheh2019Romandominationproblem}.
-Além disso, redes sem fio "ad hoc", onde um conjunto de usuários com conexões sem fio formam uma rede temporária, sem necessidade de autoridade central ou infraestrutura permanente, constituem um outro bom exemplo \autocite{Wu2000Dominationitsapplications}.
+Além disso, redes sem fio "ad hoc", onde um conjunto de usuários com conexões sem fio formam uma rede temporária, sem necessidade de autoridade central ou infraestrutura permanente, constituem outro bom exemplo \autocite{Wu2000Dominationitsapplications}.
 
 
 \subsection{Modelo matemático}
-\label{sec:orgb40ae0c}
+\label{sec:org46fa19b}
 Para um grafo \(G = (V, E)\), dizemos que a \textbf{vizinhança aberta} \(N(v)\) de um vértice \(v\) é definida como o conjunto de vértices adjacentes a \(v\) em \(G\), ou seja, \(N(v) = \{u|(u, v) \in E\}\).
 Similarmente, dizemos que a \textbf{vizinhança fechada} \(N[v]\) de um vértice \(v\) é a vizinhança aberta incluindo o próprio \(v\), ou seja, \(N[v] = N(v) \cup \{v\}\).
 Para um conjunto de vértices \(s\), a vizinhança aberta desse conjunto é a união das vizinhanças abertas de cada um dos seus vértices (o respectivo pode ser dito para a vizinhança fechada).
@@ -73,7 +73,7 @@ Diremos que uma \textbf{função de dominação romana} é uma função \(f : V 
 Definimos o \textbf{número de dominação romana} total de um grafo \(G\) como o menor valor \(f(v), \forall v \in V\), tal que f é uma função de dominação romana do grafo G.
 
 \subsection{Revisão bibliográfica}
-\label{sec:org7b73e85}
+\label{sec:orgd517c50}
 Após a descrição inicial do problema, \textcite{ReVelle2000DefendensImperiumRomanum} apresentaram o desenvolvimento inicial em teoria de grafos.
 Além disso, \textcite{Cockayne2004Romandominationgraphs} apresentaram alguns resultados importantes de teoria de grafos sobre o problema, como limitantes e propriedades da função de dominação romana, os quais foram estendidos e aprimorados por \textcite{Xing2006noteRomandomination}, \textcite{Favaron2009Romandominationnumber}, \textcite{Mobaraky2008BoundsRomanDomination}.
 Algumas classes especiais de grafos podem ser resolvidas em tempo linear, mas, no caso geral, o problema é NP-difícil (\autocite{Dreyer2000Applicationsvariationsdomination,Klobucar2014SomeresultsRoman,Shang2007RomanDominationProblem}).
@@ -86,7 +86,7 @@ Partindo de um conjunto de soluções, realizamos "cruzamentos" das melhores par
 A cada uma, induzimos "mutações" aleatórias que alteram certos pontos das soluções, espelhando a realidade e tentando evitar cair em mínimos locais.
 
 \section{Metodologia}
-\label{sec:org47c74bb}
+\label{sec:orga19f19c}
 
 \textbf{Programação Linear} é uma técnica de otimização de problemas a partir da modelagem dos mesmos em \textbf{programas lineares}.
 Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) \autocite{Chvatal1983LinearProgramming} . Todo programa linear pode ser escrito em sua forma canônica:
@@ -129,7 +129,7 @@ Nesta, para cada vértice \(i\), existem duas variáveis associadas: \(x_i\) rea
 Perceba que soluções onde \(x_i > 1\) e \(y_i = 1\) são viáveis, mas \textcite{Ivanovic2016Improvedmixedinteger} mostra que elas não serão ótimas.
 
 \section{Objetivos}
-\label{sec:orgd261c81}
+\label{sec:org579f979}
 Neste projeto, objetivamos propor novos modelos de PLI para dominação romana e suas variantes explorando técnicas como \textbf{branch-and-cut} e \textbf{branch-and-price}.
 Além disso, estudaremos a possibilidade de novos cortes e limitantes para as formulações.
 
