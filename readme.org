@@ -1,18 +1,31 @@
 #+Title: Mestrado
+#+category: mest
 
-* O que estou fazendo
-No momento, minhas atividades estão divididas em duas fronts:
-- Projeto IC :: a ser entregue em Set/Out sobre dominação romana. [0%]
-  - [ ] Projeto
-  - [ ] Carta de apresentação
-  - [ ] Currículo
-  - [-] Histórico escolar
-  - [ ] Cartas de recomendação: Prof Rafael, Prof Lehilton e Prof Fábio.
-
-- Projeto FAPESP :: a ser entregue até Nov/Dez sobre o tema que vou fazer no mestrado.
-
-Por enquanto, gostaria de fazer um mestrado em PLI mas a sobre qual problema ainda permanece em aberto:
-- Inventory Routing :: veja [cite:@coelho2013ThirtyYearsInventory]
-- Graph Coloring :: ?
+* Tarefas
+** TODO Projeto IC
+DEADLINE: <2022-10-18 Tue>
+<<projeto_ic>>
+- [ ] Correções do prof no projeto
+- [ ] Terminar a carta
+- [ ] Perguntar a profa Islene se pode colocar ela como recomendação também.
+- [ ] Enviar email para os profes lembrando que coloquei eles
+** TODO Apresentação de inventory routing [100%]
+DEADLINE: <2022-11-17 Thu> SCHEDULED: <2022-11-17 Thu>
+*** DONE Ler [cite:@Coelho2013ThirtyYearsInventory]
+CLOSED: [2022-10-11 Tue 20:45] DEADLINE: <2022-09-29 Thu>
 
 * Reuniões
+** 31 de ago
+Como achar papers: Scopus e google scholar no citado por.
+** 19 de set
+- [X] Trocar em publicação por submetido
+- [X] Citar quais discilpinas fui pad
+- Na carta, vender o meu peixe e minha motivação, pode ser um coisa mais pessoal.
+** 5 de out
+Sobre inventory routing:
+- Ver como está a formulação atual
+- Ver onde tá saindo coisas sobre isso, qual a credibilidade dos journals.
+
+Outras ideias que o prof. Rafael comentou:
+- Mais de um nível, abrir depósitos que guardam os produtos e dai vão para consumidor.
+- Omnichannels, juntar a ideia de vender o estoque de loja e online.
