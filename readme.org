@@ -9,10 +9,19 @@ DEADLINE: <2022-10-18 Tue>
 - [ ] Terminar a carta
 - [ ] Perguntar a profa Islene se pode colocar ela como recomendação também.
 - [ ] Enviar email para os profes lembrando que coloquei eles
-** TODO Apresentação de inventory routing [100%]
-DEADLINE: <2022-11-17 Thu> SCHEDULED: <2022-11-17 Thu>
+
+** TODO Apresentação de inventory routing [50%]
+DEADLINE: <2022-11-17 Thu>
 *** DONE Ler [cite:@Coelho2013ThirtyYearsInventory]
 CLOSED: [2022-10-11 Tue 20:45] DEADLINE: <2022-09-29 Thu>
+*** TODO Continuar a pesquisa sobre roteamento de inventário
+DEADLINE: <2022-10-19 Wed>
+- [ ] Ver como está a formulação atual
+- [ ] Ver onde tá saindo coisas sobre isso, qual a credibilidade dos journals.
+
+Outras ideias que o prof. Rafael comentou:
+- [ ] Mais de um nível, abrir depósitos que guardam os produtos e dai vão para consumidor.
+- [ ] Omnichannels, juntar a ideia de vender o estoque de loja e online.
 
 * Reuniões
 ** 31 de ago
