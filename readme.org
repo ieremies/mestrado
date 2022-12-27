@@ -2,20 +2,13 @@
 #+category: mest
 
 * Tarefas
-** TODO Projeto IC
-DEADLINE: <2022-10-18 Tue>
-<<projeto_ic>>
-- [ ] Correções do prof no projeto
-- [ ] Terminar a carta
-- [ ] Perguntar a profa Islene se pode colocar ela como recomendação também.
-- [ ] Enviar email para os profes lembrando que coloquei eles
-
-** TODO Apresentação de inventory routing [50%]
-DEADLINE: <2022-11-17 Thu>
+** Inventory routing [100%]
 *** DONE Ler [cite:@Coelho2013ThirtyYearsInventory]
 CLOSED: [2022-10-11 Tue 20:45] DEADLINE: <2022-09-29 Thu>
-*** TODO Continuar a pesquisa sobre roteamento de inventário
-DEADLINE: <2022-10-19 Wed>
+*** DONE Apresentação - grupo do Rafael
+CLOSED: [2022-12-14 qua 14:11] DEADLINE: <2022-12-01 qui 17:00>
+*** DONE Continuar a pesquisa sobre roteamento de inventário
+CLOSED: [2022-12-14 qua 14:11]
 - [ ] Ver como está a formulação atual
 - [ ] Ver onde tá saindo coisas sobre isso, qual a credibilidade dos journals.
 
@@ -23,6 +16,71 @@ Outras ideias que o prof. Rafael comentou:
 - [ ] Mais de um nível, abrir depósitos que guardam os produtos e dai vão para consumidor.
 - [ ] Omnichannels, juntar a ideia de vender o estoque de loja e online.
 
+Para completar isso, eu só preciso documentar o que eu já fiz.
+** TODO Graph coloring
+
+O que eu achei de bibliografia:
+
+[cite/title/b:@Cornaz2017SolvingVertexColoring]
+[cite/title/b:@Hebrard2020ConstraintSatisfiabilityReasoning]
+
+Básico
+[cite/title/b:@Malaguti2010SurveyVertexColoring]
+[cite/title/b:@Jabrayilov2018NewIntegerLinear]
+[cite/title/b:@Campelo2008AsymmetricRepresentativesFormulation]
+
+Branch-and-cut
+[cite/title/b:@MendezDiaz2006BranchCutAlgorithm]
+[cite/title/b:@MendezDiaz2008CuttingPlaneAlgorithm]
+
+Branch-and-price
+[cite/title/b:@Mehrotra1996ColumnGenerationApproach]
+[cite/title/b:@Gualandi2012ExactSolutionGraph]
+[cite/title/b:@Morrison2016SolvingPricingProblem]
+[cite/title/b:@Malaguti2011ExactApproachVertex]
+[cite/title/b:@Ferrarini2022TotalColoringTotal]
+
+Poliédrica
+[cite/title/b:@DelleDonne2016PolyhedralStudiesVertex]
+[cite/title/b:@Coll2002FacetsGraphColoring]
+
+Heurísticas
+[cite/title/b:@Furini2016ImprovedDSATURBased]
+[cite/title/b:@Mahmutogullari2020TwoLagrangianRelaxation]
+
+Grafos
+[cite/title/b:@GraphColoringInstances]
+[cite/title/b:@Campelo2004CliquesHolesVertex]
+
+
+Algumas dúvidas sobre como abordaremos o problema:
+- apenas o problema geral?
+- e sobre grafos específicos?
+- eu entendo que nosso trabalho será em PLI e não preciso mostrar coisas como heurísticas e outras técnicas no pedido de bolsa, correto?
+
+** TODO Airports and Railways
+Durante o WOPOCA, eu comecei a trabalhar nesse problema proposto em [cite:@Adamaszek2016AirportsRailwaysFacility] e com algoritmo de aproximação [cite:@Adamaszek2018ApproximatingAirportsRailways].
+
+Chegamos a formular dois PLI (veja [[id:dcd9a6d5-46e7-4e23-9307-ae29bfd35f75][airport and railways]]) e eu comecei a codar.
+
+- Não sei exatamente qual o processo de começar a trabalhar com um problema novo, propor instâncias ou o que seria suficiente para uma publicação inicial (?).
+- Acho que seria uma boa oportunidade de treinar meu C++ e o LEMON.
+- Geração de Colunas?
+** TODO Codar a la maratona
+O pessoal do wopoca tava comentando sobre trabalhar em big tech e saber codar esse probleminhas mais simples.
+** TODO C++
+Provavelmente assistir um tutorial de C++ no youtube e acompanhar com o "C++ primer" e o "Efficient C++".
+* Disciplinas
+Primeiro Semestre:
+- Introdução ao Processamento de Imagem Digital - SI com o Prof Helio
+- Seminários
+Segundo Semestre:
+- Gerência de Redes de Computadores - SC com o Prof Edmundo
+- Combinatória Poliédrica - com Prof Rafael.
+- Teoria dos Grafos I - TC com a Profa Chris.
+Não dará certo fazer Grafos no 1º por causa do trabalho.
+
+PED no segundo semestre (?)
 * Reuniões
 ** 31 de ago
 Como achar papers: Scopus e google scholar no citado por.
