@@ -28,15 +28,17 @@ Nesse exemplo, o imperador possui $4$ legiões para serem distribuídas pelo ter
 Uma região é dita segura, ou coberta, se há uma legião em seu território ou se está conectada a outra região com duas legiões.
 
 #+name: fig:mapa
-#+caption: Representação do mapa do Império Romano usada como ilustração do problem, inspirada em [cite/t:@Stewart1999DefendRomanEmpire].
-#+attr_latex: :scale 0.3
+#+caption: Representação do mapa do Império Romano usada como ilustração do problema, inspirada em [cite/t:@Stewart1999DefendRomanEmpire]. Os losângos vermelhos representam as legiões.
+#+attr_latex: :scale 0.2
 [[./mapa.jpg]]
 
 # Motivação mais atual
 As aplicações vão além do universo militar: ao alocar estações de serviços de emergência, uma lógica similar à "segurança", acima descrita, é muito útil [cite:@GhaffariHadigheh2019Romandominationproblem].
 Além disso, redes sem fio "ad hoc", onde um conjunto de usuários com conexões sem fio formam uma rede temporária, sem necessidade de autoridade central ou infraestrutura permanente, constituem outro bom exemplo [cite:@Wu2000Dominationitsapplications].
 
-
+#+begin_src elisp
+(setq org-highlight-latex-and-related '(native))
+#+end_src
 ** Modelo matemático
 Para um grafo $G = (V, E)$, dizemos que a *vizinhança aberta* $N(v)$ de um vértice $v$ é definida como o conjunto de vértices adjacentes a $v$ em $G$, ou seja, $N(v) = \{u : (u, v) \in E\}$.
 Similarmente, dizemos que a *vizinhança fechada* $N[v]$ de um vértice $v$ é a vizinhança aberta incluindo o próprio $v$, ou seja, $N[v] = N(v) \cup \{v\}$.

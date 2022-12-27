@@ -1,0 +1,99 @@
+% Created 2022-12-14 qua 12:36
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{todonotes}
+\usepackage[portuges]{babel}
+\usepackage{amsthm}
+\usepackage{setspace}
+\doublespacing
+\author{Ieremies Vieira da Fonseca Romero}
+\date{}
+\title{Programação Linear Inteira e Combinatória Poliédrica do Problema de Coloração em Grafos}
+\hypersetup{
+ pdfauthor={Ieremies Vieira da Fonseca Romero},
+ pdftitle={Programação Linear Inteira e Combinatória Poliédrica do Problema de Coloração em Grafos},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6)}, 
+ pdflang={Portuges}}
+\usepackage{biblatex}
+\addbibresource{~/arq/bib.bib}
+\begin{document}
+
+\maketitle
+\begin{abstract}
+Histórico / importância do problema.
+Usar PLI, em especial branch-and-price (geração de colunas) e branch-and-cut (planos de corte), no problema de coloração de grafos.
+Objetivamos novas formulações, cortes e estratégias para melhor resolver as instâncias consolidadas da literatura.
+\end{abstract}
+
+\section{Introdução}
+\label{sec:org02ef118}
+Contexto histórico e aplicações práticas.
+
+Importância de resolver o problema de forma eficaz e rápida.
+\subsection{Modelo matemático}
+\label{sec:org819d311}
+\subsection{Revisão bibliográfica}
+\label{sec:org72f7fa8}
+Focar na parte de PLI, não precisa trazer coisas de heurísticas ou outras técnicas.
+\section{Metodologia}
+\label{sec:orgb12a785}
+
+\textbf{Programação Linear} é uma técnica de otimização de problemas a partir da modelagem dos mesmos em \textbf{programas lineares}.
+Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) \autocite{Chvatal1983LinearProgramming} . Um programa linear pode ser escrito da seguinte forma:
+\begin{alignat*}{4}
+& \omit\rlap{minize \quad \quad $\displaystyle cx$} \\
+& \mbox{sujeito a}&& \quad & Ax & \geq b  & \quad &  \\
+&                 &&       & x               & \in \mathbb{R}_+ &      &
+\end{alignat*}
+
+Para encontrar soluções viáveis com valores ótimos, conhecemos o algoritmo \textbf{simplex} que, apesar de ter complexidade exponencial, no caso médio executa em tempo polinomial.
+
+Para alguns problemas, como o de dominação romana, não faz sentido falar em soluções fracionárias, afinal, não conseguimos designar meia legião a uma cidade.
+Para isso, restringimos as variáveis aos inteiros, fazendo assim um \textbf{Programa Linear Inteiro}. Caso apenas um subconjunto das variáveis possuam a restrição de integralidade, chamamos esse programa de linear misto.
+
+
+O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente ainda mais complexo. Para encontramos boas soluções viáveis para esse tipo de programa, algoritmos como o simplex não são o suficiente. Para isso, utilizamos técnicas como \textbf{branch-and-bound}, que consiste em dividir o problema em subproblemas menores e, durante o processo, encontrar limitantes que permitam diminuir o espaço de busca.
+
+Variações como \textbf{branch-and-cut}, na qual, ao atingir soluções não inteiras na relaxação linear usando o simplex, utilizamos algoritmos de plano de cortes para adicionar mais restrições até a solução fornecida pelo simplex na RL for inteira.
+Já para \textbf{branch-and-price}, essa técnica advém da observação que, para grandes problemas, grande parte das variáveis permanecem nulas entre as interações do \emph{branch-and-bound}.
+Assim podemos inseri-las conforme progredimos na nossa busca utilizando técnicas de geração de colunas.
+\section{Objetivos}
+\label{sec:orga31f331}
+Neste projeto, objetivamos propor novos modelos de PLI para dominação romana e suas variantes explorando técnicas como \emph{branch-and-cut} e \emph{branch-and-price}.
+Além disso, estudaremos a possibilidade de novos cortes e limitantes para as formulações.
+
+\section{Cronograma}
+\label{sec:orgebbfeda}
+BEPE
+
+Ensino de programação no elite
+\section{Material e método}
+\label{sec:orgff47998}
+Para o desenvolvimento do projeto, o aluno utilizará-se de artigos e materiais de consulta disponibilizados pela UNICAMP de maneira gratuita, grande parte desses de forma online ou por meio da Biblioteca do Instituto de Matemática, Estatística e Computação Científica.
+
+Ademais, serão realizados encontros semanais entre o aluno e o orientador para debater os conteúdos estudados e acompanhar o progresso do projeto.
+
+\section{Avaliação dos resultados}
+\label{sec:orgb100187}
+
+Os algoritmos e modelos propostos serão comparados com as instâncias presentes na literatura, como em REFERÊNCIA e, caso necessário, novas instâncias poderão ser geradas.
+
+Os resultados dos experimentos computacionais serão comparados utilizando técnicas como \textbf{Performance Profile} demonstrado por \textcite{Dolan2002Benchmarkingoptimizationsoftware}.
+
+RELATÓRIOS
+
+\printbibliography
+\end{document}
