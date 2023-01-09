@@ -1,4 +1,4 @@
-% Created 2023-01-09 Mon 17:36
+% Created 2023-01-09 Mon 17:37
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -39,7 +39,7 @@ Objetivamos novas formulações, cortes e estratégias para melhor resolver as i
 \end{abstract}
 
 \section{Introdução}
-\label{sec:org29de433}
+\label{sec:orga0b94aa}
 Dado um grafo não direcionado, o \textbf{problema de coloração de vértices} (do inglês, VCP) requer que designemos uma cor a cada vértice sem que este possua vizinhos de mesma cor e utilizemos o menor número possível de cores.
 Sua NP-completude foi demonstrada por \textcite{Garey1979ComputersIntractabilityGuide}.
 
@@ -48,16 +48,16 @@ Como discutido por \autocite{Malaguti2010SurveyVertexColoring}, diversas são as
 As aplicações acima deixam claro que encontrar uma boa (ou até ótima solução) para o problema é crucial. Cenários reais muitas vezes lidam com centenas de milhares de vértices, tornando necessário também resolvermos em tempo hábil. \todo{isso ficou horrível}
 
 \subsection{Modelo matemático}
-\label{sec:org82bf7f9}
+\label{sec:orgf777b64}
 \todo[inline]{conceitos que são citados mais para frente (eu vou voltar aqui para escrever)}
 \subsection{Revisão bibliográfica}
-\label{sec:org163faf0}
+\label{sec:orgffadaa6}
 \todo[inline]{eu não sei o que colocar aqui (ou se precisa existir essa parte) Todos os trabalhos que coloquei estão citado em outras partes do texto}
 \subsection{Problemas similares}
-\label{sec:org8156603}
+\label{sec:org78acee1}
 \textcites{Cornaz2008oneonecorrespondence}[][]{Cornaz2017SolvingVertexColoring} usam técnicas de outros problemas para resolver o VCP.
 \subsubsection{Bandwidth Coloring Problem}
-\label{sec:orgbdd8f32}
+\label{sec:orga43b850}
 O problema de \textbf{Multicoloração de Banda} (BMCP) é a combinação de dois problemas: Coloração de Banda e Multicoloração.
 No problema de \textbf{Coloração de Banda}, a diferença entre a cor de cada par de vértices adjacentes deve ser, ao menos, a distância entre os dois vértices. Assim, quando a disância é igual a \(1\), este problema é exatamente o VCP.
 No problema de \textbf{Multicoloração} um valor \(w_i\) é designado a cada vértice e \(w_i\) cores devem ser alocadas a este, de forma que um par qualquer de vértices adjacentes não compartilhe nenhum cor em comum.
@@ -68,7 +68,7 @@ Assim, no BMCP, é necessário atribuir, para um vértice \(i\), \(w_i\) cores e
 Este problema permite que situações mais complexas que o VCP sejam modeladas, como o problema de alocação de frequência em telecomunicações \autocite{Aardal2007Modelssolutiontechniques}.
 
 \subsubsection{Bounded VCP}
-\label{sec:orgf75f49d}
+\label{sec:org23b8f72}
 Muitas vezes, o recurso que queremos alocar é limitado. Assim, podemos colocar um peso \(w_i\) em cada vértice e limitar a soma dos pesos dos vértices alocados a cada uma das cores, uma restrição de capacidade.
 Este problema é conhecido como VCP Limitado ou Problema de Empacotamento com Conflito \textcite{Connolly1991KnapsackProblemsAlgorithms}.
 
@@ -77,19 +77,19 @@ Seja \(C\) a capacidade de cada cor, a restrição de capacidade é dada por
 e pode ser adicionada à formulação de ASS para modelar o problema de BVCP.
 \todo{Isso tá antes da formulação}
 \subsubsection{WVCP}
-\label{sec:org8779983}
+\label{sec:org596ef85}
 \subsubsection{Problemas similares}
-\label{sec:org3e3ccf0}
+\label{sec:org728b019}
 \todo[inline]{esse foi um que esbarrei. Eu vou atrás de outros como b-coloring (, equitable) coloring (, rainbow) coloring?}
 \begin{enumerate}
 \item MSCP
-\label{sec:org93d864c}
+\label{sec:org1e59a3d}
 O problema de Coloração de Soma Mínima nossa função objetivo é soma dos inteiros (cores) alocados a cada vértice.
 \end{enumerate}
 \section{Metodologia}
-\label{sec:org246b920}
+\label{sec:org46a2aec}
 \subsection{Programação Linear}
-\label{sec:org37f3cb7}
+\label{sec:org398a295}
 \textbf{Programação Linear} é uma técnica de otimização de problemas a partir da modelagem dos mesmos em \textbf{programas lineares}.
 Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) \textcite{Chvatal1983LinearProgramming} . Um programa linear pode ser escrito da seguinte forma:
 \begin{alignat*}{4}
@@ -101,7 +101,7 @@ Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar 
 Para encontrar soluções viáveis com valores ótimos, conhecemos o algoritmo \textbf{simplex} que, apesar de ter complexidade exponencial, no caso médio executa em tempo polinomial.
 
 \subsection{Programação linear inteira}
-\label{sec:org24c9174}
+\label{sec:orgcb406a1}
 Para alguns problemas, como o de coloração de grafos, não faz sentido falar em soluções fracionárias, afinal, não conseguimos designar ``meia cor'' a um vértice.
 Para isso, restringimos as variáveis aos inteiros, fazendo assim um \textbf{Programa Linear Inteiro}. Caso apenas um subconjunto das variáveis possuam a restrição de integralidade, chamamos esse programa de linear misto.
 
@@ -110,7 +110,7 @@ Para encontramos boas soluções viáveis para esse tipo de programa, algoritmos
 Para isso, utilizamos técnicas como \textbf{branch-and-bound}, que consiste em dividir o problema em subproblemas menores e, durante o processo, encontrar limitantes que permitam diminuir o espaço de busca.
 
 \subsection{Formulação clássica (atribuição)}
-\label{sec:org4df510f}
+\label{sec:org83e1630}
 Sabemos que \(n\) cores são suficientes para colorir um grafo \(G\). Assim, podemos definir dois conjuntos de variáveis binárias: \(x_{ih}\) se o vértice \(i\) é colorido com a cor \(h\) e \(y_h\) se a cor \(h\) é utilizada. Dessa forma, definimos a seguinte formulação.
 \begin{alignat*}{4}
 \mathrm{(ASS)} \quad & \omit\rlap{minimize  $\displaystyle \sum_{i=1}^n y_h$} \\
@@ -138,10 +138,10 @@ Eles também acrescentaram diversas famílias de inequaldiades válidas ao polit
 Já \textcite{MendezDiaz2008CuttingPlaneAlgorithm} apresentam mais duas variações da formulação ASS: uma onde a quantidade de vértices cuja cor \(h+1\) é atribuida não pode ser maior que a quantidade atribuida a cor \(h\) e outro onde conjuntos independentes são ordenados pelo menor indice e apenas a cor \(h\) pode ser atribuída ao \(h-\text{ésimo}\) conjunto.
 
 \subsection{Formulação com representantes (campelo)}
-\label{sec:org6466c4f}
+\label{sec:org34cc344}
 \textcite{Campelo2004CliquesHolesVertex} propõe uma formulação de representantes também utilizando essa idea de representantes para remover simetrias e \textcite{Campelo2008AsymmetricRepresentativesFormulation} incrementa nessa idea, avançando ainda mais o estudo poliédrico da formulação.
 \subsection{Formulação de cobertura de conjuntos (branch-and-price)}
-\label{sec:orgba418f1}
+\label{sec:orge5351df}
 Proposto por \textcite{Mehrotra1996ColumnGenerationApproach}, outra forma de entender o problema é imaginá-lo como um problema de cobertura de conjuntos onde os conjuntos disponíveis são os conjuntos independentes dos vértices.\todo{conjunto conjunto conjunto}
 
 Assim, seja \(S\) a família de conjuntos impendentes do grafo \(G\), a variável binária \(x_s\) é representa se o conjunto \(s \in S\) está sendo usado ou não na solução. Nossa formulação então se dá por:
@@ -189,7 +189,7 @@ Aleḿ disso, \textcite{Hansen2009Setcoveringpacking} demonstram a equivalência
 Os autores também apresentam resultados computacionais que não demonstram superioridade entre o trabalho deles em relação à \textcite{Mehrotra1996ColumnGenerationApproach}.
 Por fim, duas técnicas de pré-processamento e um algoritmo de plano de corte \todo{definir}.
 \subsection{Branch and bound usando DSATUR}
-\label{sec:orgde4c1db}
+\label{sec:org7f8f79f}
 Introduzido por \textcite{Brelaz1979Newmethodscolor}, melhorado por \textcite{Sewell1996improvedalgorithmexact} e \textcite{Segundo2012newDSATURbased} e aplicado por \textcite{MendezDiaz2015DSATURbasedalgorithm} em variantes do VCP.
 
 \textcite{Brelaz1979Newmethodscolor} propôs o algoritmo guloso chamado de DSATUR, em que, a cada iteração, colorimos um vértice \(v\) como uma cor válida \todo{definir}.
@@ -213,33 +213,33 @@ Em todos os casos acima, se mantiver algum empate, a ordenação lexigráfica é
 
 \textcite{Ternier2017ExactAlgorithmsVertex} apresenta novas variações para o algoritmo de \emph{branch-and-bound} usando DSATUR e novas regras de escolha de vértices com bons resultados em relação ao estado-da-arte.
 \subsection{Ordenação parcial}
-\label{sec:org1eef8c3}
+\label{sec:orgaa3237e}
 \todo[inline]{ainda preciso estudar isso aqui}
 \textcites{Jabrayilov2018NewIntegerLinear}[][]{Jabrayilov2022StrengthenedPartialOrdering}.
 \subsection{Estado da arte}
-\label{sec:org94c71ea}
+\label{sec:org000ba83}
 \textcite{Jabrayilov2018NewIntegerLinear} implementam as abordagens acima e mostra não haver uma dominancia clara entre nenhuma delas.
 Apesar disso, nos seus testes, ordenação parcial se sai melhor em grafos esparços enquanto a formulação de representantes se sai melhor em grafos densos.
 \section{Objetivos}
-\label{sec:orgcb2ed60}
+\label{sec:org3316ab1}
 Neste projeto, objetivamos propor novos modelos de PLI para dominação romana e suas variantes explorando técnicas como \emph{branch-and-cut} e \emph{branch-and-price}.
 Além disso, estudaremos a possibilidade de novos cortes e limitantes para as formulações.
 
 \todo[inline]{aqui a minha ideia é apresentar esse tal de ferramental moderno e as ideias mais recentes que podemos aplicar}
-\autocite{Lima2022Exactsolutionnetwork}
-\autocite{Pessoa2021SolvingBinPacking}
+\textcite{Lima2022Exactsolutionnetwork}
+\textcite{Pessoa2021SolvingBinPacking}
 \section{Cronograma}
-\label{sec:org8e9e964}
+\label{sec:orga18f812}
 BEPE indicar umas possibilidades de nomes. Manuel Iori.
 
 \section{Material e método}
-\label{sec:org8846321}
+\label{sec:orgb05da2e}
 Para o desenvolvimento do projeto, o aluno utilizará-se de artigos e materiais de consulta disponibilizados pela UNICAMP de maneira gratuita, grande parte desses de forma online ou por meio da Biblioteca do Instituto de Matemática, Estatística e Computação Científica.
 
 Ademais, serão realizados encontros semanais entre o aluno e o orientador para debater os conteúdos estudados e acompanhar o progresso do projeto.
 
 \section{Avaliação dos resultados}
-\label{sec:org53b94d9}
+\label{sec:org777a32c}
 Os algoritmos e modelos propostos serão comparados com as instâncias presentes na literatura, como as \textcite{GraphColoringInstances} e, caso necessário, novas instâncias poderão ser geradas.
 
 Os resultados dos experimentos computacionais serão comparados utilizando técnicas como \textbf{Performance Profile} demonstrado por \textcite{Dolan2002Benchmarkingoptimizationsoftware}.

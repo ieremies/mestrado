@@ -186,8 +186,8 @@ Neste projeto, objetivamos propor novos modelos de PLI para dominação romana e
 Além disso, estudaremos a possibilidade de novos cortes e limitantes para as formulações.
 
 [[comment::inline aqui a minha ideia é apresentar esse tal de ferramental moderno e as ideias mais recentes que podemos aplicar]]
-[cite:@Lima2022Exactsolutionnetwork]
-[cite:@Pessoa2021SolvingBinPacking]
+[cite/text:@Lima2022Exactsolutionnetwork]
+[cite/text:@Pessoa2021SolvingBinPacking]
 
 # TODO Trabalhos com branch-cut-and-price
 # citar a ideia do "ferramental moderno de PLI"
