@@ -3,6 +3,7 @@
 #+options: toc:nil date:nil
 #+latex_header: \usepackage{setspace}
 #+latex_header: \doublespacing
+#+latex_header: \newtheorem{prep}{Preposição}[section]
 
 # Documento inteiro: 20 páginas
 # Resumo: máximo de 20 linhas
@@ -18,7 +19,7 @@ Dado um grafo não direcionado, o *problema de coloração de vértices* (do ing
 Sua NP-completude foi demonstrada por [cite/text:@Garey1979ComputersIntractabilityGuide].
 
 # Aplicações práticas.
-Como discutido por [cite:@Malaguti2010SurveyVertexColoring], diversas são as aplicações do problema, como: agendamento [cite:@Leighton1979GraphColoringAlgorithm], timetabling [cite:@Werra1985introductiontimetabling], alocação de resgistradores [cite:@Chow1990prioritybasedcoloring], comunicação de redes [cite:@Caprara2007PassengerRailwayOptimization] e alocação de banda [cite:@Gamst1986Somelowerbounds].
+Como discutido por [cite:@Malaguti2010SurveyVertexColoring], diversas são as aplicações do problema, como: agendamento [cite:@Leighton1979GraphColoringAlgorithm], timetabling [cite:@Werra1985introductiontimetabling], alocação de registradores [cite:@Chow1990prioritybasedcoloring], comunicação de redes [cite:@Caprara2007PassengerRailwayOptimization] e alocação de banda [cite:@Gamst1986Somelowerbounds].
 
 # Importância de resolver o problema de forma eficaz e rápida.
 As aplicações acima deixam claro que encontrar uma boa (ou até ótima solução) para o problema é crucial. Cenários reais muitas vezes lidam com centenas de milhares de vértices, tornando necessário também resolvermos em tempo hábil. [[comment:isso ficou horrível]]
@@ -27,29 +28,33 @@ As aplicações acima deixam claro que encontrar uma boa (ou até ótima soluç�
 [[comment::inline conceitos que são citados mais para frente (eu vou voltar aqui para escrever)]]
 ** Revisão bibliográfica
 [[comment::inline eu não sei o que colocar aqui (ou se precisa existir essa parte) Todos os trabalhos que coloquei estão citado em outras partes do texto]]
+
+Outras surveys:
+- [cite:@Lewis2015GuideGraphColouring]
+- [cite:@Lima2018ExactAlgorithmsGraph]
+- [cite:@Husfeldt2015Graphcolouringalgorithms]
 ** Problemas similares
+# TODO esses dois artigos
 [cite/text:@Cornaz2008oneonecorrespondence; @Cornaz2017SolvingVertexColoring] usam técnicas de outros problemas para resolver o VCP.
 *** Bandwidth Coloring Problem
 O problema de *Multicoloração de Banda* (BMCP) é a combinação de dois problemas: Coloração de Banda e Multicoloração.
-No problema de *Coloração de Banda*, a diferença entre a cor de cada par de vértices adjacentes deve ser, ao menos, a distância entre os dois vértices. Assim, quando a disância é igual a $1$, este problema é exatamente o VCP.
+No problema de *Coloração de Banda*, a diferença entre a cor de cada par de vértices adjacentes deve ser, ao menos, a distância entre os dois vértices. Assim, quando a distância é igual a $1$, este problema é exatamente o VCP.
 No problema de *Multicoloração* um valor $w_i$ é designado a cada vértice e $w_i$ cores devem ser alocadas a este, de forma que um par qualquer de vértices adjacentes não compartilhe nenhum cor em comum.
 
-Assim, no BMCP, é necessário atribuir, para um vértice $i$, $w_i$ cores e para qualquer par de vértices adjacentes, cada combinação dois a dois de cores atribuidas a eles deve ter diferença maior que a distância entre os vértices.
-[[comment:Coloco a formulção de atribuição? Acho que não já que o objetivo é apenas mostrar que existem problemas similares]]
+Assim, no BMCP, é necessário atribuir, para um vértice $i$, $w_i$ cores e para qualquer par de vértices adjacentes, cada combinação dois a dois de cores atribuídas a eles deve ter diferença maior que a distância entre os vértices.
 
 Este problema permite que situações mais complexas que o VCP sejam modeladas, como o problema de alocação de frequência em telecomunicações [cite:@Aardal2007Modelssolutiontechniques].
-# Depois o artigo fala sobre alguns resultados e desenvolvimentos específicos desse problema, mas acho que não cabe colocar aqui.
 
 *** Bounded VCP
 Muitas vezes, o recurso que queremos alocar é limitado. Assim, podemos colocar um peso $w_i$ em cada vértice e limitar a soma dos pesos dos vértices alocados a cada uma das cores, uma restrição de capacidade.
 Este problema é conhecido como VCP Limitado ou Problema de Empacotamento com Conflito [cite/text:@Connolly1991KnapsackProblemsAlgorithms].
-# Conferir se essa referência acima está correta.
 
 Seja $C$ a capacidade de cada cor, a restrição de capacidade é dada por
 \[ \sum_{i=1}^n w_i x_{ih} \leq C, \quad h = 1, \dots, n\]
 e pode ser adicionada à formulação de ASS para modelar o problema de BVCP.
 [[comment:Isso tá antes da formulação]]
 *** TODO WVCP
+[[comment::inline to be done]]
 *** Problemas similares
 [[comment::inline esse foi um que esbarrei. Eu vou atrás de outros como b-coloring, equitable coloring, rainbow coloring?]]
 **** TODO MSCP
@@ -87,7 +92,7 @@ Sabemos que $n$ cores são suficientes para colorir um grafo $G$. Assim, podemos
 Apesar de sua claridade e simplicidade, tal formulação vê pouca aplicação prática sem que apliquemos técnicas mais sofisticadas.
 
 Esse fato se dá por dois motivos:
-- Muitas soluções são simétricas umas às outras, já que as cores são indistiguíveis. Uma solução que utiliza $k$ cores possui $k$ permutações de cores do que é, efetivamente, a mesma solução.
+- Muitas soluções são simétricas umas às outras, já que as cores são indistinguíveis. Uma solução que utiliza $k$ cores possui $k$ permutações de cores do que é, efetivamente, a mesma solução.
 - A relaxação linear do modelo é extremamente fraca.
 
 [cite/text:@MendezDiaz2006BranchCutAlgorithm; @MendezDiaz2008CuttingPlaneAlgorithm] se dedicaram a resolver tais problemas.
@@ -95,27 +100,47 @@ Esse fato se dá por dois motivos:
 \[ y_h \geq y_h+1 \quad h = 1, \dots, n-1 \]
 que garante que a cor $h+1$ só será utilizada se a cor $h$ já estiver sendo.
 
-Eles também acrescentaram diversas famílias de inequaldiades válidas ao politopo do novo modelo que são adicionadas ao algoritmo de /Branch-and-Cut/ [[comment:definir]] para fortalecer a relaxação linear além de implementar a estratégia de branching proposta por [cite/text:@Brelaz1979Newmethodscolor] com resultados computacionais satisfatórios.
+Eles também acrescentaram diversas famílias de inequalidades válidas ao politopo do novo modelo que são adicionadas ao algoritmo de /Branch-and-Cut/ [[comment:definir]] para fortalecer a relaxação linear além de implementar a estratégia de branching proposta por [cite/text:@Brelaz1979Newmethodscolor] com resultados computacionais satisfatórios.
 [[comment::inline eu preciso mostrar as inqualidades?]]
 # Isso tá estranho, esse é realmente o mais moderno de branch-and-cut que temos? ...
 
-Já [cite/text:@MendezDiaz2008CuttingPlaneAlgorithm] apresentam mais duas variações da formulação ASS: uma onde a quantidade de vértices cuja cor $h+1$ é atribuida não pode ser maior que a quantidade atribuida a cor $h$ e outro onde conjuntos independentes são ordenados pelo menor indice e apenas a cor $h$ pode ser atribuída ao $h-\text{ésimo}$ conjunto.
+Já [cite/text:@MendezDiaz2008CuttingPlaneAlgorithm] apresentam mais duas variações da formulação ASS: uma onde a quantidade de vértices cuja cor $h+1$ é atribuída não pode ser maior que a quantidade atribuída a cor $h$ e outro onde conjuntos independentes são ordenados pelo menor índice e apenas a cor $h$ pode ser atribuída ao $h-\text{ésimo}$ conjunto.
 
-** TODO Formulação com representantes (campelo)
-[cite/text:@Campelo2004CliquesHolesVertex] propõe uma formulação de representantes também utilizando essa idea de representantes para remover simetrias e [cite/text:@Campelo2008AsymmetricRepresentativesFormulation] incrementa nessa idea, avançando ainda mais o estudo poliédrico da formulação.
-** TODO Formulação de cobertura de conjuntos (branch-and-price)
+** Formulação por representantes
+[cite:@Campelo2004CliquesHolesVertex] propuseram uma formulação baseada em representantes, na qual cada cor é representada por um vértice.
+Para tal, utilizamos a variável binária $x_{vu}$, para todo $u, v \in V$ não adjacentes, a fim de representar se o vértice $v$ é representante da cor de $u$ e $x_{vv}$ se $v$ é o próprio representante de sua cor.
+Seja $\bar{N}(v)$ o conjunto de vértices não adjacentes de $v$, esta formulação pode ser escrita como
+\begin{alignat*}{4}
+\mathrm{(REP)} \quad & \omit\rlap{minimize  $\displaystyle \sum_{v \in V} x{vv}$} \\
+& \mbox{sujeito a}&& \quad & \sum_{u \in \bar{N}(v) \cup \{v\}} x_{uv}&= 1        & \quad & v \in V \\
+&                 &&   & x_{vu} + x_{vw}    & \leq x_{vv} &   & v \in V, \forall e = (u,w) \in G[\bar{N}(v)] \\
+&                 &&   & x_{vu}       & \in \{0,1\} &   & \text{ para todo par de vértices $u$, $v$ não adjacentes ou $v = u$}
+\end{alignat*}
+O primeiro conjunto de restrições garante que todo vétice terá extamente um representante.
+O segundo garante que dois vértices adjacentes terão representantes diferentes.
+
+Como [cite:@Campelo2008AsymmetricRepresentativesFormulation] discute, existem diversas soluções simétricas que apenas mudam o representante das cores sem alterar efetivamente a solução.
+É proposto por eles acrescentar uma ordenação para que apenas o menor vértice podesse ser o representante.
+Porém, este modelo possui um número exponencial de variáveis.
+Os autores também apresentam diversas restrições válidas a fim de reforçar o modelo.
+
+Por fim, [cite:@Campelo2008AsymmetricRepresentativesFormulation] se debruça sobre essa formulação, realizando a caracterização completa do politopo para algumas classes de grafos.
+Experimentos computacionais foram feitos por [cite:@Jabrayilov2018NewIntegerLinear] mostrando a capacidade deste modelo de competir com as demais formulações.
+** Formulação de cobertura de conjuntos (branch-and-price)
 Proposto por [cite/text:@Mehrotra1996ColumnGenerationApproach], outra forma de entender o problema é imaginá-lo como um problema de cobertura de conjuntos onde os conjuntos disponíveis são os conjuntos independentes dos vértices.[[comment: conjunto conjunto conjunto]]
 
-Assim, seja $S$ a família de conjuntos impendentes do grafo $G$, a variável binária $x_s$ é representa se o conjunto $s \in S$ está sendo usado ou não na solução. Nossa formulação então se dá por:
-\begin{alignat*}{4}
-& \omit\rlap{minimize  $\displaystyle \sum_{s \in S} x_s$} \\
+Assim, seja $S$ a família de conjuntos impendentes do grafo $G$, a variável binária $x_s$ representa se o conjunto $s \in S$ está sendo usado ou não na solução. Nossa formulação então se dá por:
+\begin{alignat}{4}
+& \omit\rlap{minimize  $\displaystyle \sum_{s \in S} x_s$} \nonumber \\
 & \mbox{sujeito a}&& \quad & \sum_{s \in S: i \in s} x_{s}&\geq 1 & \quad & i \in V \label{rest9} \\
-&                 &&   & y_s       & \in \{0,1\} &    & s \in S
-\end{alignat*}
+&                 &&   & y_s       & \in \{0,1\} &    & s \in S \nonumber
+\end{alignat}
 [[comment::inline Explicação das restrições?]]
-Já essa formulação sofre de ter um número exponencial de variáveis.
+Já essa formulação sofre de ter um número exponencial de variáveis, o que a torna impossível de implementá-la em "SOLVERS" convencionais como /Gurobi/.
 
-[cite/text:@Mehrotra1996ColumnGenerationApproach] propôs um algoritmo de /branch-and-price/ [[comment:definir]] baseado na formulação de cobertura de conjuntos.
+[cite/text:@Mehrotra1996ColumnGenerationApproach] propuseram um algoritmo de /branch-and-price/ [[comment:definir]] baseado na formulação de cobertura de conjuntos.
+[[comment::inline acho que aqui tem que ir a definição de branch-and-price]]
+
 O subproblema de geração de coluna caracteriza um *Problema de Conjunto Independente de peso máximo*.
 # TODO Tá certo esse nome do problema?
 \begin{alignat*}{4}
@@ -125,10 +150,10 @@ O subproblema de geração de coluna caracteriza um *Problema de Conjunto Indepe
 \end{alignat*}
 onde $z_i$ é uma variável binária que indica se o vértice $i$ está incluso no conjunto independente e $\pi_i$ é o valor ótimo da variável dual associado a restrição \ref{rest9}.
 Tal problema pode ser resolvido de forma heurística para encontrar a coluna de custo reduzido com valor negativo.[[comment:preciso explica o porquê disso?]]
-Em caso de soluções frácionárias, os autores sugerem uma estratégia [[comment:explico qual?]] que garante que os subproblemas continuam a ser de coloração de vértices e apenas requer que o grafo original seja alterado.
+Em caso de soluções fracionárias, os autores sugerem uma estratégia [[comment:explico qual?]] que garante que os subproblemas continuam a ser de coloração de vértices e apenas requer que o grafo original seja alterado.
 
-[[comment:inline ainda preciso olhar esses dois papers]]
-- [cite/text:@Malaguti2011ExactApproachVertex] propôs metaheurísitcas para inicialização e geração de colunas bem como novos esquemas de branching.
+# TODO Esses dois artigos
+- [cite/text:@Malaguti2011ExactApproachVertex] propôs meta-heurísticas para inicialização e geração de colunas bem como novos esquemas de branching.
 - [cite/text:@Held2012Maximumweightstable] sugere técnicas para melhorar a estabilidade numérica
 
 [cite/text:@Hansen2009Setcoveringpacking] propôs a formulação chamada de *Empacotamento de conjunto*.
@@ -139,7 +164,7 @@ Em caso de soluções frácionárias, os autores sugerem uma estratégia [[comme
 \end{alignat*}
 na qual $\Omega$ é a família de conjuntos independentes com mais de um elemento.
 Para essa formulação, seja $z$ o valor da solução, a quantidade de cores usadas é igual $k = n - z$.
-Aleḿ disso, [cite/text:@Hansen2009Setcoveringpacking] demonstram a equivalência das formulações de SC e SP, bem como apresentam diversas famílias de inequalidades válidas que definem facetas[[comment:definir]].
+Além disso, [cite/text:@Hansen2009Setcoveringpacking] demonstram a equivalência das formulações de SC e SP, bem como apresentam diversas famílias de inequalidades válidas que definem facetas[[comment:definir]].
 
 #+begin_prep
 [cite/text:@Hansen2009Setcoveringpacking] Seja $i \in V$, então a inequação correspondente /ref{rest9} define uma faceta se, e somente se, $i$ não for dominado.
@@ -151,7 +176,6 @@ Por fim, duas técnicas de pré-processamento e um algoritmo de plano de corte [
 
 # DUVIDA no parágrafo logo a baixo da preposição, (0,1/2)-chvátal-gumory cortes.
 ** TODO Branch and bound usando DSATUR
-Introduzido por [cite/text:@Brelaz1979Newmethodscolor], melhorado por [cite/text:@Sewell1996improvedalgorithmexact] e [cite/text:@Segundo2012newDSATURbased] e aplicado por [cite/text:@MendezDiaz2015DSATURbasedalgorithm] em variantes do VCP.
 
 # [[pdf:~/arq/files/Ternier2017ExactAlgorithmsVertex - Exact Algorithms for the Vertex Coloring Problem and Its Generalisations.pdf::42]]
 
@@ -160,27 +184,55 @@ Dizemos que o *grau de saturação* [[comment:cromatico ou de saturação]] de u
 O DSATUR utiliza essa ideia para escolher, como próximo vértice a ser colorido, aquele com maior grau de saturação.
 
 É possível utilizar essa ideia para melhorar nosso /branch-and-bound/.
-A cada ramificação, selecionamos o vértice com maior gráu de saturação e criamos um problema para cada cor viável já utilizada, acrescentando uma ainda não utilizada.
+A cada ramificação, selecionamos o vértice com maior grau de saturação e criamos um problema para cada cor viável já utilizada, acrescentando uma ainda não utilizada.
 [[comment::inline talvez eu precise definir as notações de coloração parcial para isso ficar melhor]]
 
-Apesar disso, muitas vezes, diversos vértices possuem o mesmo gráu de saturação, fazendo-se necessário implementar regras de desempate.
+Apesar disso, muitas vezes, diversos vértices possuem o mesmo grau de saturação, fazendo-se necessário implementar regras de desempate.
 Dentre as propostas, temos:
-- [cite/text:@Brelaz1979Newmethodscolor] utiliza o gráu do vértice.
+- [cite/text:@Brelaz1979Newmethodscolor] utiliza o grau do vértice.
 - [cite/text:@Sewell1996improvedalgorithmexact] utiliza o vértice que maximiza o número de cores disponíveis para todos os vértices ainda não coloridos.
 - [cite/text:@Segundo2012newDSATURbased] incrementa na ideia anterior, mas apenas utilizando os vértices que estão sendo desempatados.
 Em todos os casos acima, se mantiver algum empate, a ordenação lexigráfica é utilizada.
 
-[cite/text:@Ternier2017ExactAlgorithmsVertex] implementa essas variações mostra que o proposto por [cite/text:@Sewell1996improvedalgorithmexact] é o mais rápido, mesmo com maior complexidade computacional na regra de desempate, dado um bom limitante inferior inicial.
+[cite/text:@Ternier2017ExactAlgorithmsVertex] implementa essas variações mostra que o proposto por [cite/text:@Sewell1996improvedalgorithmexact], o qual se mostra o mais rápido, mesmo com maior complexidade computacional na regra de desempate, dado um bom limitante inferior inicial.
 
 [cite/text:@Ternier2017ExactAlgorithmsVertex] apresenta novas variações para o algoritmo de /branch-and-bound/ usando DSATUR e novas regras de escolha de vértices com bons resultados em relação ao estado-da-arte.
 # NO FINAL DISSO TUDO EU LEIO QUE ELE PUBLICOU ISSO EM OUTRAS REFERÊNCIA ÒDIOOOOOOOOOOOOO
 # [[pdf:~/arq/files/Ternier2017ExactAlgorithmsVertex - Exact Algorithms for the Vertex Coloring Problem and Its Generalisations.pdf::79][ref]]
-** TODO Ordenação parcial
-[[comment::inline ainda preciso estudar isso aqui]]
-[cite/text:@Jabrayilov2018NewIntegerLinear; @Jabrayilov2022StrengthenedPartialOrdering].
+** Ordenação parcial hibrida
+# APRESENTAR ISSO PARA O RAFAEL
+Apresentado inicialmente por [cite:@Jabrayilov2018NewIntegerLinear] e posteriormente melhorado por [cite:@Jabrayilov2022StrengthenedPartialOrdering], utilizamos um misto de ordenação parcial da união entre os vértices e as cores disponíveis e o modelo de atribuição.
+Dizemos que o vértice $v$ é colorido com a cor $h$ se $h-1 \succ v$ e $h \nsucc v$ (no caso de $h=1$, se $h \nsucc v$). [[comment:definir H como upper bound]]
+Além disso, nesse modelo, é escolhido um vértice arbitrário $q$.
+A formulação segue:
+
+
+\begin{alignat*}
+\mathrm { (POPH) } \quad & \omit\rlap{minimize  $\displaystyle 1+\sum_{1 \leq h \leq H} g_{h, q}$} \\
+& \mbox { sujeito a } && \quad & g_{H, v} &=0          & \quad & \forall v \in V \\
+&                     &&   & x_{v, 1} &=1-g_{1, v} & \quad & \forall v \in V \\
+&                     &&   & x_{v, h} &=g_{h-1, v}-g_{h, v} & \quad & \forall v \in V, h=2, \ldots, H \\
+&                     &&   & x_{u, 1}+x_{v, 1} &\leq g_{1, q} & \quad & \forall u v \in E \\
+&                     &&   & x_{u, h}+x_{v, h} &\leq g_{h-1, q} & \quad & \forall u v \in E, h=2, \ldots, H \\
+&                     &&   & g_{h, q}-g_{h, v} &\geq 0 & \quad & \forall v \in V, h=1, \ldots, H \\
+&                     &&   & g_{h+1, q}-g_{h, v} &\geq 0 & \quad & \forall v \in N(q), h=1, \ldots, H-1 \\
+&                     &&   & x_{v, h}, g_{h, v} &\in\{0,1\} & \quad & \forall v \in V, h=1, \ldots, H \text {. } \\
+&                     &&   &
+\end{alignat*}
+[[comment::inline vou reformatar essa explicação]]
+O primeiro conjunto de restrições garante que nenhum vértice é maior que a cor H.
+O segundo e terceiro correlacionam as variáveis de ordenação parcial com as de atribuição.
+O quarto e quinto garantem que dois vértices adjacentes não são coloridos com a mesma cor.
+Já a sexta, força que $q$ seja o vértice com a maior cor.
+A sétima é utilizada para reforçar.
+
+Segundo os resultados experimentais de [cite:@Jabrayilov2022StrengthenedPartialOrdering], essa formulação domina os modelos anteriores nas instâncias DIMACS [cite:@GraphColoringInstances] esparsas (densidade $\frac{2|E|}{|V|(|V|-1)} \leq 0.1$).
+
+** TODO Diagrama de decisões binárias ordenadas
+[cite:@Hoeve2021Graphcoloringdecision]
 ** Estado da arte
-[cite/text:@Jabrayilov2018NewIntegerLinear] implementam as abordagens acima e mostra não haver uma dominancia clara entre nenhuma delas.
-Apesar disso, nos seus testes, ordenação parcial se sai melhor em grafos esparços enquanto a formulação de representantes se sai melhor em grafos densos.
+[cite/text:@Jabrayilov2018NewIntegerLinear] implementam as abordagens acima e mostra não haver uma dominância clara entre nenhuma delas.
+Apesar disso, nos seus testes, ordenação parcial se sai melhor em grafos esparsos enquanto a formulação de representantes se sai melhor em grafos densos.
 * Objetivos
 Neste projeto, objetivamos propor novos modelos de PLI para dominação romana e suas variantes explorando técnicas como /branch-and-cut/ e /branch-and-price/.
 Além disso, estudaremos a possibilidade de novos cortes e limitantes para as formulações.
