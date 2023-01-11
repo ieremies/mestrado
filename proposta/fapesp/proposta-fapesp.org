@@ -5,7 +5,6 @@
 #+latex_header: \doublespacing
 #+latex_header: \newtheorem{prep}{Preposição}[section]
 
-# Documento inteiro: 20 páginas
 # Resumo: máximo de 20 linhas
 #+begin_abstract
 Histórico / importância do problema.
@@ -14,56 +13,66 @@ Objetivamos novas formulações, cortes e estratégias para melhor resolver as i
 #+end_abstract
 
 * Introdução
-# Contexto histórico -> aqui entram referência de como foi proposto e resultados importantes de grafos.
-Dado um grafo não direcionado, o *problema de coloração de vértices* (do inglês, VCP) requer que designemos uma cor a cada vértice sem que este possua vizinhos de mesma cor e utilizemos o menor número possível de cores.
+# Contexto histórico -> referências de como foi proposto e resultados importantes de grafos.
+Dado um grafo não direcionado, uma *coloração própria* deste é uma alocação de cores tal que nenhum vértice seja adjacente a outro de mesma cor.
+O *problema de coloração de vértices* (do inglês, VCP) requer que encontremos uma coloração própria usando o menor número possível de cores.
 Sua NP-completude foi demonstrada por [cite/text:@Garey1979ComputersIntractabilityGuide].
 
 # Aplicações práticas.
-Como discutido por [cite:@Malaguti2010SurveyVertexColoring], diversas são as aplicações do problema, como: agendamento [cite:@Leighton1979GraphColoringAlgorithm], timetabling [cite:@Werra1985introductiontimetabling], alocação de registradores [cite:@Chow1990prioritybasedcoloring], comunicação de redes [cite:@Caprara2007PassengerRailwayOptimization] e alocação de banda [cite:@Gamst1986Somelowerbounds].
+Como discutido por [cite/text:@Malaguti2010SurveyVertexColoring], diversas são as aplicações do problema, como: agendamento [cite:@Leighton1979GraphColoringAlgorithm], timetabling [cite:@Werra1985introductiontimetabling], alocação de registradores [cite:@Chow1990prioritybasedcoloring], comunicação de redes [cite:@Caprara2007PassengerRailwayOptimization] e alocação de banda [cite:@Gamst1986Somelowerbounds].
 
 # Importância de resolver o problema de forma eficaz e rápida.
-As aplicações acima deixam claro que encontrar uma boa (ou até ótima solução) para o problema é crucial. Cenários reais muitas vezes lidam com centenas de milhares de vértices, tornando necessário também resolvermos em tempo hábil. [[comment:isso ficou horrível]]
+As aplicações acima deixam claro que encontrar uma boa (ou até ótima solução) para o problema é crucial.
+Cenários reais, muitas vezes, lidam com centenas de milhares de vértices, tornando necessário também resolvermos de forma eficiente.
 
 ** Modelo matemático
 [[comment::inline conceitos que são citados mais para frente (eu vou voltar aqui para escrever)]]
+
 ** Revisão bibliográfica
 [[comment::inline eu não sei o que colocar aqui (ou se precisa existir essa parte) Todos os trabalhos que coloquei estão citado em outras partes do texto]]
 
-Outras surveys:
+Surveys do assunto:
+- [cite:@Malaguti2010SurveyVertexColoring]
 - [cite:@Lewis2015GuideGraphColouring]
-- [cite:@Lima2018ExactAlgorithmsGraph]
 - [cite:@Husfeldt2015Graphcolouringalgorithms]
+- [cite:@Lima2018ExactAlgorithmsGraph]
+
 ** Problemas similares
 # TODO esses dois artigos
-[cite/text:@Cornaz2008oneonecorrespondence; @Cornaz2017SolvingVertexColoring] usam técnicas de outros problemas para resolver o VCP.
+[cite/text:@Cornaz2008oneonecorrespondence; @Cornaz2017SolvingVertexColoring] usa stable set para resolver o VCP.
 *** Bandwidth Coloring Problem
-O problema de *Multicoloração de Banda* (BMCP) é a combinação de dois problemas: Coloração de Banda e Multicoloração.
-No problema de *Coloração de Banda*, a diferença entre a cor de cada par de vértices adjacentes deve ser, ao menos, a distância entre os dois vértices. Assim, quando a distância é igual a $1$, este problema é exatamente o VCP.
-No problema de *Multicoloração* um valor $w_i$ é designado a cada vértice e $w_i$ cores devem ser alocadas a este, de forma que um par qualquer de vértices adjacentes não compartilhe nenhum cor em comum.
+O problema de *Multicoloração de Banda* (do inglês, BMCP) é a combinação de dois problemas: Coloração de Banda e Multicoloração.
+No problema de *Coloração de Banda*, a diferença entre a cor de cada par de vértices adjacentes deve ser, ao menos, a distância entre os dois vértices.
+No problema de *Multicoloração* um valor $w_i$ é designado a cada vértice e $w_i$ cores devem ser alocadas a este, de forma que um par qualquer de vértices adjacentes não compartilhe nenhuma cor em comum.
 
 Assim, no BMCP, é necessário atribuir, para um vértice $i$, $w_i$ cores e para qualquer par de vértices adjacentes, cada combinação dois a dois de cores atribuídas a eles deve ter diferença maior que a distância entre os vértices.
-
-Este problema permite que situações mais complexas que o VCP sejam modeladas, como o problema de alocação de frequência em telecomunicações [cite:@Aardal2007Modelssolutiontechniques].
+Este problema permite que situações mais complexas que o VCP sejam modeladas, como a alocação de frequência em telecomunicações [cite:@Aardal2007Modelssolutiontechniques].
 
 *** Bounded VCP
-Muitas vezes, o recurso que queremos alocar é limitado. Assim, podemos colocar um peso $w_i$ em cada vértice e limitar a soma dos pesos dos vértices alocados a cada uma das cores, uma restrição de capacidade.
-Este problema é conhecido como VCP Limitado ou Problema de Empacotamento com Conflito [cite/text:@Connolly1991KnapsackProblemsAlgorithms].
+Muitas vezes, o recurso que queremos alocar é limitado.
+Para refletir isso, podemos colocar um peso $w_i$ [[comment: conflita com o w acima]] em cada vértice e restringir a soma dos pesos dos vértices alocados a cada uma das cores, uma restrição de capacidade.
+Este problema é conhecido como VCP Limitado (do inglês, BVCP) ou *Problema de Empacotamento com Conflito* [cite:@Connolly1991KnapsackProblemsAlgorithms].
 
 Seja $C$ a capacidade de cada cor, a restrição de capacidade é dada por
 \[ \sum_{i=1}^n w_i x_{ih} \leq C, \quad h = 1, \dots, n\]
 e pode ser adicionada à formulação de ASS para modelar o problema de BVCP.
 [[comment:Isso tá antes da formulação]]
 *** TODO WVCP
-[[comment::inline to be done]]
+A cada vértice é atrelado um peso e o custo de uma cor é o maior peso dentre os vértices que ela colore.
+Assim, no *Problema de Coloração com Pesos*, queremos reduzir o custo total das cores.
+Esse problema vê aplicações na "SHEDULING ON A BATCH MACHINE WITH JOB COMPATIBILITIES" e Problema de Decomposição de Matriz em Divisão de tempo para Alocação de Tráfico de Multiplo Acessos (MATRIX DECOMPOSITION PROBLEM IN TIME DIVISION MULTIPLE ACCES TRAFFIC ASSIGNMENT).
+Esse problema foi estudado por [cite:@Werra1985introductiontimetabling], [cite:@Escoffier2006WeightedColoringfurther] e [cite:@Finke2008Batchprocessinginterval].
+[[comment::inline talvez uns resultados masi atualizados?]]
 *** Problemas similares
-[[comment::inline esse foi um que esbarrei. Eu vou atrás de outros como b-coloring, equitable coloring, rainbow coloring?]]
-**** TODO MSCP
-O problema de Coloração de Soma Mínima nossa função objetivo é soma dos inteiros (cores) alocados a cada vértice.
-# [[pdf:~/arq/files/Ternier2017ExactAlgorithmsVertex - Exact Algorithms for the Vertex Coloring Problem and Its Generalisations.pdf::80][ref]]
+- minimum sum
+- equitable
+- rainbow
+- max-coloring
+- minimun sum
 * Metodologia
 ** Programação Linear
 *Programação Linear* é uma técnica de otimização de problemas a partir da modelagem dos mesmos em *programas lineares*.
-Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) [cite/text:@Chvatal1983LinearProgramming] . Um programa linear pode ser escrito da seguinte forma:
+Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) [cite:@Chvatal1983LinearProgramming] . Um programa linear pode ser escrito da seguinte forma:
 \begin{alignat*}{4}
 & \omit\rlap{minize \quad \quad $\displaystyle cx$} \\
 & \mbox{sujeito a}&& \quad & Ax & \geq b  & \quad &  \\
@@ -101,13 +110,11 @@ Esse fato se dá por dois motivos:
 que garante que a cor $h+1$ só será utilizada se a cor $h$ já estiver sendo.
 
 Eles também acrescentaram diversas famílias de inequalidades válidas ao politopo do novo modelo que são adicionadas ao algoritmo de /Branch-and-Cut/ [[comment:definir]] para fortalecer a relaxação linear além de implementar a estratégia de branching proposta por [cite/text:@Brelaz1979Newmethodscolor] com resultados computacionais satisfatórios.
-[[comment::inline eu preciso mostrar as inqualidades?]]
-# Isso tá estranho, esse é realmente o mais moderno de branch-and-cut que temos? ...
 
 Já [cite/text:@MendezDiaz2008CuttingPlaneAlgorithm] apresentam mais duas variações da formulação ASS: uma onde a quantidade de vértices cuja cor $h+1$ é atribuída não pode ser maior que a quantidade atribuída a cor $h$ e outro onde conjuntos independentes são ordenados pelo menor índice e apenas a cor $h$ pode ser atribuída ao $h-\text{ésimo}$ conjunto.
 
 ** Formulação por representantes
-[cite:@Campelo2004CliquesHolesVertex] propuseram uma formulação baseada em representantes, na qual cada cor é representada por um vértice.
+[cite/text:@Campelo2004CliquesHolesVertex] propuseram uma formulação baseada em representantes, na qual cada cor é representada por um vértice.
 Para tal, utilizamos a variável binária $x_{vu}$, para todo $u, v \in V$ não adjacentes, a fim de representar se o vértice $v$ é representante da cor de $u$ e $x_{vv}$ se $v$ é o próprio representante de sua cor.
 Seja $\bar{N}(v)$ o conjunto de vértices não adjacentes de $v$, esta formulação pode ser escrita como
 \begin{alignat*}{4}
@@ -119,30 +126,29 @@ Seja $\bar{N}(v)$ o conjunto de vértices não adjacentes de $v$, esta formulaç
 O primeiro conjunto de restrições garante que todo vétice terá extamente um representante.
 O segundo garante que dois vértices adjacentes terão representantes diferentes.
 
-Como [cite:@Campelo2008AsymmetricRepresentativesFormulation] discute, existem diversas soluções simétricas que apenas mudam o representante das cores sem alterar efetivamente a solução.
-É proposto por eles acrescentar uma ordenação para que apenas o menor vértice podesse ser o representante.
+Como [cite/text:@Campelo2008AsymmetricRepresentativesFormulation] discute, existem diversas soluções simétricas que apenas mudam o representante das cores sem alterar efetivamente a solução.
+Eles propõem acrescentar uma ordenação para que apenas o menor vértice podesse ser o representante.
 Porém, este modelo possui um número exponencial de variáveis.
 Os autores também apresentam diversas restrições válidas a fim de reforçar o modelo.
 
-Por fim, [cite:@Campelo2008AsymmetricRepresentativesFormulation] se debruça sobre essa formulação, realizando a caracterização completa do politopo para algumas classes de grafos.
-Experimentos computacionais foram feitos por [cite:@Jabrayilov2018NewIntegerLinear] mostrando a capacidade deste modelo de competir com as demais formulações.
+Por fim, [cite/text:@Campelo2008AsymmetricRepresentativesFormulation] debruçam-se sobre essa formulação, realizando a caracterização completa do politopo para algumas classes de grafos.
+Experimentos computacionais foram feitos por [cite/text:@Jabrayilov2018NewIntegerLinear] mostrando a capacidade deste modelo de competir com as demais formulações.
 ** Formulação de cobertura de conjuntos (branch-and-price)
-Proposto por [cite/text:@Mehrotra1996ColumnGenerationApproach], outra forma de entender o problema é imaginá-lo como um problema de cobertura de conjuntos onde os conjuntos disponíveis são os conjuntos independentes dos vértices.[[comment: conjunto conjunto conjunto]]
+Proposto por [cite/text:@Mehrotra1996ColumnGenerationApproach], outra forma de entender o problema é imaginá-lo como um *problema de cobertura de conjuntos* (do inglês, SC) onde os conjuntos disponíveis são os conjuntos independentes dos vértices.[[comment: conjunto conjunto conjunto]]
 
 Assim, seja $S$ a família de conjuntos impendentes do grafo $G$, a variável binária $x_s$ representa se o conjunto $s \in S$ está sendo usado ou não na solução. Nossa formulação então se dá por:
 \begin{alignat}{4}
-& \omit\rlap{minimize  $\displaystyle \sum_{s \in S} x_s$} \nonumber \\
+\mathrm{(SC)} \quad & \omit\rlap{minimize  $\displaystyle \sum_{s \in S} x_s$} \nonumber \\
 & \mbox{sujeito a}&& \quad & \sum_{s \in S: i \in s} x_{s}&\geq 1 & \quad & i \in V \label{rest9} \\
 &                 &&   & y_s       & \in \{0,1\} &    & s \in S \nonumber
 \end{alignat}
-[[comment::inline Explicação das restrições?]]
-Já essa formulação sofre de ter um número exponencial de variáveis, o que a torna impossível de implementá-la em "SOLVERS" convencionais como /Gurobi/.
+O primeiro conjunto de restrições garante que todos os vértices de $V$ estarão contido em algum conjunto indpendente escolhido.
+Apesar de poucas restrições, essa formulação sofre de ter um número exponencial de variáveis, o que a torna impossível de implementá-la em "SOLVERS" convencionais como /Gurobi/.
 
-[cite/text:@Mehrotra1996ColumnGenerationApproach] propuseram um algoritmo de /branch-and-price/ [[comment:definir]] baseado na formulação de cobertura de conjuntos.
+Por tal motivo, [cite/text:@Mehrotra1996ColumnGenerationApproach] propuseram um algoritmo de /branch-and-price/ [[comment:definir]] baseado nesta modelagem.
 [[comment::inline acho que aqui tem que ir a definição de branch-and-price]]
 
-O subproblema de geração de coluna caracteriza um *Problema de Conjunto Independente de peso máximo*.
-# TODO Tá certo esse nome do problema?
+Nest algoritmo, o subproblema de geração de coluna caracteriza um *Problema de Conjunto Independente de peso máximo*:
 \begin{alignat*}{4}
 & \omit\rlap{maximize  $\displaystyle \sum_{i \in V} \pi_i z_i$} \\
 & \mbox{sujeito a}&& \quad & z_i + z_j &\leq 1 & \quad & (i,j) \in E \\
@@ -152,13 +158,13 @@ onde $z_i$ é uma variável binária que indica se o vértice $i$ está incluso 
 Tal problema pode ser resolvido de forma heurística para encontrar a coluna de custo reduzido com valor negativo.[[comment:preciso explica o porquê disso?]]
 Em caso de soluções fracionárias, os autores sugerem uma estratégia [[comment:explico qual?]] que garante que os subproblemas continuam a ser de coloração de vértices e apenas requer que o grafo original seja alterado.
 
-# TODO Esses dois artigos
-- [cite/text:@Malaguti2011ExactApproachVertex] propôs meta-heurísticas para inicialização e geração de colunas bem como novos esquemas de branching.
-- [cite/text:@Held2012Maximumweightstable] sugere técnicas para melhorar a estabilidade numérica
+# Eu tô falando que ouvi dizer...
+Além disso, [cite/text:@Malaguti2011ExactApproachVertex] propôs meta-heurísticas para inicialização e geração de colunas bem como novos esquemas de branching.
+Já [cite/text:@Held2012Maximumweightstable] sugere técnicas para melhorar a estabilidade numérica
 
-[cite/text:@Hansen2009Setcoveringpacking] propôs a formulação chamada de *Empacotamento de conjunto*.
+Similar a este último modelo, [cite/text:@Hansen2009Setcoveringpacking] propuseram a formulação chamada de *Empacotamento de conjunto* (do inglês, SP)
 \begin{alignat*}{4}
-& \omit\rlap{minimize  $\displaystyle \sum_{s \in \Omega} (|s| - 1)x_s$} \\
+\mathrm{(SP)} \quad & \omit\rlap{minimize  $\displaystyle \sum_{s \in \Omega} (|s| - 1)x_s$} \\
 & \mbox{sujeito a}&& \quad & \sum_{s \in \Omega: i \in s} x_{s}&\leq 1 & \quad & i \in V \\
 &                 &&   & y_s       & \in \{0,1\} &    & s \in \Omega
 \end{alignat*}
@@ -175,8 +181,8 @@ Os autores também apresentam resultados computacionais que não demonstram supe
 Por fim, duas técnicas de pré-processamento e um algoritmo de plano de corte [[comment:definir]].
 
 # DUVIDA no parágrafo logo a baixo da preposição, (0,1/2)-chvátal-gumory cortes.
-** TODO Branch and bound usando DSATUR
-
+** Branch and bound usando DSATUR
+# Isso aqui não é PLI
 # [[pdf:~/arq/files/Ternier2017ExactAlgorithmsVertex - Exact Algorithms for the Vertex Coloring Problem and Its Generalisations.pdf::42]]
 
 [cite/text:@Brelaz1979Newmethodscolor] propôs o algoritmo guloso chamado de DSATUR, em que, a cada iteração, colorimos um vértice $v$ como uma cor válida [[comment:definir]].
@@ -205,8 +211,6 @@ Apresentado inicialmente por [cite:@Jabrayilov2018NewIntegerLinear] e posteriorm
 Dizemos que o vértice $v$ é colorido com a cor $h$ se $h-1 \succ v$ e $h \nsucc v$ (no caso de $h=1$, se $h \nsucc v$). [[comment:definir H como upper bound]]
 Além disso, nesse modelo, é escolhido um vértice arbitrário $q$.
 A formulação segue:
-
-
 \begin{alignat*}
 \mathrm { (POPH) } \quad & \omit\rlap{minimize  $\displaystyle 1+\sum_{1 \leq h \leq H} g_{h, q}$} \\
 & \mbox { sujeito a } && \quad & g_{H, v} &=0          & \quad & \forall v \in V \\
