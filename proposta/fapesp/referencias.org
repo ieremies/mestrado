@@ -1,0 +1,8 @@
+#+Title: Referências
+#+options: toc:nil num:nil date:nil
+
+O beneficiário deste projeto indica como referências seus seguintes ex-professores na graduação:
+- Prof. Dr. Lehilton L. C. Pedrosa
+- Prof. Dr. Fábio Luiz Usberti
+
+Ambos possuem como endereço o Instituto de Computação, Universidade Estadual de Campinas, Av. Albert Einstein, 1251, 13083-852, Campinas-SP, Brasil e respectivas salas 12 e 15.
