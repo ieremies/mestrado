@@ -1,64 +1,75 @@
 #+Title: Mestrado
 #+category: mest
+* Bolsa FAPESP
+** TODO Súmula curricular
+DEADLINE: <2023-02-25 sáb>
+:PROPERTIES:
+:Effort:   60
+:END:
+Transpor o que tenho de CV para o formato da súmula que a fapesp pede.
 
-* Tarefas
-** Inventory routing [100%]
-*** DONE Ler [cite:@Coelho2013ThirtyYearsInventory]
-CLOSED: [2022-10-11 Tue 20:45] DEADLINE: <2022-09-29 Thu>
-*** DONE Apresentação - grupo do Rafael
-CLOSED: [2022-12-14 qua 14:11] DEADLINE: <2022-12-01 qui 17:00>
-*** DONE Continuar a pesquisa sobre roteamento de inventário
-CLOSED: [2022-12-14 qua 14:11]
-- [ ] Ver como está a formulação atual
-- [ ] Ver onde tá saindo coisas sobre isso, qual a credibilidade dos journals.
+* Artigos
+** Revisões literárias
+*** DONE Malaguti 2010 - A Survey on Vertex Coloring Problems
+CLOSED: [2023-02-23 qui 16:08]
+[cite:@Malaguti2010SurveyVertexColoring]
+*** TODO Lewis 2015 - Guide to Graph Colouring Algorithms and Applications
+[cite:@Lewis2015GuideGraphColouring]
+*** TODO Lima 2018 - Exact Algorithms for the Graph Coloring Problem
+[cite:@Lima2018ExactAlgorithmsGraph]
+*** TODO Husfeldt 2015 - Graph colouring algorithms
+[cite:@Husfeldt2015Graphcolouringalgorithms]
+** Atribuição
+*** Brélaz 1979 - New methods to color the vertices of a graph
+[cite:@Brelaz1979Newmethodscolor]
+*** Méndez-Dıaz 2006 - A Branch-and-Cut Algorithm for Graph Coloring
+[cite:@MendezDiaz2006BranchCutAlgorithm]
+*** Méndez-Diaz 2008 - A Cutting Plane Algorithm for Graph Coloring
+[cite:@MendezDiaz2008CuttingPlaneAlgorithm]
+** Representantes
+*** Campêlo 2004 - Cliques, Holes and the Vertex Coloring Polytope
+[cite:@Campelo2004CliquesHolesVertex]
+*** Campêlo 2008 - On the Asymmetric Representatives Formulation for the VCP
+[cite:@Campelo2008AsymmetricRepresentativesFormulation]
+*** Campos 2015 - Polyhedral studies of VCP: The asymmetric representatives formulation
+[cite:@Campos2015Polyhedralstudiesvertex]
+** Conjuntos independentes
+*** Mehrotra 1996 - Column Generation Approach for Graph Coloring
+[cite:@Mehrotra1996ColumnGenerationApproach]
+*** Cornaz 2008 - A one-to-one correspondence between colorings and stable sets
+[cite:@Cornaz2008oneonecorrespondence]
+*** Hansen 2009 - Set covering and packing formulations of GC: Algorithms and first polyhedral results
+[cite:@Hansen2009Setcoveringpacking]
+*** Malaguti 2011 - An Exact Approach for the VCP
+[cite:@Malaguti2011ExactApproachVertex]
+*** Held 2012 - Maximum-weight stable sets and safe lower bounds for graph coloring
+[cite:@Held2012Maximumweightstable]
+*** Morrison 2014 - A Wide Branching Strategy for the GCP
+[cite:@Morrison2014WideBranchingStrategy]
+*** Morrison 2016 - Solving the Pricing Problem in a B&P for GC Using Zero-Suppressed Binary Decision Diagrams
+[cite:@Morrison2016SolvingPricingProblem]
+*** Cornaz 2017 - Solving Vertex Coloring Problems as Maximum Weight Stable Set Problems
+[cite:@Cornaz2017SolvingVertexColoring]
+** Ordenação parcial hibrida
+*** Jabrayilov 2017 - New Integer Linear Programming Models for the VCP
+[cite:@Jabrayilov2018NewIntegerLinear]
+*** Jabrayilov 2018 - Strengthened Partial-Ordering Based ILP Models for the VCP
+[cite:@Jabrayilov2022StrengthenedPartialOrdering]
+** Diagrama de decisões binárias ordenada
+*** Hoeve 2021 - Graph coloring with decision diagrams
+[cite:@Hoeve2021Graphcoloringdecision]
+** Constrain programming
+*** Gualandi 2012 - Exact Solution of GCP via Constraint Programming and Column Generation
+[cite:@Gualandi2012ExactSolutionGraph]
+** Técnicas
+*** TODO Pessoa 2021 - Solving Bin Packing Problems Using VRPSolver Models
+[cite:@Pessoa2021SolvingBinPacking]
+*** TODO Lima 2022 - Exact solution of network flow models with strong relaxations
+[cite:@Lima2022Exactsolutionnetwork]
+*** Paper do Renan
 
-Outras ideias que o prof. Rafael comentou:
-- [ ] Mais de um nível, abrir depósitos que guardam os produtos e dai vão para consumidor.
-- [ ] Omnichannels, juntar a ideia de vender o estoque de loja e online.
-
-Para completar isso, eu só preciso documentar o que eu já fiz.
-** TODO Graph coloring
-
-O que eu achei de bibliografia:
-
-[cite/title/b:@Cornaz2017SolvingVertexColoring]
-[cite/title/b:@Hebrard2020ConstraintSatisfiabilityReasoning]
-
-Básico
-[cite/title/b:@Malaguti2010SurveyVertexColoring]
-[cite/title/b:@Jabrayilov2018NewIntegerLinear]
-[cite/title/b:@Campelo2008AsymmetricRepresentativesFormulation]
-
-Branch-and-cut
-[cite/title/b:@MendezDiaz2006BranchCutAlgorithm]
-[cite/title/b:@MendezDiaz2008CuttingPlaneAlgorithm]
-
-Branch-and-price
-[cite/title/b:@Mehrotra1996ColumnGenerationApproach]
-[cite/title/b:@Gualandi2012ExactSolutionGraph]
-[cite/title/b:@Morrison2016SolvingPricingProblem]
-[cite/title/b:@Malaguti2011ExactApproachVertex]
-[cite/title/b:@Ferrarini2022TotalColoringTotal]
-
-Poliédrica
-[cite/title/b:@DelleDonne2016PolyhedralStudiesVertex]
-[cite/title/b:@Coll2002FacetsGraphColoring]
-
-Heurísticas
-[cite/title/b:@Furini2016ImprovedDSATURBased]
-[cite/title/b:@Mahmutogullari2020TwoLagrangianRelaxation]
-
-Grafos
-[cite/title/b:@GraphColoringInstances]
-[cite/title/b:@Campelo2004CliquesHolesVertex]
-
-
-Algumas dúvidas sobre como abordaremos o problema:
-- apenas o problema geral?
-- e sobre grafos específicos?
-- eu entendo que nosso trabalho será em PLI e não preciso mostrar coisas como heurísticas e outras técnicas no pedido de bolsa, correto?
-
-** TODO Airports and Railways
+* Outras habilidades
+** Airports and Railways
 Durante o WOPOCA, eu comecei a trabalhar nesse problema proposto em [cite:@Adamaszek2016AirportsRailwaysFacility] e com algoritmo de aproximação [cite:@Adamaszek2018ApproximatingAirportsRailways].
 
 Chegamos a formular dois PLI (veja [[id:dcd9a6d5-46e7-4e23-9307-ae29bfd35f75][airport and railways]]) e eu comecei a codar.
@@ -66,21 +77,26 @@ Chegamos a formular dois PLI (veja [[id:dcd9a6d5-46e7-4e23-9307-ae29bfd35f75][ai
 - Não sei exatamente qual o processo de começar a trabalhar com um problema novo, propor instâncias ou o que seria suficiente para uma publicação inicial (?).
 - Acho que seria uma boa oportunidade de treinar meu C++ e o LEMON.
 - Geração de Colunas?
-** TODO Codar a la maratona
-O pessoal do wopoca tava comentando sobre trabalhar em big tech e saber codar esse probleminhas mais simples.
-** TODO C++
+** Codar a la maratona
+O pessoal do wopoca tava comentando sobre trabalhar em big tech e saber codar esses probleminhas mais simples.
+** C++
 Provavelmente assistir um tutorial de C++ no youtube e acompanhar com o "C++ primer" e o "Efficient C++".
 * Disciplinas
 Primeiro Semestre:
-- Introdução ao Processamento de Imagem Digital - SI com o Prof Helio
-- Seminários
+- Introdução ao Processamento de Imagem Digital - SI com o Prof Helio (seg 19, qua 21)
+- Seminários (sex 14)
 Segundo Semestre:
-- Gerência de Redes de Computadores - SC com o Prof Edmundo
-- Combinatória Poliédrica - com Prof Rafael.
-- Teoria dos Grafos I - TC com a Profa Chris.
-Não dará certo fazer Grafos no 1º por causa do trabalho.
+- Gerência de Redes de Computadores - SC com o Prof Edmundo (ter e qui 10)
+- Combinatória Poliédrica - com Prof Rafael. (ter e qui 14)
+- Teoria dos Grafos I - TC com a Profa Chris. (seg 21, qua 19) (ñ vou matricular se ñ for preciso)
 
-PED no segundo semestre (?)
+PED no segundo semestre:
+- MC202 com o Rafael, segundas a tarde inteira.
+- MC202 com o GPT, terças as 21.
+
+PIF a ser pedido:
+- Já fiz MC758 com o Rafael, só pedir a validação
+- Eu fiz MC824 com o Usberti, mas preciso pedir a matrícula e falar com ele.
 * Reuniões
 ** 31 de ago
 Como achar papers: Scopus e google scholar no citado por.
@@ -96,3 +112,11 @@ Sobre inventory routing:
 Outras ideias que o prof. Rafael comentou:
 - Mais de um nível, abrir depósitos que guardam os produtos e dai vão para consumidor.
 - Omnichannels, juntar a ideia de vender o estoque de loja e online.
+** 14 de dez
+<2022-12-14 qua>
+O último algoritmo d branch and price que temos é bem antigo, será que conseguimos usar as técnicas mais recente para implementar algo melhor, utilizando o ferramental como o do Vinicius Loti?
+Para o pedido, eu devo ler por cima os papers que separei e me basear na [cite:@Malaguti2010SurveyVertexColoring].
+Provavelmente heurísticas rápidas podem ser úteis para gerar cortes.
+Não iremos restringir o trabalho a classes de grafos, mas eu devo citar problemas similares como um plano B, tanto para valorizar o problema original como pela possibilidade de sermos o estado da arte em outro.
+
+- Conferir trabalhos recentes do Vinicius Loti
