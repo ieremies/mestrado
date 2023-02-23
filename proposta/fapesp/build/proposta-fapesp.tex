@@ -1,4 +1,4 @@
-% Created 2023-02-14 ter 14:59
+% Created 2023-02-23 qui 14:17
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -27,7 +27,7 @@
  pdftitle={Programação Linear Inteira aplicada a problemas de Coloração em Grafos},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.2 (Org mode 9.6)}, 
+ pdfcreator={Emacs 28.2 (Org mode 9.6.1)}, 
  pdflang={Portuges}}
 \usepackage{biblatex}
 \addbibresource{~/arq/bib.bib}
@@ -35,14 +35,17 @@
 
 \maketitle
 \begin{abstract}
-TEM QUE FAZER POXA
-Histórico / importância do problema.
-Usar PLI, em especial branch-and-price (geração de colunas) e branch-and-cut (planos de corte), no problema de coloração de grafos.
-Objetivamos novas formulações, cortes e estratégias para melhor resolver as instâncias consolidadas da literatura.
+A coloração em grafos é um clássico problema da literatura que, apesar disso, não deixa de ser relevante em problemas cada vez mais atuais.
+Determinar uma organização de recursos sem que haja certos conflitos se mostra um desafio em divsersas áreas e resolve-lo de forma eficiente é objeto de estudo de diversas áreas.
+
+Nesse projeto, objetivamos utilizar Programação Linear Inteira para avançar os resultados já apresentados tanto por esta técnica como por outras.
+Acreditamos que nosso trabalho se diferencia ao utilizar avanços nos últimos anos em métodos como \emph{Branch-and-Price} e planos de corte.
+
+Dessa forma, objetivamos resultados competitivos nas instâncias consolidadas na literatura, bem como possíveis novas formulações, cortes e estratégias para melhor resolve-las.
 \end{abstract}
 
 \section{Introdução}
-\label{sec:orgc38058e}
+\label{sec:org46a3325}
 Dado um grafo não direcionado, uma \textbf{coloração própria} deste é uma alocação de cores tal que nenhum vértice seja adjacente a outro de mesma cor.
 O \textbf{problema de coloração de vértices} (do inglês, VCP) requer que encontremos uma coloração própria usando o menor número possível de cores.
 Sua NP-completude foi demonstrada por \textcite{Garey1979ComputersIntractabilityGuide}.
@@ -62,7 +65,7 @@ Neste projeto, utilizaremos de Programação Linear para resolver o problema de 
 Por fim, recomendamos as seguintes revisões bibliográficas sobre o problema \autocites{Malaguti2010SurveyVertexColoring}[][]{Lewis2015GuideGraphColouring}[][]{Husfeldt2015Graphcolouringalgorithms}[][]{Lima2018ExactAlgorithmsGraph}.
 
 \subsection{Modelo matemático}
-\label{sec:orgac89758}
+\label{sec:org70398b1}
 Durante essa proposta, utilizaremos algumas notações que apresentaremos a seguir.
 
 Seja \(G = (V,E)\) um grafo simples não direcionado, denotamos como \(n = |V|\) a quantidade de vértices e \(m = |E|\) a quantidade de arestas.
@@ -77,7 +80,7 @@ Por fim, usaremos \(H\) como limitante superior ao número cromático.
 Uma cor \(h\) é dita válida para o vértice \(v\) se nenhum outro vértice na sua vizinhança aberta possui a mesma atribuída a ele.
 
 \subsection{Problemas similares}
-\label{sec:org3df7e39}
+\label{sec:orga9279cd}
 O problema de \textbf{Multicoloração de Banda} (do inglês, BMCP) é a combinação de dois problemas: Coloração de Banda e Multicoloração.
 No problema de \textbf{Coloração de Banda}, a diferença entre a cor de cada par de vértices adjacentes deve ser, ao menos, a distância entre os dois vértices.
 No problema de \textbf{Multicoloração} uma certa quantidade de cores devem ser alocadas a cada vértice, de forma que um par qualquer de vértices adjacentes não possuam uma cor em comum.
@@ -101,10 +104,10 @@ A variante de \textbf{soma mínima} pede para encontramos a coloração com a me
 Já a \textbf{equitativa,} é o desafio de encontrar uma coloração que distribua as cores de forma onde a diferença entre a cardinalidade da cor atribuída a dois vértices adjacentes seja pequena.
 
 \section{Metodologia}
-\label{sec:org9a75b2c}
+\label{sec:org7710e79}
 \label{metodologia}
 \subsection{Programação Linear}
-\label{sec:orgf115a96}
+\label{sec:orgb0f8ceb}
 \textbf{Programação Linear} é uma técnica de otimização de problemas a partir da modelagem dos mesmos em \textbf{programas lineares}.
 Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) \autocite{Chvatal1983LinearProgramming} . Um programa linear pode ser escrito da seguinte forma:
 \begin{alignat*}{4}
@@ -132,7 +135,7 @@ A seguir, apresentamos as metodologias e técnicas que nos são relevantes para 
 Em geral, as instâncias usadas para os resultados de experimentos computacionais são as apresentadas em \autocite{GraphColoringInstances}, que foram atualizadas com o passar dos anos.
 
 \subsection{Atribuição}
-\label{sec:orgbe67dc6}
+\label{sec:orgf9d1d7d}
 É possível perceber que \(n\) cores são suficientes para colorir um grafo \(G\). Podemos então definir dois conjuntos de variáveis binárias: \(x_{ih}\) se o vértice \(i\) é colorido com a cor \(h\) e \(y_h\) se a cor \(h\) é utilizada. Dessa forma, construímos a seguinte formulação.
 
 \begin{alignat*}{4}
@@ -163,7 +166,7 @@ Um algoritmo de \emph{branch-and-bound} consiste em, durante a árvore de \emph{
 Já \textcite{MendezDiaz2008CuttingPlaneAlgorithm} apresentam mais duas variações da formulação ASS: uma onde a quantidade de vértices cuja cor \(h+1\) é atribuída não pode ser maior que a quantidade atribuída a cor \(h\) e outro onde conjuntos independentes são ordenados pelo menor índice e apenas a cor \(h\) pode ser atribuída ao \(h-\text{ésimo}\) conjunto.
 
 \subsection{Representantes}
-\label{sec:org1ddecdf}
+\label{sec:org4b7ec42}
 \textcite{Campelo2004CliquesHolesVertex} propuseram uma formulação baseada em representantes, em que cada cor é representada por um vértice.
 Para tal, utilizamos a variável binária \(x_{vu}\), para todo \(u, v \in V\) não adjacentes, a fim de representar se o vértice \(v\) é representante da cor de \(u\) e \(x_{vv}\) se \(v\) é o próprio representante de sua cor.
 Seja \(\bar{N}(v)\) o conjunto de vértices não adjacentes de \(v\), esta formulação pode ser escrita como
@@ -183,7 +186,7 @@ Por fim, \textcite{Campos2015Polyhedralstudiesvertex} debruçam-se sobre essa fo
 Experimentos computacionais foram feitos por \textcite{Jabrayilov2018NewIntegerLinear} mostrando a capacidade deste modelo de competir com as demais formulações.
 
 \subsection{Conjuntos independentes}
-\label{sec:org5c942ad}
+\label{sec:org9892666}
 \label{conjuntos_independentes}
 Proposto por \textcite{Mehrotra1996ColumnGenerationApproach}, outra forma de entender o problema é imaginá-lo como um \textbf{problema de cobertura de conjuntos} (do inglês, SC) onde os conjuntos disponíveis são os conjuntos independentes dos vértices.
 
@@ -230,10 +233,10 @@ Já \textcite{Morrison2014WideBranchingStrategy} apresentam outra forma de reali
 Tradicionalmente, esta é feita dividindo apenas em dois subproblemas, mas os autores propõem uma abrangente quantidade de subproblemas a cada ramificação com intuito de impedir que cheguemos a subgrafos onde o problema de precificação é mais difícil.
 Mais uma vez, resultados computacionais provam que a ideia é competitiva com as anteriores.
 
-Recentemente, \textcite{Morrison2016SolvingPricingProblem} propôs uma estratégia utilizando diagramas de decisão para agilizar a resolução do problema de precificação que, segundo seus experimentos, possui bons resultados práticos bem como fornece limites inferiores durante o processo.
+Recentemente, \textcite{Morrison2016SolvingPricingProblem} propuseram uma estratégia utilizando diagramas de decisão para agilizar a resolução do problema de precificação que, segundo seus experimentos, possui bons resultados práticos bem como fornece limites inferiores durante o processo.
 
 \subsection{Ordenação parcial hibrida}
-\label{sec:orgad12656}
+\label{sec:org18701f7}
 Apresentado inicialmente por \textcite{Jabrayilov2018NewIntegerLinear} e posteriormente melhorado \autocite{Jabrayilov2022StrengthenedPartialOrdering}, utilizamos um misto do modelo de atribuição e a ordenação parcial da união entre os vértices e as cores disponíveis.
 Dizemos que o vértice \(v\) é colorido com a cor \(h\) se \(h-1 \succ v\) e \(h \nsucc v\) (no caso de \(h=1\), se \(h \nsucc v\)).
 Além disso, nesse modelo, é escolhido um vértice arbitrário \(q\).
@@ -257,7 +260,7 @@ Por fim o sexto, força que \(q\) seja o vértice com a maior cor que, juntament
 Segundo os resultados experimentais de \autocite{Jabrayilov2022StrengthenedPartialOrdering}, essa formulação domina os modelos anteriores nas instâncias DIMACS \autocite{GraphColoringInstances} esparsas (densidade \(\frac{2|E|}{|V|(|V|-1)} \leq 0.1\)).
 
 \subsection{Diagrama de decisões binárias ordenadas}
-\label{sec:org6c836ba}
+\label{sec:org0a3a623}
 Por fim, mais recentemente, \textcite{Hoeve2021Graphcoloringdecision} aplicaram técnicas de diagrama de decisão.
 Nesta, representamos cada atribuição por um arco que liga o ``estado da solução'' antes e depois de tomá-la.
 Mais formalmente, para um problema \(P\) definido por um conjunto de variáveis ordenadas \(X = \{x_1,x_2,\dots ,x_n\}\), construímos um diagrama de decisão, um grafo simples acíclico de \(n+1\) níveis.
@@ -282,7 +285,7 @@ Neste, os números dentro dos nós representam o conjunto de vértices disponív
 Os autores relatam ter obtido resultados competitivos com outros estados-da-arte utilizando estratégias específicas da literatura de diagrama de decisões para resolver as dificuldades apresentadas acima.
 
 \section{Objetivos}
-\label{sec:org7d77a49}
+\label{sec:org857bb8c}
 Recentemente, houve avanços significativos na abordagem de branch-and-price para o problema de coloração, resultando em vários trabalhos publicados para outros problemas que utilizam e melhoram essa técnica. Um exemplo notável é o trabalho de \textcite{Lima2022Exactsolutionnetwork}, que apresenta técnicas fortes que melhoram o estado da arte para problemas como empacotamento.
 
 Os autores propõem um modelo baseado em fluxo de arcos para auxiliar em algoritmos de geração de colunas.
@@ -304,7 +307,7 @@ Por fim, como apresentado no começo desse projeto, diversos são os problemas s
 Assim, podemos também voltar nossas técnicas e implementações a tais variantes.
 
 \section{Cronograma}
-\label{sec:orgf488c9f}
+\label{sec:orgaeed05b}
 O projeto está dividido em etapas distintas, cada uma com um objetivo específico.
 A primeira fase é de revisão bibliográfica, onde serão dedicados \(3\) trimestres para estudar a literatura existente sobre o assunto.
 Reforçamos que, apesar deste ser o foco da primeira etapa, a revisão da bibliografia será permanente.
@@ -324,16 +327,16 @@ Refletimos o cronograma planejado na Tabela \ref{tab:cron}.
 \caption{\label{tab:cron}Cronograma trimestral para este projeto de mestrado, iniciando em Março de 2023.}
 \centering
 \begin{tabular}{lllllllll}
-Atividade & Mar & Jun & Set & Dez & Mar & Jun & Set & Dez\\\empty
+Atividade & Mar & Jun & Set & Dez & Mar & Jun & Set & Dez\\[0pt]
 \hline
-Disciplinas & x & x & x &  &  &  &  & \\\empty
-EQM &  & x &  &  &  &  &  & \\\empty
-PED &  &  & x &  &  &  &  & \\\empty
-Revi. Biblio. & x & x & x &  &  &  &  & \\\empty
-Implem. estado-da-arte &  &  & x &  &  &  &  & \\\empty
-Desenvolvimento &  &  & x & x & x & x & x & x\\\empty
-Escrita &  &  &  &  &  &  & x & x\\\empty
-Intercâmbio &  &  &  &  & x & x &  & \\\empty
+Disciplinas & x & x & x &  &  &  &  & \\[0pt]
+EQM &  & x &  &  &  &  &  & \\[0pt]
+PED &  &  & x &  &  &  &  & \\[0pt]
+Revi. Biblio. & x & x & x &  &  &  &  & \\[0pt]
+Implem. estado-da-arte &  &  & x &  &  &  &  & \\[0pt]
+Desenvolvimento &  &  & x & x & x & x & x & x\\[0pt]
+Escrita &  &  &  &  &  &  & x & x\\[0pt]
+Intercâmbio &  &  &  &  & x & x &  & \\[0pt]
 \end{tabular}
 \end{table}
 
@@ -341,16 +344,18 @@ Acrescido a isso, o beneficiário deste projeto ministra aulas de Introdução �
 Para o ano de \(2023\), estão programadas \(3\) aulas semanais, o que se mantém de acordo com a Portaria PR n° \(05/2012\).
 Acreditamos que tal atividade muito acrescentará no desenvolvimento do aluno como acadêmico, transmitindo os conhecimentos adquiridos à comunidade e ajudando na divulgação científica.
 \section{Material e método}
-\label{sec:org8dc9efb}
+\label{sec:orgeb5d1fb}
 Para o desenvolvimento do projeto, o aluno utilizará-se de artigos e materiais de consulta disponibilizados pela UNICAMP de maneira gratuita, grande parte desses de forma online ou por meio da Biblioteca do Instituto de Matemática, Estatística e Computação Científica.
 
 Ademais, serão realizados encontros semanais entre o aluno e o orientador para debater os conteúdos estudados e acompanhar o progresso do projeto.
 
 \section{Avaliação dos resultados}
-\label{sec:org41c8b3a}
+\label{sec:orgb18e7ef}
 Os algoritmos e modelos propostos serão comparados com as instâncias presentes na literatura, como as \textcite{GraphColoringInstances} e, caso necessário, novas instâncias poderão ser geradas.
 
 Os resultados dos experimentos computacionais serão comparados utilizando técnicas como \textbf{Performance Profile} demonstrado por \textcite{Dolan2002Benchmarkingoptimizationsoftware}.
+
+Além disso, pretendemos utilizar técnicas de análise estatísica como apresentadas por \autocite{Derrac2011practicaltutorialuse} afim de produzir comparações mais rigorozas entre as propostas desse projeto.
 
 Por fim, como previsto, serão elaborados relatórios com os resultados obtidos bem como qualquer artigo que venha a ser relevante.
 

@@ -9,10 +9,13 @@
 
 # Resumo: máximo de 20 linhas
 #+begin_abstract
-TEM QUE FAZER POXA
-Histórico / importância do problema.
-Usar PLI, em especial branch-and-price (geração de colunas) e branch-and-cut (planos de corte), no problema de coloração de grafos.
-Objetivamos novas formulações, cortes e estratégias para melhor resolver as instâncias consolidadas da literatura.
+A coloração em grafos é um clássico problema da literatura que, apesar disso, não deixa de ser relevante em problemas cada vez mais atuais.
+Determinar uma organização de recursos sem que haja certos conflitos se mostra um desafio em divsersas áreas e resolve-lo de forma eficiente é objeto de estudo de diversas áreas.
+
+Nesse projeto, objetivamos utilizar Programação Linear Inteira para avançar os resultados já apresentados tanto por esta técnica como por outras.
+Acreditamos que nosso trabalho se diferencia ao utilizar avanços nos últimos anos em métodos como /Branch-and-Price/ e planos de corte.
+
+Dessa forma, objetivamos resultados competitivos nas instâncias consolidadas na literatura, bem como possíveis novas formulações, cortes e estratégias para melhor resolve-las.
 #+end_abstract
 
 * Introdução
@@ -205,7 +208,7 @@ Já [cite/text:@Morrison2014WideBranchingStrategy] apresentam outra forma de rea
 Tradicionalmente, esta é feita dividindo apenas em dois subproblemas, mas os autores propõem uma abrangente quantidade de subproblemas a cada ramificação com intuito de impedir que cheguemos a subgrafos onde o problema de precificação é mais difícil.
 Mais uma vez, resultados computacionais provam que a ideia é competitiva com as anteriores.
 
-Recentemente, [cite/text:@Morrison2016SolvingPricingProblem] propôs uma estratégia utilizando diagramas de decisão para agilizar a resolução do problema de precificação que, segundo seus experimentos, possui bons resultados práticos bem como fornece limites inferiores durante o processo.
+Recentemente, [cite/text:@Morrison2016SolvingPricingProblem] propuseram uma estratégia utilizando diagramas de decisão para agilizar a resolução do problema de precificação que, segundo seus experimentos, possui bons resultados práticos bem como fornece limites inferiores durante o processo.
 
 ** Ordenação parcial hibrida
 Apresentado inicialmente por [cite/text:@Jabrayilov2018NewIntegerLinear] e posteriormente melhorado [cite:@Jabrayilov2022StrengthenedPartialOrdering], utilizamos um misto do modelo de atribuição e a ordenação parcial da união entre os vértices e as cores disponíveis.
@@ -336,7 +339,7 @@ Os algoritmos e modelos propostos serão comparados com as instâncias presentes
 
 Os resultados dos experimentos computacionais serão comparados utilizando técnicas como *Performance Profile* demonstrado por [cite/t:@Dolan2002Benchmarkingoptimizationsoftware].
 
-# TODO análise estatística
+Além disso, pretendemos utilizar técnicas de análise estatísica como apresentadas por [cite:@Derrac2011practicaltutorialuse] afim de produzir comparações mais rigorozas entre as propostas desse projeto.
 
 Por fim, como previsto, serão elaborados relatórios com os resultados obtidos bem como qualquer artigo que venha a ser relevante.
 
