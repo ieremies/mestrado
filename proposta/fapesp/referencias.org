@@ -1,4 +1,5 @@
 #+Title: Referências
+#+Subtitle: Programação Linear Inteira aplicada a problemas de Coloração em Grafos
 #+options: toc:nil num:nil date:nil
 
 O beneficiário deste projeto indica como referências seus seguintes ex-professores na graduação:
