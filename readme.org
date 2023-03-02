@@ -1,21 +1,45 @@
 #+Title: Mestrado
 #+category: mest
-* Bolsa FAPESP
-** TODO Súmula curricular
+* Bolsa
+** FAPESP
+Valor: R$ 2.349,60
+*** TODO Súmula curricular
 DEADLINE: <2023-02-25 sáb>
 :PROPERTIES:
 :Effort:   60
 :END:
 Transpor o que tenho de CV para o formato da súmula que a fapesp pede.
+*** TODO Revisar o texto
+DEADLINE: <2023-03-02 qui>
+:LOGBOOK:
+CLOCK: [2023-02-28 ter 13:09]--[2023-02-28 ter 14:31] =>  1:22
+:END:
+** CNPq
+Valor: R$ 1.500,00
+*** TODO Abertura da proposta
+DEADLINE: <2023-03-28 ter>
 
 * Artigos
 ** Revisões literárias
 *** DONE Malaguti 2010 - A Survey on Vertex Coloring Problems
 CLOSED: [2023-02-23 qui 16:08]
 [cite:@Malaguti2010SurveyVertexColoring]
-*** TODO Lewis 2015 - Guide to Graph Colouring Algorithms and Applications
+*** DONE Lewis 2015 - Guide to Graph Colouring Algorithms and Applications
+CLOSED: [2023-02-28 ter 17:09]
+:LOGBOOK:
+CLOCK: [2023-02-28 ter 16:49]--[2023-02-28 ter 17:09] =>  0:20
+:END:
 [cite:@Lewis2015GuideGraphColouring]
-*** TODO Lima 2018 - Exact Algorithms for the Graph Coloring Problem
+
+Livro grande com muitas coisas sobre coloração.
+Acho que dele eu posso tirar, em especial, a seção sobre Programação Inteira e a de Complexidade.
+
+Seção de programação inteira não tinha nada de novo.
+*** DONE Lima 2018 - Exact Algorithms for the Graph Coloring Problem
+CLOSED: [2023-02-28 ter 17:33]
+:LOGBOOK:
+CLOCK: [2023-02-28 ter 17:30]--[2023-02-28 ter 17:33] =>  0:03
+:END:
 [cite:@Lima2018ExactAlgorithmsGraph]
 *** TODO Husfeldt 2015 - Graph colouring algorithms
 [cite:@Husfeldt2015Graphcolouringalgorithms]
@@ -64,8 +88,25 @@ CLOSED: [2023-02-23 qui 16:08]
 ** Técnicas
 *** TODO Pessoa 2021 - Solving Bin Packing Problems Using VRPSolver Models
 [cite:@Pessoa2021SolvingBinPacking]
-*** TODO Lima 2022 - Exact solution of network flow models with strong relaxations
+*** TODO Lima 2022 - Exact solution of network flow models with strong relaxations [0%]
+:LOGBOOK:
+CLOCK: [2023-02-28 ter 15:45]--[2023-02-28 ter 16:40] =>  0:55
+:END:
 [cite:@Lima2022Exactsolutionnetwork]
+
+- [ ] Introduction
+- [ ] Network flow and Dantzig-Wolfe decompositions: preliminaries
+- [ ] An overview of the solution framework
+- [ ] On the solution of the linear relaxation
+- [ ] Variable-fixing based on reduced costs
+- [ ] Branching scheme
+- [ ] Applications to cutting and packing problems
+- [ ] Computational experiments
+*** TODO Desrosiers 2005
+[cite:@Desrosiers2005ColumnGenerationGerad]
+Citado por [cite:@Lima2018ExactAlgorithmsGraph] como referência para geração de colunas.
+*** TODO DW decompositions
+[cite:@AndradeUmalgoritmoexato]
 *** Paper do Renan
 
 * Outras habilidades
@@ -88,15 +129,17 @@ Primeiro Semestre:
 Segundo Semestre:
 - Gerência de Redes de Computadores - SC com o Prof Edmundo (ter e qui 10)
 - Combinatória Poliédrica - com Prof Rafael. (ter e qui 14)
-- Teoria dos Grafos I - TC com a Profa Chris. (seg 21, qua 19) (ñ vou matricular se ñ for preciso)
+- Pesquisa Operacional - com o Prof Usberti (sex 19) (já fiz, só falar com ele)
+- Teoria dos Grafos I - TC com a Profa Chris. (seg 21, qua 19) (ñ vou matricular)
 
 PED no segundo semestre:
 - MC202 com o Rafael, segundas a tarde inteira.
 - MC202 com o GPT, terças as 21.
 
-PIF a ser pedido:
+** TODO Solicitar PIF
 - Já fiz MC758 com o Rafael, só pedir a validação
 - Eu fiz MC824 com o Usberti, mas preciso pedir a matrícula e falar com ele.
+** TODO Proficiência em inglês
 * Reuniões
 ** 31 de ago
 Como achar papers: Scopus e google scholar no citado por.
