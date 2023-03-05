@@ -8,13 +8,15 @@
 #+latex_header: \usepackage[a4paper, total={6in, 8in}]{geometry}
 
 # Resumo: máximo de 20 linhas
-# PROF: tá super genérico, seja mais direto, fale com leitor de computação
 #+begin_abstract
-A coloração em grafos é um clássico problema da literatura que, apesar disso, não deixa de ser relevante em problemas cada vez mais atuais.
-Determinar uma organização de recursos sem que haja certos conflitos se mostra um desafio em diversas áreas e resolvê-lo de forma eficiente é objeto de estudo de diversas áreas.
+Uma coloração própria de vértices de um grafo consiste em uma alocação de cores tal que nenhum par de vértices adjacentes possuam a mesma cor.
+No problema de coloração de vértices, procuramos uma coloração própria utilizando o menor número possível de cores.
+Além de ser um tradicional problema de teoria dos grafos, o problema se apresenta como NP-difícil e resolvê-lo de forma exata é extremamente relevante na atualidade.
+Tais aplicações vão desde alocação de recursos como registradores até gerenciamento de eventos.
 
-Nesse projeto, objetivamos utilizar Programação Linear Inteira para avançar os resultados tanto por desta técnica como de outras.
-Acreditamos que nosso trabalho se diferencia ao utilizar avanços nos últimos anos em métodos como /Branch-and-Price/ e planos de corte.
+Soluções exatas para este problema utilizam técnicas como enumeração com /Branch-and-Bound/ [cite:@Furini2016ImprovedDSATURBased], programação dinâmica [cite:@Eppstein2006SmallMaximalIndependent; @Byskov2002ChromaticNumberTime] ou programação linear inteira.
+Nesse projeto, almejamos a última e aplicar algoritmos de /Branch-and-Price/ para superar os resultados da literatura.
+Acreditamos que nosso trabalho se diferencia ao aplicar técnicas propostas por [cite/text:@Lima2022Exactsolutionnetwork] e [cite/text:@Pessoa2021SolvingBinPacking].
 
 Dessa forma, objetivamos resultados competitivos nas instâncias consolidadas na literatura, bem como possíveis novas formulações, cortes e estratégias para melhor resolvê-las.
 #+end_abstract
@@ -24,9 +26,6 @@ Dado um grafo não direcionado, uma *coloração própria* deste é uma alocaç�
 O *Problema de Coloração de Vértices* (VCP) requer que encontremos uma coloração própria usando o menor número possível de cores.
 Decidir se um grafo possui uma coloração própria que usa até $k \geq 3$ cores é um problema NP-completo [cite:@Garey1979ComputersIntractabilityGuide].
 Como discutido por [cite/text:@Lewis2015GuideGraphColouring], o problema de otimização também é NP-difícil.
-# PROF: o prob é NP-difícil e GJ prova que a 3-coloração é NP-completo
-# eu não encontrei uma referência que mostra que o problema de otimização é NP-hard.
-# Tem referências ao Lewis 2015, mas nele ele só diz que o problema de otimização é NP-hard, sem uma prova formal...
 
 Muitas vezes, deseja-se alocar eventos ou recursos sem que hajam conflitos, seja na divisão de tarefas num cenário de fábricas ou escritórios, ou na organização de eventos.
 Assim, desejamos construir uma alocação de eventos a horários sem que, por exemplo, requeira que uma pessoa esteja em dois locais simultaneamente.
@@ -37,10 +36,10 @@ Além dessa, como discutido por [cite/text:@Malaguti2010SurveyVertexColoring], d
 
 As aplicações acima deixam claro que encontrar uma boa (ou até ótima) solução para o problema é crucial.
 Cenários reais, muitas vezes, lidam com centenas de milhares de vértices, tornando necessário também resolvermos de forma rápida.
-# PROF: deixe claro que é em termos de tempo
 
 Neste projeto, utilizaremos de Programação Linear Inteira para resolver o problema de forma exata, como discutido na Seção [[metodologia]].
 É importante mencionar que Programação Dinâmica também é comumente utilizada [cite:@Eppstein2006SmallMaximalIndependent; @Byskov2002ChromaticNumberTime], mas que vê apenas desenvolvimentos teóricos sem grande aplicabilidade prática no VCP.
+Já técnicas de enumeração baseado em /branch-and-bound/ [cite:@Brelaz1979Newmethodscolor] possuem resultados práticos melhores que programação dinâmica, mas ainda são superados por técnicas de programação linear inteira.
 Por fim, recomendamos as seguintes revisões bibliográficas sobre o problema [cite:@Malaguti2010SurveyVertexColoring; @Lewis2015GuideGraphColouring; @Husfeldt2015Graphcolouringalgorithms; @Lima2018ExactAlgorithmsGraph].
 
 ** Modelo matemático
@@ -95,8 +94,7 @@ Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar 
 \end{alignat*}
 
 Para encontrar soluções viáveis com valores ótimos, conhecemos o algoritmo *simplex* que, apesar de ter complexidade exponencial, no caso médio executa em tempo polinomial [cite:@Borgwardt1986SimplexMethodAlgorithms].
-# PROF: existem outros, melhor citar.
-# eu não conferi essa citação mas não achei melhor.
+Além deste, é importante mencionar os métodos de ponto interno [cite:@Karmarkar1984newpolynomialtime] e o elipsóide [cite:@Bland1981FeatureArticleTheEllipsoid] como alternativas ao simplex.
 
 # Programação Linear Inteira
 Para alguns problemas, como o de coloração de grafos, não faz sentido falar em soluções fracionárias, afinal, não conseguimos designar "meia cor" a um vértice.
@@ -129,14 +127,10 @@ Em geral, as instâncias usadas para os resultados de experimentos computacionai
 Apesar de sua claridade e simplicidade, tal formulação vê pouca aplicação prática sem que apliquemos técnicas mais sofisticadas.
 
 Esse fato se dá por dois motivos:
-# PROF: é pior do que isso, não? n! / (n-k)!
-a. Muitas soluções são simétricas umas às outras, já que as cores são indistinguíveis. Uma solução que utiliza $k$ cores possui $k$ permutações de cores do que é, efetivamente, a mesma solução.
-b. A relaxação linear do modelo é extremamente fraca.
-# PROF: isto é... explicar o que isso significa.
+a. Muitas soluções são simétricas umas às outras, já que as cores são indistinguíveis. Uma solução que utiliza $k$ cores possui $\frac{n!}{(n-k)!}$ permutações de cores do que é, efetivamente, a mesma solução.
+b. A relaxação linear do modelo (quando a restrição de integridade é removida) é extremamente fraca. Assim, resolvê-la ainda nos deixa muito distante da solução ótima inteira, o que não é muito útil.
 
-# PROF: como eu junto essas duas referências??
-[cite/text:@MendezDiaz2006BranchCutAlgorithm; @MendezDiaz2008CuttingPlaneAlgorithm] se dedicaram a resolver tais problemas.
-[cite/text:@MendezDiaz2006BranchCutAlgorithm] adicionaram a restrição
+Afim de resolver tais problemas, [cite/text:@MendezDiaz2006BranchCutAlgorithm] adicionaram a restrição
 \[ y_h \geq y_{h+1} \quad h = 1, \dots, n-1 \]
 que garante que a cor $h+1$ só será utilizada se a cor $h$ já estiver sendo, quebrando várias simetrias.
 
@@ -145,7 +139,6 @@ Eles também acrescentaram diversas famílias de desigualdades válidas ao polit
 Um algoritmo de /branch-and-bound/ consiste em, durante a árvore de /branch-and-bound/, adicionar desigualdades e cortes válidos para diminuir o espaço de busca. Um corte válido é uma inequação que não elimina nenhuma solução inteira viável do modelo.
 
 Já [cite/text:@MendezDiaz2008CuttingPlaneAlgorithm] apresentam mais duas variações da formulação ASS: uma onde a quantidade de vértices cuja cor $h+1$ é atribuída não pode ser maior que a quantidade atribuída a cor $h$ e outro onde conjuntos independentes são ordenados pelo menor índice e apenas a cor $h$ pode ser atribuída ao $h-\text{ésimo}$ conjunto.
-# PROF: conjunto independente não é definido
 
 ** Representantes
 [cite/text:@Campelo2004CliquesHolesVertex] propuseram uma formulação baseada em representantes, em que cada cor é representada por um vértice.
@@ -159,9 +152,8 @@ Seja $\bar{N}(v)$ o conjunto de vértices não adjacentes de $v$, esta formulaç
 \end{alignat*}
 O primeiro conjunto de restrições garante que todo vértice terá exatamente um representante enquanto o segundo garante que dois vértices adjacentes terão representantes diferentes.
 
-# PROF: tá meio disconexo aqui
-Como [cite/text:@Campelo2008AsymmetricRepresentativesFormulation] discutem, existem diversas soluções simétricas, apenas distinguem no representante das cores sem alterar efetivamente a solução.
-Eles propõem acrescentar uma ordenação para que apenas o menor vértice possa ser o representante, porém este modelo possui um número exponencial de variáveis e portanto requer técnicas como /branch-and-price/, abordada mais afundo na Seção [[conjuntos_independentes]].
+Como [cite/text:@Campelo2008AsymmetricRepresentativesFormulation] discutem, existem diversas soluções simétricas para tal modelo que apenas distinguem no representante das cores sem alterar efetivamente a solução.
+Eles propõem acrescentar uma ordenação para que apenas o menor vértice possa ser o representante, porém esta versão possui um número exponencial de variáveis e portanto requer técnicas como /branch-and-price/, abordada mais afundo na Seção [[conjuntos_independentes]].
 Os autores também apresentam diversas restrições válidas a fim de reforçar o modelo.
 
 Por fim, [cite/text:@Campos2015Polyhedralstudiesvertex] debruçam-se sobre essa formulação, realizando a caracterização completa do politopo para algumas classes de grafos.
@@ -179,7 +171,6 @@ Assim, seja $S$ a família de conjuntos impendentes do grafo $G$, a variável bi
 \end{alignat}
 O primeiro conjunto de restrições garante que todos os vértices de $V$ estão contidos em algum conjunto independente escolhido.
 Apesar de poucas restrições, essa formulação sofre de ter um número exponencial de variáveis, o que a torna impraticável de implementá-la em resolvedores convencionais como /Gurobi/.
-# PROF: impraticável?
 
 Por tal motivo, [cite/text:@Mehrotra1996ColumnGenerationApproach] propuseram um algoritmo de /branch-and-price/ baseado nesta modelagem.
 Essa abordagem permite lidar com um número exponencial de variáveis, já que iniciamos com um subconjunto destas e adicionamos com o passar do desenvolvimento da árvore de /branch-and-bound/.
@@ -206,7 +197,6 @@ em que $\Omega$ é a família de conjuntos independentes com mais de um elemento
 Para essa formulação, seja $z$ o valor da solução, a quantidade de cores usadas é igual $k = n - z$.
 Além disso, [cite/text:@Hansen2009Setcoveringpacking] demonstram a equivalência das formulações de SC e SP, bem como apresentam diversas famílias de inequalidades válidas que definem facetas.
 Uma *faceta* pode ser definida como uma face própria maximal, ou seja, uma face própria que não está contida em nenhuma outra.
-# PROF: podia ter definido isso quando definiu face
 
 Os autores também apresentam resultados computacionais que não demonstram superioridade entre o trabalho deles em relação à [cite/text:@Mehrotra1996ColumnGenerationApproach] bem como técnicas de pré-processamento e um algoritmo de planos-de-corte.
 Um algoritmo de *planos-de-corte* é aquele que parte de um modelo relaxado, resolve-se e iterativamente acrescenta-se inequações válidas, chamadas de planos-de-corte, de forma a eliminar tal solução.
@@ -219,9 +209,10 @@ Mais uma vez, resultados computacionais provam que a ideia é competitiva com as
 Recentemente, [cite/text:@Morrison2016SolvingPricingProblem] propuseram uma estratégia utilizando diagramas de decisão para agilizar a resolução do problema de precificação que, segundo seus experimentos, possui bons resultados práticos bem como fornece limites inferiores durante o processo.
 
 ** Ordenação parcial hibrida
-Apresentado inicialmente por [cite/text:@Jabrayilov2018NewIntegerLinear] e posteriormente melhorado [cite:@Jabrayilov2022StrengthenedPartialOrdering], utilizamos um misto do modelo de atribuição e a ordenação parcial da união entre os vértices e as cores disponíveis.
+Apresentado inicialmente por [cite/text:@Jabrayilov2018NewIntegerLinear] e posteriormente melhorado [cite:@Jabrayilov2022StrengthenedPartialOrdering], utilizamos um misto do modelo de atribuição e a ordenação parcial.
+Para isto, definimos uma ordenação parcial da união do conjunto de vértices e do conjunto ordenado de cores $(1, \dots, H)$ e, portanto, determinamos a ordem relativa de cada vértice com respeito a cada cor.
 Dizemos que o vértice $v$ é colorido com a cor $h$ se $h-1 \succ v$ e $h \nsucc v$ (no caso de $h=1$, se $h \nsucc v$).
-# PROF: Não entendi de onde vem esse >
+
 Além disso, nesse modelo, é escolhido um vértice arbitrário $q$ e $H$ é um limitante superior do número cromático.
 A formulação segue:
 \begin{alignat*}
@@ -288,9 +279,8 @@ Em todos os casos acima, se mantiver algum empate, a ordenação lexigráfica é
 * Objetivos
 Recentemente, houve avanços significativos na abordagem de branch-and-price para o problema de coloração, resultando em vários trabalhos publicados para outros problemas que utilizam e melhoram essa técnica. Um exemplo notável é o trabalho de [cite/text:@Lima2022Exactsolutionnetwork], que apresenta técnicas fortes que melhoram o estado da arte para problemas como o Problema de Empacotamento.
 
-# PROF: duas marcações que eu não entendi
 Os autores propõem um modelo baseado em fluxo de arcos para auxiliar em algoritmos de geração de colunas.
-Eles também comentam que qualquer problema de cobertura de conjunto consegue ser transformada em um problema de fluxo, o que indica que suas técnicas podem ser relevantes para o nosso problema.
+Eles também comentam que qualquer problema de cobertura de conjunto consegue ser transformado em um problema de fluxo, o que indica que suas técnicas podem ser relevantes para o nosso problema.
 Além disso, eles utilizam *fixação de variáveis*, técnica na qual é possível provar que algumas variáveis nunca poderão entrar no modelo de /branch-and-pricing/ e tornar a solução melhor.
 A dificuldade reside em encontrar uma solução dual viável que possibilite computar o custo reduzido, necessário para provar esta afirmação.
 Um importante desenvolvimento proposto pelos autores é justamente um modelo linear capaz de encontrar eficientemente uma solução, mesmo que não seja ótima (o que, como argumentado por eles, é ainda mais eficiênte).
@@ -337,7 +327,7 @@ Refletimos o cronograma planejado na Tabela ref:tab:cron.
 Acrescido a isso, o beneficiário deste projeto ministra aulas de Introdução à Programação para alunos de ensino médio na modalidade de itinerários formativos desde $2022$ em colégio particular de Campinas, SP.
 Para o ano de $2023$, estão programadas $3$ aulas semanais, o que se mantém de acordo com a Portaria PR n° $05/2012$.
 Acreditamos que tal atividade muito acrescentará no desenvolvimento do aluno como acadêmico, transmitindo os conhecimentos adquiridos à comunidade e ajudando na divulgação científica.
-# PROF: tem que estar no projeto?
+
 * Material e método
 Para o desenvolvimento do projeto, o aluno utilizará-se de artigos e materiais de consulta disponibilizados pela UNICAMP de maneira gratuita, grande parte desses de forma online ou por meio da Biblioteca do Instituto de Matemática, Estatística e Computação Científica.
 
