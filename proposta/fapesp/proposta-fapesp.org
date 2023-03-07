@@ -10,22 +10,20 @@
 # Resumo: máximo de 20 linhas
 #+begin_abstract
 Uma coloração própria de vértices de um grafo consiste em uma alocação de cores tal que nenhum par de vértices adjacentes possuam a mesma cor.
-No problema de coloração de vértices, procuramos uma coloração própria utilizando o menor número possível de cores.
+No problema de coloração de vértices, dado um grafo, procuramos uma coloração própria utilizando o menor número possível de cores.
 Além de ser um tradicional problema de teoria dos grafos, o problema se apresenta como NP-difícil e resolvê-lo de forma exata é extremamente relevante na atualidade.
-Tais aplicações vão desde alocação de recursos como registradores até gerenciamento de eventos.
+Tais aplicações vão desda alocação de recursos como registradores até o gerenciamento de eventos.
 
 Soluções exatas para este problema utilizam técnicas como enumeração com /Branch-and-Bound/ [cite:@Furini2016ImprovedDSATURBased], programação dinâmica [cite:@Eppstein2006SmallMaximalIndependent; @Byskov2002ChromaticNumberTime] ou programação linear inteira.
 Nesse projeto, almejamos a última e aplicar algoritmos de /Branch-and-Price/ para superar os resultados da literatura.
-Acreditamos que nosso trabalho se diferencia ao aplicar técnicas propostas por [cite/text:@Lima2022Exactsolutionnetwork] e [cite/text:@Pessoa2021SolvingBinPacking].
-
+Acreditamos que nosso trabalho se diferencia ao aplicar técnicas recentes para tais algoritmos, o que pode levar a uma melhora do estado-da-arte.
 Dessa forma, objetivamos resultados competitivos nas instâncias consolidadas na literatura, bem como possíveis novas formulações, cortes e estratégias para melhor resolvê-las.
 #+end_abstract
 
 * Introdução
 Dado um grafo não direcionado, uma *coloração própria* deste é uma alocação de cores tal que nenhum vértice seja adjacente a outro de mesma cor.
 O *Problema de Coloração de Vértices* (VCP) requer que encontremos uma coloração própria usando o menor número possível de cores.
-Decidir se um grafo possui uma coloração própria que usa até $k \geq 3$ cores é um problema NP-completo [cite:@Garey1979ComputersIntractabilityGuide].
-Como discutido por [cite/text:@Lewis2015GuideGraphColouring], o problema de otimização também é NP-difícil.
+Decidir se um grafo possui uma coloração própria que usa até $k \geq 3$ cores é um problema NP-completo [cite:@Garey1979ComputersIntractabilityGuide], de forma que o problema de otimização também é NP-difícil.
 
 Muitas vezes, deseja-se alocar eventos ou recursos sem que hajam conflitos, seja na divisão de tarefas num cenário de fábricas ou escritórios, ou na organização de eventos.
 Assim, desejamos construir uma alocação de eventos a horários sem que, por exemplo, requeira que uma pessoa esteja em dois locais simultaneamente.
@@ -94,7 +92,7 @@ Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar 
 \end{alignat*}
 
 Para encontrar soluções viáveis com valores ótimos, conhecemos o algoritmo *simplex* que, apesar de ter complexidade exponencial, no caso médio executa em tempo polinomial [cite:@Borgwardt1986SimplexMethodAlgorithms].
-Além deste, é importante mencionar os métodos de ponto interno [cite:@Karmarkar1984newpolynomialtime] e o elipsóide [cite:@Bland1981FeatureArticleTheEllipsoid] como alternativas ao simplex.
+Além deste, é importante mencionar os métodos de ponto interno [cite:@Karmarkar1984newpolynomialtime] e elipsóide [cite:@Bland1981FeatureArticleTheEllipsoid] como alternativas ao simplex.
 
 # Programação Linear Inteira
 Para alguns problemas, como o de coloração de grafos, não faz sentido falar em soluções fracionárias, afinal, não conseguimos designar "meia cor" a um vértice.
@@ -128,7 +126,7 @@ Apesar de sua claridade e simplicidade, tal formulação vê pouca aplicação p
 
 Esse fato se dá por dois motivos:
 a. Muitas soluções são simétricas umas às outras, já que as cores são indistinguíveis. Uma solução que utiliza $k$ cores possui $\frac{n!}{(n-k)!}$ permutações de cores do que é, efetivamente, a mesma solução.
-b. A relaxação linear do modelo (quando a restrição de integridade é removida) é extremamente fraca. Assim, resolvê-la ainda nos deixa muito distante da solução ótima inteira, o que não é muito útil.
+b. A relaxação linear do modelo (quando a restrição de integridade é removida) é extremamente fraca. Assim, resolvê-la ainda nos deixa muito distante da solução ótima inteira.
 
 Afim de resolver tais problemas, [cite/text:@MendezDiaz2006BranchCutAlgorithm] adicionaram a restrição
 \[ y_h \geq y_{h+1} \quad h = 1, \dots, n-1 \]
