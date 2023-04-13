@@ -1,0 +1,35 @@
+#+Title: MO443 - Processamento de Imagem Digital
+#+Subtitle: Prof. Helio
+#+category: mo443
+
+[[https://www.ic.unicamp.br/~helio/][Helio Pedrini's Homepage]]
+
+* Aulas
+** Introdução
+Algumas tecnologias importantes para o curso.
+Talvez seja importante configurar de antemão ou criar um ambiente conda.
+- openCV
+- scikit-image
+- scipy
+- numpy
+** Vetorização
+É a ideia de utilizar coisas como =x[x < 0] = 0= (transforma todos os números negativos em zero)
+** Broadcasting
+[[https://numpy.org/doc/stable/user/basics.broadcasting.html][Broadcasting]]
+
+Ao realizar operações aritméticas com elementos de dimensões diferentes, o menor fator é "expandido" de forma a realizar toda a operação.
+
+#+begin_src python
+import numpy as np
+
+x = np.array([1,2,3])
+return x * 2
+#+end_src
+
+#+RESULTS:
+| 2 | 4 | 6 |
+** Resolução espacial
+Densidade de pixels da imagem.
+Está relacionado a quantidade de informações que podemos tirar da imagem
+
+Não confundir com a dimensão da imagem (1090p) ou amplitude (contraste)

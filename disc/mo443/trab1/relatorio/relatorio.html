@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
+<head>
+<!-- 2023-04-05 Wed 22:17 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trabalho 1</title>
+<meta name="author" content="Ieremies Vieira da Fonseca Romero" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Trabalho 1
+<br />
+<span class="subtitle">Introdução ao Processamento Digital de Imagem</span>
+</h1>
+
+<div id="outline-container-org61161a0" class="outline-2">
+<h2 id="org61161a0">Introdução</h2>
+<div class="outline-text-2" id="text-org61161a0">
+<p>
+O processamento digital de imagens é uma área de estudo fundamental em Ciência da Computação, que visa o tratamento e manipulação de imagens digitais por meio de técnicas e algoritmos computacionais.
+A análise e processamento de imagens digitais é uma tarefa complexa e multidisciplinar, que envolve conhecimentos em matemática, estatística, computação gráfica, processamento de sinais e outras áreas correlatas.
+</p>
+
+<p>
+O objetivo deste trabalho é apresentar uma série de processamentos básicos em imagens digitais, abordando desde a leitura e escrita de imagens até operações de filtragem.
+Para o desenvolvimento das operações, será empregada a vetorização de comandos, que permite processar as imagens de forma mais eficiente e rápida, através da aplicação de operações vetoriais em vez de operações matriciais.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9bf289c" class="outline-2">
+<h2 id="org9bf289c">O programa</h2>
+<div class="outline-text-2" id="text-org9bf289c">
+<p>
+Neste trabalho, utilizamos as bibliotecas <code>numpy</code> 1.24.1 e OpenCV 4.7.0.72 utilizado via <code>cv2</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">import</span> numpy <span style="color: #673AB7;">as</span> np
+<span style="color: #673AB7;">import</span> cv2
+</pre>
+</div>
+
+<p>
+Há duas formas de utilizar o código deste projeto:
+</p>
+<dl class="org-dl">
+<dt>script.py</dt><dd>Executa todas as funções em todas as imagens e salva o seus respectivos resultados.</dd>
+<dt>iterativo</dt><dd>utilizando <code>python -i funcs.py</code>, é possível interagir com cada uma das funções no terminal.</dd>
+</dl>
+
+<p>
+Cada uma das questões do enúnciado é resolvido por uma função contida no arquivo <code>funcs.py</code>.
+Todas as funções possuem como primeiro parâmetro a imagem sob a qual ela irá atuar.
+Algumas funções possuem o segundo parâmetro, cujos significados são resumidos na tabela <a href="tab">tab</a>.
+</p>
+
+<table id="orgf94b559" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Função</th>
+<th scope="col" class="org-left">Significado do segundo argumento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>mosaico</code></td>
+<td class="org-left">ordem a ser rearrumada.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>combinacao_imagem</code></td>
+<td class="org-left">segunda imagem a ser combinada.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ajuste_brilho</code></td>
+<td class="org-left">gamma a ser utilizado na operação.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>quantizacao</code></td>
+<td class="org-left">quantidade de níveis da imagem resultante.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>planos_bit</code></td>
+<td class="org-left">qual plano queremos.</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>filtragem</code></td>
+<td class="org-left">qual filtro aplicar.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Para leitura e escrita de imagens, utilizamos a biblioteca <code>cv2</code> para ler e salvar imagens, como no código apresentado abaixo.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #B0BEC5; font-style: italic;"># Read any image to a numpy array</span>
+img_colored <span style="color: #673AB7;">=</span> cv2.<span style="color: #37474F; font-weight: bold; font-style: italic;">imread</span>(<span style="color: #29B6F6;">'image.png'</span>)
+<span style="color: #B0BEC5; font-style: italic;"># Read a grayscale image</span>
+img_gray <span style="color: #673AB7;">=</span> cv2.<span style="color: #37474F; font-weight: bold; font-style: italic;">imread</span>(<span style="color: #29B6F6;">'image.png'</span>, cv2.<span style="color: #673AB7; font-style: italic;">IMREAD_GRAYSCALE</span>)
+<span style="color: #B0BEC5; font-style: italic;"># Save a numpy array to image file</span>
+cv.<span style="color: #37474F; font-weight: bold; font-style: italic;">imwrite</span>(<span style="color: #29B6F6;">'out.png'</span>, img)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbd5465e" class="outline-2">
+<h2 id="orgbd5465e">Mosaico</h2>
+<div class="outline-text-2" id="text-orgbd5465e">
+<p>
+Para essa função recebemos tanto a imagem <code>img</code> quanto a ordem <code>order</code>.
+Esta ordem é semelhante a descrita em uma ordenação dos \(16\) quadrantes, da esquerda para direita, de cima pra baixo.
+Assim, o \(i\text{-ésimo}\) valor \(order_i\) indica que, na nova imagem, o quadrante \(i\) aparece no lugar do antigo quadrante \(order_i\).
+</p>
+
+<p>
+No código, primeiro dividimos a imagem nos \(16\) quadrantes utilizando a função <code>np.split</code> passando como parâmetro \(4\) partes e eixos diferentes.
+Depois, é necessário alterar os índices já que, em python, listas são indexadas a partir do zero.
+Realizamos a conversão de ordem para coordenadas na matriz sabendo que o \(i\text{-ésimo}\) está na linha \(i // 4\) (divisão inteira) e na coluna \(i \% 4\) (resto).
+Por fim, juntamos de volta os quadrantes utilizando a função <code>np.concatenate</code> e retornamos a nova imagem.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">mosaico</span>(img, order):
+    <span style="color: #B0BEC5; font-style: italic;"># Divide in 4 horizontal strips (lines)</span>
+    lines <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">split</span>(img, <span style="color: #29B6F6;">4</span>, <span style="color: #37474F; font-weight: bold;">axis</span><span style="color: #673AB7;">=</span><span style="color: #29B6F6;">0</span>)
+    <span style="color: #B0BEC5; font-style: italic;"># Divide verticaly each line in 4 pieces (squares)</span>
+    squares <span style="color: #673AB7;">=</span> [np.<span style="color: #37474F; font-weight: bold; font-style: italic;">split</span>(line, <span style="color: #29B6F6;">4</span>, <span style="color: #37474F; font-weight: bold;">axis</span><span style="color: #673AB7;">=</span><span style="color: #29B6F6;">1</span>) <span style="color: #673AB7;">for</span> line <span style="color: #673AB7;">in</span> lines]
+    <span style="color: #B0BEC5; font-style: italic;"># Placehold for the new order of squares</span>
+    new_squares <span style="color: #673AB7;">=</span> [[<span style="color: #29B6F6;">0</span> <span style="color: #673AB7;">for</span> <span style="color: #673AB7;">_</span> <span style="color: #673AB7;">in</span> <span style="color: #673AB7; font-weight: bold;">range</span>(<span style="color: #29B6F6;">4</span>)] <span style="color: #673AB7;">for</span> <span style="color: #673AB7;">_</span> <span style="color: #673AB7;">in</span> <span style="color: #673AB7; font-weight: bold;">range</span>(<span style="color: #29B6F6;">4</span>)]
+    <span style="color: #673AB7;">for</span> k <span style="color: #673AB7;">in</span> <span style="color: #673AB7; font-weight: bold;">range</span>(<span style="color: #29B6F6;">16</span>):
+        i <span style="color: #673AB7;">=</span> order[k] <span style="color: #673AB7;">-</span> <span style="color: #29B6F6;">1</span>  <span style="color: #B0BEC5; font-style: italic;"># make the order start on index zero</span>
+        <span style="color: #B0BEC5; font-style: italic;"># Convert the order to the coordenate in the matrix</span>
+        new_squares[k <span style="color: #673AB7;">//</span> <span style="color: #29B6F6;">4</span>][k <span style="color: #673AB7;">%</span> <span style="color: #29B6F6;">4</span>] <span style="color: #673AB7;">=</span> squares[i <span style="color: #673AB7;">//</span> <span style="color: #29B6F6;">4</span>][i <span style="color: #673AB7;">%</span> <span style="color: #29B6F6;">4</span>]
+    <span style="color: #B0BEC5; font-style: italic;"># Recombine to form the new horizontal lines</span>
+    new_lines <span style="color: #673AB7;">=</span> [np.<span style="color: #37474F; font-weight: bold; font-style: italic;">concatenate</span>(new_square, <span style="color: #37474F; font-weight: bold;">axis</span><span style="color: #673AB7;">=</span><span style="color: #29B6F6;">1</span>) <span style="color: #673AB7;">for</span> new_square <span style="color: #673AB7;">in</span> new_squares]
+    <span style="color: #B0BEC5; font-style: italic;"># Recombine the horizontal lines into the new image</span>
+    new_img <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">concatenate</span>(new_lines, <span style="color: #37474F; font-weight: bold;">axis</span><span style="color: #673AB7;">=</span><span style="color: #29B6F6;">0</span>)
+    <span style="color: #673AB7;">return</span> new_img
+</pre>
+</div>
+
+<div id="orgfe790da" class="figure">
+<p><img src="../out/baboon_mosaico.png" alt="baboon_mosaico.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Reorganização das partes da imagem &ldquo;baboon.png&rdquo; na mesma ordenação proposta no enunciado.</p>
+</div>
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-orgae84a84" class="outline-2">
+<h2 id="orgae84a84">Combinação de imagem</h2>
+<div class="outline-text-2" id="text-orgae84a84">
+<p>
+Utilizando a vetorização, podemos combinar as imagens <code>img1</code> e <code>img2</code>, cada uma sendo multiplicada por \(0.5\).
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">combinacao_imagem</span>(img1, img2):
+    <span style="color: #673AB7;">return</span> <span style="color: #29B6F6;">0.5</span> <span style="color: #673AB7;">*</span> img1 <span style="color: #673AB7;">+</span> <span style="color: #29B6F6;">0.5</span> <span style="color: #673AB7;">*</span> img2
+</pre>
+</div>
+
+<div id="org361b688" class="figure">
+<p><img src="../out/baboon_butterfly_combinacao.png" alt="baboon_butterfly_combinacao.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Combinação da imagem &ldquo;baboon.png&rdquo; e &ldquo;butterfly.png&rdquo;.</p>
+</div>
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-org9a20300" class="outline-2">
+<h2 id="org9a20300">Transformação de intensidade</h2>
+<div class="outline-text-2" id="text-org9a20300">
+</div>
+<div id="outline-container-orgc621a7c" class="outline-3">
+<h3 id="orgc621a7c">Negativo</h3>
+<div class="outline-text-3" id="text-orgc621a7c">
+<p>
+Podemos atingir o resultado desejado utilizando a operação <code>np.invert</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">negativo</span>(img):
+    <span style="color: #673AB7;">return</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">invert</span>(img)
+</pre>
+</div>
+
+<div id="org8c6faa5" class="figure">
+<p><img src="../out/baboon_negativo.png" alt="baboon_negativo.png" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Negativo da imagem &ldquo;baboon.png&rdquo;.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdfd3491" class="outline-3">
+<h3 id="orgdfd3491">Converter para o intervalo \([100, 200]\).</h3>
+<div class="outline-text-3" id="text-orgdfd3491">
+<p>
+Para isso, entendemos que cada valor da imagem original está a uma proporção de \(0\) a \(255\).
+Calculamos tal proporção e transpomos a mesma para o intervalo \(100\) a \(200\).
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">converter_para_intervalo</span>(img):
+    <span style="color: #673AB7;">return</span> <span style="color: #29B6F6;">100</span> <span style="color: #673AB7;">+</span> (img <span style="color: #673AB7;">/</span> <span style="color: #29B6F6;">255</span>) <span style="color: #673AB7;">*</span> <span style="color: #29B6F6;">100</span>
+</pre>
+</div>
+
+<div id="org7b2f137" class="figure">
+<p><img src="../out/baboon_converter_para_intervalo.png" alt="baboon_converter_para_intervalo.png" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Converção proporcional dos valores da imagem &ldquo;baboon.png&rdquo; ao intervalo \([100,200]\).</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7cffe93" class="outline-3">
+<h3 id="org7cffe93">Linhas pares invertidas</h3>
+<div class="outline-text-3" id="text-org7cffe93">
+<p>
+Nesse caso, primeiro selecionamos as linhas pares, utilizando o parâmetro <code>step</code> de listas e, de forma similar, invertemo-nas utilizando <code>-1</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">linhas_pares_invertidas</span>(img):
+    linhas_pares <span style="color: #673AB7;">=</span> img[::<span style="color: #29B6F6;">2</span>]         <span style="color: #B0BEC5; font-style: italic;"># seleciona as linhas pares</span>
+    img[::<span style="color: #29B6F6;">2</span>] <span style="color: #673AB7;">=</span> linhas_pares[:,::<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>] <span style="color: #B0BEC5; font-style: italic;"># inverte as linhas</span>
+    <span style="color: #673AB7;">return</span> img
+</pre>
+</div>
+
+<div id="orgd752819" class="figure">
+<p><img src="../out/baboon_linhas_pares_invertidas.png" alt="baboon_linhas_pares_invertidas.png" />
+</p>
+<p><span class="figure-number">Figure 5: </span>Linhas pares da imagem &ldquo;baboon.png&rdquo; invertidas.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org570af7a" class="outline-3">
+<h3 id="org570af7a">Reflexão de linhas</h3>
+<div class="outline-text-3" id="text-org570af7a">
+<p>
+Nesse, cortamos a imagem na metade, copiamos a imagem e invertemos essa.
+Por fim, salvamos a concatenação na vertical das imagens.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">reflexao_linhas</span>(img):
+    n, m <span style="color: #673AB7;">=</span> img.<span style="font-style: italic;">shape</span>
+    part1 <span style="color: #673AB7;">=</span> img[:m<span style="color: #673AB7;">//</span><span style="color: #29B6F6;">2</span>:]
+    part2 <span style="color: #673AB7;">=</span> part1[::<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>]
+    <span style="color: #673AB7;">return</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">concatenate</span>((part1, part2), <span style="color: #37474F; font-weight: bold;">axis</span><span style="color: #673AB7;">=</span><span style="color: #29B6F6;">0</span>)
+</pre>
+</div>
+
+<div id="org5ceda6d" class="figure">
+<p><img src="../out/baboon_reflexao_linhas.png" alt="baboon_reflexao_linhas.png" />
+</p>
+<p><span class="figure-number">Figure 6: </span>Reflexão das linhas da imagem &ldquo;baboon.png&rdquo;</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc22a6e2" class="outline-3">
+<h3 id="orgc22a6e2">Espelhamento vertical</h3>
+<div class="outline-text-3" id="text-orgc22a6e2">
+<p>
+Utilizando o <code>step</code> do parâmetro de listas em python, podemos inverter a matriz.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">espelhamento_vertical</span>(img):
+    <span style="color: #673AB7;">return</span> img[::<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>]
+</pre>
+</div>
+
+<div id="org445d904" class="figure">
+<p><img src="../out/baboon_espelhamento_vertical.png" alt="baboon_espelhamento_vertical.png" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Espelhamento vertical da imagem &ldquo;baboon.png&rdquo;</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4058ed7" class="outline-2">
+<h2 id="org4058ed7">Imagens coloridas</h2>
+<div class="outline-text-2" id="text-org4058ed7">
+</div>
+<div id="outline-container-org29417ba" class="outline-3">
+<h3 id="org29417ba">Colorida para colorida</h3>
+<div class="outline-text-3" id="text-org29417ba">
+<p>
+Cada pixel é representado por um vetor de três dimensões, cada uma para cada valor dos canais RGB.
+Para aplicar a tranformação proposta, podemos utilizar de uma matriz para representa-la, como descrita no código pela variável <code>A</code>.
+Assim, aplicamos o produto de matrizes via <code>np.dot</code> e cada pixel e substituimos o novo vetor de três dimensões como novo pixel.
+Por fim, garantimos que todos os valores de canais de todos os pixels estão no intervalo de \([0, 255]\).
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">colorida_colorida</span>(img):
+    <span style="color: #B0BEC5; font-style: italic;"># Set up the transformation matrix</span>
+    <span style="color: #673AB7;">A</span> <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">array</span>([[<span style="color: #29B6F6;">0.393</span>, <span style="color: #29B6F6;">0.769</span>, <span style="color: #29B6F6;">0.189</span>],
+                  [<span style="color: #29B6F6;">0.349</span>, <span style="color: #29B6F6;">0.686</span>, <span style="color: #29B6F6;">0.168</span>],
+                  [<span style="color: #29B6F6;">0.272</span>, <span style="color: #29B6F6;">0.534</span>, <span style="color: #29B6F6;">0.131</span>]])
+    <span style="color: #B0BEC5; font-style: italic;"># Multiply each pixel by the transformation matrix</span>
+    img <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">dot</span>(img, <span style="color: #673AB7;">A</span>)
+    <span style="color: #B0BEC5; font-style: italic;"># Limit pixel values to the range [0, 255]</span>
+    <span style="color: #673AB7;">return</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">clip</span>(img, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">255</span>)
+</pre>
+</div>
+
+<div id="org56e22c2" class="figure">
+<p><img src="../out/lena_colorida_colorida.png" alt="lena_colorida_colorida.png" />
+</p>
+<p><span class="figure-number">Figure 8: </span>Transformação descrita aplicada à imagem &ldquo;lena.png&rdquo;.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga2f6cd3" class="outline-3">
+<h3 id="orga2f6cd3">Coloridas para cinza</h3>
+<div class="outline-text-3" id="text-orga2f6cd3">
+<p>
+Cada pixel é representado por um vetor de três dimensões, cada uma para cada valor dos canais RGB.
+Para aplicar a tranformação proposta, podemos utilizar um vetor para representa-la, como descrita no código pela variável <code>A</code>.
+Assim, aplicamos o produto de matrizes via <code>np.dot</code> e cada pixel e substituimos o novo pixel pelo escalar resultante.
+Por fim, garantimos que os valores de todos os pixels estão no intervalo de \([0, 255]\).
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">colorida_cinza</span>(img):
+    <span style="color: #B0BEC5; font-style: italic;"># Set up the transformation matrix</span>
+    <span style="color: #673AB7;">A</span> <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">array</span>([<span style="color: #29B6F6;">0.2989</span>, <span style="color: #29B6F6;">0.5870</span>, <span style="color: #29B6F6;">0.1140</span>])
+    <span style="color: #B0BEC5; font-style: italic;"># Multiply each pixel by the transformation matrix</span>
+    img <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">dot</span>(img, <span style="color: #673AB7;">A</span>)
+    <span style="color: #B0BEC5; font-style: italic;"># Limit pixel values to the range [0, 255]</span>
+    <span style="color: #673AB7;">return</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">clip</span>(img, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">255</span>)
+</pre>
+</div>
+
+<div id="orgb96a30d" class="figure">
+<p><img src="../out/lena_colorida_cinza.png" alt="lena_colorida_cinza.png" />
+</p>
+<p><span class="figure-number">Figure 9: </span>Transformação à escala de cinza aplicada à imagem &ldquo;lena.png&rdquo;.</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0c8dad4" class="outline-2">
+<h2 id="org0c8dad4">Ajuste de brilho</h2>
+<div class="outline-text-2" id="text-org0c8dad4">
+<p>
+Neste caso, recebemos a imagem e um certo valor de gamma como parâmetros.
+Utilizando vetorização, aplicamos diretamente a fórmula \(B = A^{\frac{1}{\gamma}}\).
+Por fim, apenas garantimos que os valores de cada pixel estão proporcionamente no intervalo \([0,255]\).
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">ajuste_brilho</span>(img, gamma):
+    img <span style="color: #673AB7;">=</span> (img <span style="color: #673AB7;">/</span> <span style="color: #29B6F6;">255</span>) <span style="color: #673AB7;">**</span> (<span style="color: #29B6F6;">1</span> <span style="color: #673AB7;">/</span> gamma)
+    factor <span style="color: #673AB7;">=</span> <span style="color: #29B6F6;">255</span> <span style="color: #673AB7;">/</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">max</span>(img)
+    <span style="color: #673AB7;">return</span> img <span style="color: #673AB7;">*</span> factor
+</pre>
+</div>
+
+<div id="org62ffd03" class="figure">
+<p><img src="../out/baboon_ajuste_brilho_0.5.png" alt="baboon_ajuste_brilho_0.5.png" />
+</p>
+<p><span class="figure-number">Figure 10: </span>Ajuste de brilho com gamma \(0.5\) aplicado à imagem &ldquo;baboon.png&rdquo;.</p>
+</div>
+
+<div id="orgea5e113" class="figure">
+<p><img src="../out/baboon_ajuste_brilho_2.5.png" alt="baboon_ajuste_brilho_2.5.png" />
+</p>
+<p><span class="figure-number">Figure 11: </span>Ajuste de brilho com gamma \(2.5\) aplicado à imagem &ldquo;baboon.png&rdquo;.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org70f86bc" class="outline-2">
+<h2 id="org70f86bc">Quantização de imagens</h2>
+<div class="outline-text-2" id="text-org70f86bc">
+<p>
+Para reduzir a quantidade de níveis de cinza à \(L\), definimos que cada valor está a uma certa proporção do intervalo de \(0\) a \(255\).
+Mantemos a mesma proporção no intervalo \([0, L-1]\) e arredondamos ao nível inteiro mais próximo.
+Por fim, retornamos ao formato de \(256\) mas agora com, na prática, apenas \(L\) níveis de cinza
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">quantizacao</span>(img, l):
+    img <span style="color: #673AB7;">=</span> (img <span style="color: #673AB7;">/</span> <span style="color: #29B6F6;">255</span>) <span style="color: #673AB7;">*</span> (l <span style="color: #673AB7;">-</span> <span style="color: #29B6F6;">1</span>)
+    img <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">around</span>(img)
+    <span style="color: #673AB7;">return</span> img <span style="color: #673AB7;">*</span> (<span style="color: #29B6F6;">256</span><span style="color: #673AB7;">/</span>(l<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>))
+</pre>
+</div>
+
+<div id="orgf86dcb2" class="figure">
+<p><img src="../out/baboon_quantizacao_2.png" alt="baboon_quantizacao_2.png" />
+</p>
+<p><span class="figure-number">Figure 12: </span>Quantização da imagem &ldquo;baboon.png&rdquo; em \(2\) níveis.</p>
+</div>
+
+<div id="orga7eaa69" class="figure">
+<p><img src="../out/baboon_quantizacao_16.png" alt="baboon_quantizacao_16.png" />
+</p>
+<p><span class="figure-number">Figure 13: </span>Quantização da imagem &ldquo;baboon.png&rdquo; em \(16\) níveis.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org96d9269" class="outline-2">
+<h2 id="org96d9269">Planos de bits</h2>
+<div class="outline-text-2" id="text-org96d9269">
+<p>
+Para extrairmos cada plano de bit, como definido no enunciado, precisamos pegar o \(i-text{ésimo}\) bit da esquerda para direita.
+Assim, o \(i\) plano, fazemos <code>(img &gt;&gt; i) &amp; 1</code> e salvamos cada um desses planos numa lista.
+Na hora de salvar a imagem, precisamos multiplicar por \(255\), já que cada plano de bit é uma array de \(0\) e \(1\).
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">planos_bit</span>(img, plano):
+    bit_planes <span style="color: #673AB7;">=</span> [np.<span style="color: #37474F; font-weight: bold; font-style: italic;">uint8</span>((img <span style="color: #673AB7;">&gt;&gt;</span> bit) <span style="color: #673AB7;">&amp;</span> <span style="color: #29B6F6;">1</span>) <span style="color: #673AB7;">for</span> bit <span style="color: #673AB7;">in</span> <span style="color: #673AB7; font-weight: bold;">range</span>(<span style="color: #29B6F6;">8</span>)]
+    <span style="color: #673AB7;">return</span> bit_planes[plano] <span style="color: #673AB7;">*</span> <span style="color: #29B6F6;">255</span>
+</pre>
+</div>
+
+<div id="org34616d6" class="figure">
+<p><img src="../out/baboon_planos_bit_0.png" alt="baboon_planos_bit_0.png" />
+</p>
+<p><span class="figure-number">Figure 14: </span>Primeiro plano de bits da imagem &ldquo;baboon.png&rdquo;.</p>
+</div>
+
+<div id="org13c5317" class="figure">
+<p><img src="../out/baboon_planos_bit_4.png" alt="baboon_planos_bit_4.png" />
+</p>
+<p><span class="figure-number">Figure 15: </span>Quinto plano de bits da imagem &ldquo;baboon.png&rdquo;.</p>
+</div>
+
+<p>
+\newpage
+</p>
+</div>
+</div>
+<div id="outline-container-orgadb72c6" class="outline-2">
+<h2 id="orgadb72c6">Filtragem de imagens</h2>
+<div class="outline-text-2" id="text-orgadb72c6">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #B0BEC5; font-style: italic;"># Defini&#231;&#227;o das matrizes</span>
+h1 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">0</span>],
+                 [<span style="color: #29B6F6;">0</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">0</span>],
+                 [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">2</span>, <span style="color: #29B6F6;">16</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>],
+                 [<span style="color: #29B6F6;">0</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">0</span>],
+                 [<span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">0</span>]])
+h2 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">4</span>, <span style="color: #29B6F6;">6</span>, <span style="color: #29B6F6;">4</span>, <span style="color: #29B6F6;">1</span>],
+                 [<span style="color: #29B6F6;">4</span>, <span style="color: #29B6F6;">16</span>, <span style="color: #29B6F6;">24</span>, <span style="color: #29B6F6;">16</span>, <span style="color: #29B6F6;">4</span>],
+                 [<span style="color: #29B6F6;">6</span>, <span style="color: #29B6F6;">24</span>, <span style="color: #29B6F6;">36</span>, <span style="color: #29B6F6;">24</span>, <span style="color: #29B6F6;">6</span>],
+                 [<span style="color: #29B6F6;">4</span>, <span style="color: #29B6F6;">16</span>, <span style="color: #29B6F6;">24</span>, <span style="color: #29B6F6;">16</span>, <span style="color: #29B6F6;">4</span>],
+                 [<span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">4</span>, <span style="color: #29B6F6;">6</span>, <span style="color: #29B6F6;">4</span>, <span style="color: #29B6F6;">1</span>]])
+h2 <span style="color: #673AB7;">=</span> h2 <span style="color: #673AB7;">/</span> <span style="color: #29B6F6;">256</span>
+h3 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">1</span>], [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">2</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">2</span>], [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">1</span>]])
+h4 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>], [<span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">0</span>], [<span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #29B6F6;">1</span>]])
+h5 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>], [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">8</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>], [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>]])
+h6 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">1</span>], [<span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">1</span>], [<span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">1</span>]]) <span style="color: #673AB7;">/</span> <span style="color: #29B6F6;">9</span>
+h7 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">2</span>], [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>], [<span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>]])
+h8 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>], [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>], [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">2</span>]])
+h9 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">identity</span>(<span style="color: #29B6F6;">9</span>) <span style="color: #673AB7;">/</span> <span style="color: #29B6F6;">9</span>
+h10 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>],
+                  [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>],
+                  [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #29B6F6;">8</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>],
+                  [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #29B6F6;">2</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>],
+                  [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>]])
+h10 <span style="color: #673AB7;">=</span> h10 <span style="color: #673AB7;">/</span> <span style="color: #29B6F6;">8</span>
+h11 <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">asarray</span>([[<span style="color: #29B6F6;">1</span>, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">0</span>], [<span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">1</span>], [<span style="color: #29B6F6;">0</span>, <span style="color: #29B6F6;">1</span>, <span style="color: #29B6F6;">1</span>]])
+</pre>
+</div>
+
+<p>
+Para cada filtro, definimos um kernel, uma matriz que representa nosso filtro.
+Para aplicarmos o filtro, passamos a imagem bem como o filtro para a função <code>cv2.filter2D</code>.
+Vale a pena ressaltar o argumento <code>-1</code> da função, este especifica que a saída deve ter a mesma profundidade que a entrada.
+</p>
+
+<p>
+Outro fato interessante de comentar é sobre as decisões de &ldquo;padding&rdquo;.
+Quando aplicamos um filtro como os descritos aqui, precisamos decidir o que fazer nos pixels de borda, já que estes não possuem todos os vizinhos como os demais pixels.
+A função <code>cv2.filter2D</code> aplica o chamado &ldquo;zero-padding&rdquo;, na qual são adicionados zeros às bordas conforme necessário.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">filtragem</span>(img, h):
+    <span style="color: #673AB7;">return</span> cv2.<span style="color: #37474F; font-weight: bold; font-style: italic;">filter2D</span>(img, <span style="color: #673AB7;">-</span><span style="color: #29B6F6;">1</span>, h)
+</pre>
+</div>
+
+<p>
+Por questões de espaço, neste relatório iremos reproduzir os resultados de alguns filtros.
+Todos os resultados estão disponíveis na pasta <code>out</code>.
+</p>
+
+
+<div id="org1e808a1" class="figure">
+<p><img src="../out/baboon_filtro_h3.png" alt="baboon_filtro_h3.png" />
+</p>
+<p><span class="figure-number">Figure 16: </span>Filtro \(h_3\) aplicado à imagem &ldquo;baboon.png&rdquo;.</p>
+</div>
+
+<div id="orgd73c236" class="figure">
+<p><img src="../out/baboon_filtro_h4.png" alt="baboon_filtro_h4.png" />
+</p>
+<p><span class="figure-number">Figure 17: </span>Filtro \(h_4\) aplicado à imagem &ldquo;baboon.png&rdquo;.</p>
+</div>
+
+<div id="org9be9bb2" class="figure">
+<p><img src="../out/baboon_filtro_h9.png" alt="baboon_filtro_h9.png" />
+</p>
+<p><span class="figure-number">Figure 18: </span>Filtro \(h_9\) aplicado à imagem &ldquo;baboon.png&rdquo;.</p>
+</div>
+
+<p>
+Após executar os filtros observamos os seguintes efeitos de cada um:
+</p>
+<dl class="org-dl">
+<dt>h1</dt><dd>passa-alta que realça as bordas.</dd>
+<dt>h2</dt><dd>de suavização (blur) que reduz o ruído.</dd>
+<dt>h3</dt><dd>detecta bordas no sentido horizontal.</dd>
+<dt>h4</dt><dd>detecta bordas no sentido vertical.</dd>
+<dt>h5</dt><dd>realça as bordas.</dd>
+<dt>h6</dt><dd>de suavização (blur) que reduz o ruído e as características.</dd>
+<dt>h7</dt><dd>detecta bordas diagonais.</dd>
+<dt>h8</dt><dd>detecta bordas diagonais.</dd>
+<dt>h9</dt><dd>de suavização (blur) diagonalmente.</dd>
+<dt>h10</dt><dd>de nitidez que realça as características.</dd>
+<dt>h11</dt><dd>aumenta o brilho (efeito de gloom).</dd>
+</dl>
+
+<p>
+Por fim, como sugerido no enunciado, podemos combinar o kernel \(h3\) com o \(h4\).
+Utilizamos as funções <code>np.square</code> e <code>np.sqrt</code> para realizar as operações aritméticas vetorizadas.
+Vemos que a combinação de dois filtros que detectavam bordas em sentidos diferentes resultam em um bom filtro para detectar bordas em ambos.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #673AB7;">def</span> <span style="color: #37474F; font-weight: bold;">filtragem_h3_h4</span>(img):
+    img <span style="color: #673AB7;">=</span> img.<span style="color: #37474F; font-weight: bold; font-style: italic;">astype</span>(np.<span style="font-style: italic;">float32</span>)
+    res <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">square</span>(<span style="color: #37474F; font-weight: bold;">filtragem</span>(img, h3))
+    res <span style="color: #673AB7;">+=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">square</span>(<span style="color: #37474F; font-weight: bold;">filtragem</span>(img, h4))
+    res <span style="color: #673AB7;">=</span> np.<span style="color: #37474F; font-weight: bold; font-style: italic;">sqrt</span>(res)
+    <span style="color: #673AB7;">return</span> res
+</pre>
+</div>
+
+<div id="orgaec7ed1" class="figure">
+<p><img src="../out/baboon_filtragem_h3_h4.png" alt="baboon_filtragem_h3_h4.png" />
+</p>
+<p><span class="figure-number">Figure 19: </span>Resultado do filtro \(h_3\) combinado com o resultado do filtro \(h_4\) na imagem &ldquo;baboon.png&rdquo;</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ieremies Vieira da Fonseca Romero</p>
+<p class="date">Created: 2023-04-05 Wed 22:17</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+#+Title: Seminários em Computação
+#+category: semi
+
+* Resumos
+** TODO Seminário 1 - Transformação Digital – Computação Escalar & Dados Digitais Intensivos
+DEADLINE: <2023-03-17 Fri>
+CLOCK: [2023-03-17 Fri 11:37]--[2023-03-17 Fri 12:45] =>  1:08
+
+A computação escalável com uso intensivo de dados (DISC) é uma abordagem centrada em dados digitais que utiliza modelos de programação de alto nível e clusters de hardware para processamento. A estratégia de downsizing, que tentava diminuir o tamanho dos computadores, foi substituída pela abordagem de rightsizing, que permite a utilização de diferentes níveis de computação (edge, fog e cloud) para executar tarefas específicas de forma mais eficiente.
+
+No contexto da DISC, os dados são coletados na borda, limpos e organizados para serem enviados para a “fog”, que agrega os dados e envia para processamento na nuvem. A análise desses dados permite a extração de informações valiosas para o conhecimento.
+
+A DISC é aplicada em cenários de workflows de dados, paralelização massiva, logística de dados, processamento de stream, entre outros. É importante considerar a escalabilidade de entrada e saída de dados, a capacidade de armazenamento e o desempenho de acesso aos dados. Além disso, é necessário utilizar ferramentas específicas para cada uma dessas tarefas.
+
+A simulação apropriada, de pós-processamento, in-situ e in-transit também é uma parte importante da abordagem DISC. Em resumo, a DISC é uma abordagem centrada em dados que requer uma organização e armazenamento eficientes dos dados, além de ferramentas específicas para processamento e simulação (pós-processamento, in-situ e in-transit).
+** TODO Seminário 2 - Exploiting the Computing Continuum with self-distributing services.
+DEADLINE: <2023-03-17 Fri>
+:LOGBOOK:
+CLOCK: [2023-03-17 Fri 14:00]--[2023-03-17 Fri 14:45] =>  0:45
+:END:
+Os sistemas contemporâneos apresentam elevada complexidade devido à heterogeneidade (de hardware, sistema operacional, linguagem de programação, protocolos etc.) e volatilidade (constante mudança em diferentes níveis, adição e remoção de máquinas, mudanças no uso da rede e padrões de uso).
+
+Atualmente, a estrutura de computação distribuída estabelece uma hierárquia que inclui dispositivos na borda (PCs, celulares e outros dispositivos com recursos computacionais limitados), nós de borda (que agregam informações de dispositivos de borda e enviam informações para a nuvem) e nuvem (camada mais distante).
+
+Computação contínua visa integrar essas camadas de forma a reduzir as barreiras.
+Serviços como contêineres e Kubernetes permitem a mobilidade do código nas diferentes camadas.
+Para quebrar um sistema e movê-lo de camada, é necessário primeiro transformá-lo de uma aplicação monolítica em microsserviços autônomos sem estado.
+
+Os sistemas de software emergentes são sistemas autônomos e autoadaptativos que utilizam algoritmos de aprendizado por reforço para gerenciar suas componentes. Esse agente inteligente pode trocar as componentes em tempo de execução e determinar a melhor configuração com base no impacto nos recursos e funcionalidades. Esse conceito também pode ser usado para determinar a colocação das componentes em diferentes camadas ou clusters de rede. Embora isso possa aumentar os requisitos de rede, o off-loading de carga computacional pode ser benéfico em muitos casos.
+** TODO Seminário 3 - Federated learning
+A abordagem mais utilizada é centralizar os dados.
+Isso tem problemas, em especial em termos de privacidade, seria melhor manter os dados na borda, no dispositivo que o coleto..
+Assim, aprendizado federado utiliza um conjunto de dados locais para conjuntamente de outros dispositivos treinar o modelo.
+
+O dispositivo de borda recebe o modelo geral, utiliza os dados coletados por ele para localmente melhorar ao seu caso de uso e devolve os parâmetros.
+O agregador do aprendizado federado aplica um algoritmo de agregação que, diferente dos algoritmos de aprendizado, objetiva juntar os "conhecimentos" adiquiridos pelos dispositivos de borda.
+
+Além da privacidade, há outras vantagens também:
+- Capacidade da rede :: transportar os parâmetros é muito mais leve que os dados.
+- Latência :: o modelo está mais próximo do usuário
+- Escalabiidade :: quanto maior a demanda, maior a quantidade de dispositivos disponíveis.
+
+Ferramentas: TensorFlow Federated (TFF), FATE, Sherpa.ai, DataSHIELD, Flower.
+
+Algoritmos de agregação:
+- google federated average
+- federated sgd :: bom para massas de dados homogêneas
+- fault tolerant federated average :: consegue trabalhar mesmo com a perda de nós e dados, bons para redes ad-hoc.
+- Q-federated average :: facilidade a fazer ajuste aos modelos em relação a desempenho dos clientes.
+- Federated Optimization ::
+- FedSim :: agrupa clientes como gradientes similares em agregaçõe locais.
+
+Desafios relacionados a aprendizado federado continuam, com privacidade, dados insuficiêntes, heterogenoidade estatística, latência e mobilidade.
+** TODO Seminário 4 - Um relato de experiências de cooperação academia/empresas no tecnológico do Brasil
+O apresentador tem grande histórico de experiências em criar empresas de dentro da Universidade.
+Já um outro tipo de experiência é colaborações com start-up ajudando e guiando
+
+# PERG: você afirmou que esse modelo universidade/empresa é modelo. Mas isso não desvaloriza áreas de pesquisa de base, um dos objetivos da sepração mercado/público.
+Como forma de circuventar as dificuldades de atrelar empresas à universidade pública, eles buscaram convencimento da comunidade dentro e fora da instituição.
+Precisaram ter cuidados com a legislação pois, segundo ele, "os engessam".
+Além disso, utilizam-se das incubadoras da UFMA, mas quando um professor com dedicação exclusiva é necessário que ele peça afastamento.
+
+Identificar problemas interessantes do ponto de vista acadêmico e tentar gerar resultados academicamente interessantes.
+
+O apresentador ainda comenta mais duas formas de interação universidade e empresa:
+Projeto de P&D pela lei de informática, mas, que segundo ele, não foi uma boa experiência.
+Embrapii: empresa brasileira de pesquisa e inovação, como uma EMBRAPA de tecnologia

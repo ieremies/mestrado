@@ -1,0 +1,47 @@
+% Created 2023-03-31 sex 19:48
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[outpudir=build]{minted}
+\usepackage[outpudir=build]{minted}
+\usepackage{todonotes}
+\usepackage[brazil, portuges]{babel}
+\usepackage{amsthm}
+\author{Ieremies Vieira da Fonseca Romero}
+\date{}
+\title{Aprendizagem federada em ambientes de cidades inteligentes\\\medskip
+\large Seminário 3}
+\hypersetup{
+ pdfauthor={Ieremies Vieira da Fonseca Romero},
+ pdftitle={Aprendizagem federada em ambientes de cidades inteligentes},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6.1)}, 
+ pdflang={Portuges}}
+\usepackage[date=year]{biblatex}
+\addbibresource{~/arq/bib.bib}
+\begin{document}
+
+\maketitle
+Na palestra ``Aprendizagem federada em ambientes de cidades inteligentes'', foi discutido que a abordagem mais comum em relação aos dados é centralizá-los. No entanto, essa prática traz problemas, principalmente relacionados à privacidade. Portanto, uma alternativa seria manter os dados na borda, no dispositivo que os coletou, e utilizar o aprendizado federado para treinar modelos conjuntamente com outros dispositivos.
+
+No aprendizado federado, um conjunto de dados locais é utilizado para melhorar o modelo de forma personalizada, e o dispositivo de borda recebe o modelo geral, utiliza seus próprios dados para melhorar o modelo localmente e, em seguida, devolve os parâmetros. O agregador do aprendizado federado aplica um algoritmo de agregação cujo objetivo é juntar os ``conhecimentos'' adquiridos pelos dispositivos de borda.
+
+Além da questão de privacidade, o aprendizado federado apresenta outras vantagens, como a capacidade da rede, a latência mais baixa e a escalabilidade, principalmente em situações de alta demanda. Para a implementação, existem diversas ferramentas disponíveis, como TensorFlow Federated (TFF), FATE, Sherpa.ai, DataSHIELD e Flower.
+
+Entre os algoritmos de agregação, podemos citar o Google Federated Average, o Federated SGD, o Fault Tolerant Federated Average, o Q-Federated Average, o Federated Optimization e o FedSim, bons para diferentes tipos de dados e situações.
+
+No entanto, os desafios relacionados ao aprendizado federado ainda são significativos, como a privacidade, a insuficiência de dados, a heterogeneidade estatística, a latência e a mobilidade. São necessárias mais pesquisas e avanços na área para superar esses desafios e potencializar o uso do aprendizado federado.
+
+Po fim, o palestrante contou suas experiências trabalhando em um projeto financiado pela União Europeia que utiliza a cidade de Aveiro, em Portugal, como experimento nessa tecnologia.
+\end{document}

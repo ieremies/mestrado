@@ -1,0 +1,13 @@
+#+title: Exploiting the Computing Continuum with self-distributing services
+#+subtitle: Seminário 2
+#+options: toc:nil num:nil date:nil
+
+Os sistemas contemporâneos apresentam elevada complexidade devido à heterogeneidade (de hardware, sistema operacional, linguagem de programação, protocolos etc.) e volatilidade (constante mudança em diferentes níveis, adição e remoção de máquinas, mudanças no uso da rede e padrões de uso).
+
+Atualmente, a estrutura de computação distribuída estabelece uma hierárquia que inclui dispositivos na borda (PCs, celulares e outros dispositivos com recursos computacionais limitados), nós de borda (que agregam informações de dispositivos de borda e enviam informações para a nuvem) e nuvem (camada mais distante).
+
+Computação contínua visa integrar essas camadas de forma a reduzir as barreiras.
+Serviços como contêineres e Kubernetes permitem a mobilidade do código nas diferentes camadas.
+Para quebrar um sistema e movê-lo de camada, é necessário primeiro transformá-lo de uma aplicação monolítica em microsserviços autônomos sem estado.
+
+Os sistemas de software emergentes são sistemas autônomos e autoadaptativos que utilizam algoritmos de aprendizado por reforço para gerenciar suas componentes. Esse agente inteligente pode trocar as componentes em tempo de execução e determinar a melhor configuração com base no impacto nos recursos e funcionalidades. Esse conceito também pode ser usado para determinar a colocação das componentes em diferentes camadas ou clusters de rede. Embora isso possa aumentar os requisitos de rede, o off-loading de carga computacional pode ser benéfico em muitos casos.
