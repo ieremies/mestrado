@@ -1,91 +1,15 @@
 #+Title: Mestrado
 #+category: mest
-* Bolsa
-** FAPESP
-Valor: R$ 2.349,60
-*** TODO Súmula curricular
-DEADLINE: <2023-02-25 sáb>
-:PROPERTIES:
-:Effort:   60
-:END:
-Transpor o que tenho de CV para o formato da súmula que a fapesp pede.
-*** TODO Revisar o texto
-DEADLINE: <2023-03-02 qui>
-:LOGBOOK:
-CLOCK: [2023-02-28 ter 13:09]--[2023-02-28 ter 14:31] =>  1:22
-:END:
-** CNPq
-Valor: R$ 1.500,00
-*** TODO Abertura da proposta
-DEADLINE: <2023-03-28 ter>
 
-* Artigos
-** Revisões literárias
-*** DONE Malaguti 2010 - A Survey on Vertex Coloring Problems
-CLOSED: [2023-02-23 qui 16:08]
-[cite:@Malaguti2010SurveyVertexColoring]
-*** DONE Lewis 2015 - Guide to Graph Colouring Algorithms and Applications
-CLOSED: [2023-02-28 ter 17:09]
-:LOGBOOK:
-CLOCK: [2023-02-28 ter 16:49]--[2023-02-28 ter 17:09] =>  0:20
-:END:
-[cite:@Lewis2015GuideGraphColouring]
+[[org:../proj/mest/docs/reunioes.org][Reuniões]] | [[org:../proj/mest/docs/disciplinas.org][Disciplinas]] | [[org:../proj/mest/docs/habilidades.org][Habilidades]]
 
-Livro grande com muitas coisas sobre coloração.
-Acho que dele eu posso tirar, em especial, a seção sobre Programação Inteira e a de Complexidade.
-
-Seção de programação inteira não tinha nada de novo.
-*** DONE Lima 2018 - Exact Algorithms for the Graph Coloring Problem
-CLOSED: [2023-02-28 ter 17:33]
-:LOGBOOK:
-CLOCK: [2023-02-28 ter 17:30]--[2023-02-28 ter 17:33] =>  0:03
-:END:
-[cite:@Lima2018ExactAlgorithmsGraph]
-*** TODO Husfeldt 2015 - Graph colouring algorithms
-[cite:@Husfeldt2015Graphcolouringalgorithms]
-** Atribuição
-*** Brélaz 1979 - New methods to color the vertices of a graph
-[cite:@Brelaz1979Newmethodscolor]
-*** Méndez-Dıaz 2006 - A Branch-and-Cut Algorithm for Graph Coloring
-[cite:@MendezDiaz2006BranchCutAlgorithm]
-*** Méndez-Diaz 2008 - A Cutting Plane Algorithm for Graph Coloring
-[cite:@MendezDiaz2008CuttingPlaneAlgorithm]
-** Representantes
-*** Campêlo 2004 - Cliques, Holes and the Vertex Coloring Polytope
-[cite:@Campelo2004CliquesHolesVertex]
-*** Campêlo 2008 - On the Asymmetric Representatives Formulation for the VCP
-[cite:@Campelo2008AsymmetricRepresentativesFormulation]
-*** Campos 2015 - Polyhedral studies of VCP: The asymmetric representatives formulation
-[cite:@Campos2015Polyhedralstudiesvertex]
-** Conjuntos independentes
-*** Mehrotra 1996 - Column Generation Approach for Graph Coloring
-[cite:@Mehrotra1996ColumnGenerationApproach]
-*** Cornaz 2008 - A one-to-one correspondence between colorings and stable sets
-[cite:@Cornaz2008oneonecorrespondence]
-*** Hansen 2009 - Set covering and packing formulations of GC: Algorithms and first polyhedral results
-[cite:@Hansen2009Setcoveringpacking]
-*** Malaguti 2011 - An Exact Approach for the VCP
-[cite:@Malaguti2011ExactApproachVertex]
-*** Held 2012 - Maximum-weight stable sets and safe lower bounds for graph coloring
+* Tarefas
+** TODO Branching :code:
+** TODO Como resolver o MWSS :study:
 [cite:@Held2012Maximumweightstable]
-*** Morrison 2014 - A Wide Branching Strategy for the GCP
-[cite:@Morrison2014WideBranchingStrategy]
-*** Morrison 2016 - Solving the Pricing Problem in a B&P for GC Using Zero-Suppressed Binary Decision Diagrams
-[cite:@Morrison2016SolvingPricingProblem]
-*** Cornaz 2017 - Solving Vertex Coloring Problems as Maximum Weight Stable Set Problems
-[cite:@Cornaz2017SolvingVertexColoring]
-** Ordenação parcial hibrida
-*** Jabrayilov 2017 - New Integer Linear Programming Models for the VCP
-[cite:@Jabrayilov2018NewIntegerLinear]
-*** Jabrayilov 2018 - Strengthened Partial-Ordering Based ILP Models for the VCP
-[cite:@Jabrayilov2022StrengthenedPartialOrdering]
-** Diagrama de decisões binárias ordenada
-*** Hoeve 2021 - Graph coloring with decision diagrams
-[cite:@Hoeve2021Graphcoloringdecision]
-** Constrain programming
+** Artigos
 *** Gualandi 2012 - Exact Solution of GCP via Constraint Programming and Column Generation
 [cite:@Gualandi2012ExactSolutionGraph]
-** Técnicas
 *** TODO Pessoa 2021 - Solving Bin Packing Problems Using VRPSolver Models
 [cite:@Pessoa2021SolvingBinPacking]
 *** TODO Lima 2022 - Exact solution of network flow models with strong relaxations [0%]
@@ -93,73 +17,12 @@ CLOCK: [2023-02-28 ter 17:30]--[2023-02-28 ter 17:33] =>  0:03
 CLOCK: [2023-02-28 ter 15:45]--[2023-02-28 ter 16:40] =>  0:55
 :END:
 [cite:@Lima2022Exactsolutionnetwork]
-
-- [ ] Introduction
-- [ ] Network flow and Dantzig-Wolfe decompositions: preliminaries
-- [ ] An overview of the solution framework
-- [ ] On the solution of the linear relaxation
-- [ ] Variable-fixing based on reduced costs
-- [ ] Branching scheme
-- [ ] Applications to cutting and packing problems
-- [ ] Computational experiments
 *** TODO Desrosiers 2005
 [cite:@Desrosiers2005ColumnGenerationGerad]
 Citado por [cite:@Lima2018ExactAlgorithmsGraph] como referência para geração de colunas.
 *** TODO DW decompositions
 [cite:@AndradeUmalgoritmoexato]
 *** Paper do Renan
-
-* Outras habilidades
-** Airports and Railways
-Durante o WOPOCA, eu comecei a trabalhar nesse problema proposto em [cite:@Adamaszek2016AirportsRailwaysFacility] e com algoritmo de aproximação [cite:@Adamaszek2018ApproximatingAirportsRailways].
-
-Chegamos a formular dois PLI (veja [[id:dcd9a6d5-46e7-4e23-9307-ae29bfd35f75][airport and railways]]) e eu comecei a codar.
-
-- Não sei exatamente qual o processo de começar a trabalhar com um problema novo, propor instâncias ou o que seria suficiente para uma publicação inicial (?).
-- Acho que seria uma boa oportunidade de treinar meu C++ e o LEMON.
-- Geração de Colunas?
-** Codar a la maratona
-O pessoal do wopoca tava comentando sobre trabalhar em big tech e saber codar esses probleminhas mais simples.
-** C++
-Provavelmente assistir um tutorial de C++ no youtube e acompanhar com o "C++ primer" e o "Efficient C++".
-* Disciplinas
-Primeiro Semestre:
-- Introdução ao Processamento de Imagem Digital - SI com o Prof Helio (seg 19, qua 21)
-- Seminários (sex 14)
-Segundo Semestre:
-- Gerência de Redes de Computadores - SC com o Prof Edmundo (ter e qui 10)
-- Combinatória Poliédrica - com Prof Rafael. (ter e qui 14)
-- Pesquisa Operacional - com o Prof Usberti (sex 19) (já fiz, só falar com ele)
-- Teoria dos Grafos I - TC com a Profa Chris. (seg 21, qua 19) (ñ vou matricular)
-
-PED no segundo semestre:
-- MC202 com o Rafael, segundas a tarde inteira.
-- MC202 com o GPT, terças as 21.
-
-** TODO Solicitar PIF
-- Já fiz MC758 com o Rafael, só pedir a validação
-- Eu fiz MC824 com o Usberti, mas preciso pedir a matrícula e falar com ele.
-** TODO Proficiência em inglês
-* Reuniões
-** 31 de ago
-Como achar papers: Scopus e google scholar no citado por.
-** 19 de set
-- [X] Trocar em publicação por submetido
-- [X] Citar quais discilpinas fui pad
-- Na carta, vender o meu peixe e minha motivação, pode ser um coisa mais pessoal.
-** 5 de out
-Sobre inventory routing:
-- Ver como está a formulação atual
-- Ver onde tá saindo coisas sobre isso, qual a credibilidade dos journals.
-
-Outras ideias que o prof. Rafael comentou:
-- Mais de um nível, abrir depósitos que guardam os produtos e dai vão para consumidor.
-- Omnichannels, juntar a ideia de vender o estoque de loja e online.
-** 14 de dez
-<2022-12-14 qua>
-O último algoritmo d branch and price que temos é bem antigo, será que conseguimos usar as técnicas mais recente para implementar algo melhor, utilizando o ferramental como o do Vinicius Loti?
-Para o pedido, eu devo ler por cima os papers que separei e me basear na [cite:@Malaguti2010SurveyVertexColoring].
-Provavelmente heurísticas rápidas podem ser úteis para gerar cortes.
-Não iremos restringir o trabalho a classes de grafos, mas eu devo citar problemas similares como um plano B, tanto para valorizar o problema original como pela possibilidade de sermos o estado da arte em outro.
-
-- Conferir trabalhos recentes do Vinicius Loti
+*** TODO Conferir sobre a ferramenta [[https://matilda.unimelb.edu.au/matilda/our-methodology][Matilda]]
+Renan falou que na oficina que ele tava comentaram sobre a ferramenta.
+Parace ser algo para analizar a dificuldade de instâncias.

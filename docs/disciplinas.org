@@ -1,0 +1,24 @@
+#+Title: Disciplinas
+
+Meu planejamento de disciplinas e atividades durante o mestrado.
+
+* Primeiro Semestre:
+- Introdução ao Processamento de Imagem Digital - SI com o Prof Helio (seg 19, qua 21)
+- Seminários (sex 14)
+
+* Segundo Semestre:
+- Gerência de Redes de Computadores - SC com o Prof Edmundo (ter e qui 10)
+- Combinatória Poliédrica - com Prof Rafael. (ter e qui 14)
+- Pesquisa Operacional - com o Prof Usberti (sex 19) (já fiz, só falar com ele)
+- Teoria dos Grafos I - TC com a Profa Chris. (seg 21, qua 19) (ñ vou matricular)
+
+PED no segundo semestre:
+- MC202 com o Rafael, segundas a tarde inteira.
+- MC202 com o GPT, terças as 21.
+
+* TODO Solicitar PIF
+DEADLINE: <2023-04-12 Wed>
+Rafael já me mandou o documento no slack.
+
+* TODO Proficiência em inglês
+Eles disseram que iam mandar isso no começo de abril.

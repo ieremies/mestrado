@@ -1,0 +1,70 @@
+#+Title: Reuniões
+
+Jornal de reuniões com o meu orientador.
+
+* 31 de ago
+Como achar papers: Scopus e google scholar no citado por.
+* 19 de set
+- [X] Trocar em publicação por submetido
+- [X] Citar quais discilpinas fui pad
+- Na carta, vender o meu peixe e minha motivação, pode ser um coisa mais pessoal.
+* 5 de out
+Sobre inventory routing:
+- Ver como está a formulação atual
+- Ver onde tá saindo coisas sobre isso, qual a credibilidade dos journals.
+
+Outras ideias que o prof. Rafael comentou:
+- Mais de um nível, abrir depósitos que guardam os produtos e dai vão para consumidor.
+- Omnichannels, juntar a ideia de vender o estoque de loja e online.
+* 14 de dez
+<2022-12-14 qua>
+O último algoritmo d branch and price que temos é bem antigo, será que conseguimos usar as técnicas mais recente para implementar algo melhor, utilizando o ferramental como o do Vinicius Loti?
+Para o pedido, eu devo ler por cima os papers que separei e me basear na [cite:@Malaguti2010SurveyVertexColoring].
+Provavelmente heurísticas rápidas podem ser úteis para gerar cortes.
+Não iremos restringir o trabalho a classes de grafos, mas eu devo citar problemas similares como um plano B, tanto para valorizar o problema original como pela possibilidade de sermos o estado da arte em outro.
+
+- Conferir trabalhos recentes do Vinicius Loti
+* 2 de Mar
+<2023-03-02 Thu>
+Começar a codar, codar o modelo, codar o pricing apenas como enumeração, codar a árvore de branch and bound (profundidade por equanto).
+
+Boost graph library
+Gravar a ideia de que se o complemento do grafo for desconexo a soma
+* 30 de mar
+<2023-03-30 Thu>
+Quando queremos aplicar branch-and-price, podemos fazer gerando colunas para o problema mestre ou gerando linhas para o problema dual.
+No caso, utilizando a formulação de conjuntos independentes, nosso problema dual se dá por:
+\begin{alignat*}{4}
+\mathrm{(SC-dual)} \quad & \omit\rlap{maximize  $\displaystyle \sum_{v \in V} \alpha_v$} \\
+& \mbox{sujeito a}&& \quad & \sum_{v \in V} a_{v,s} \alpha_{v} &\leq 1 & \quad & s \in S \\
+&                 &&   & \alpha_v       & \geq 0 &    & v \in V \nonumber
+\end{alignat*}
+
+Nesse caso, maximizamos o "peso" do alpha de cada vértice, mantendo o limite de soma igual a 1 para cada conjunto independente.
+Como a quantidade de restrições é exponencial, teremos que começar com um conjunto restrito de restrições.
+Ao otimizar este problema restrito, obeteremos valores iniciais para os pesos mas que não necessáriamente formam uma solução viável para o problema.
+Assim, é preciso provar que não existem conjuntos independentes cuja soma dos pesos ultrapasse o valor de 1, conhecido como problema de separação.
+Podemos fazê-lo achando o *conjunto independente de peso máximo*.
+Caso o maior não tenha peso superior a 1, sabemos que não há conjunto cuja restrição do problema dual é violada e, portanto, não há conjunto que possamos acrescentar no problema primal afim de melhorar a solução.
+
+Resolver o problema de conjunto independente de peso máximo não é barato, podemos começar com uma formulação simples e depois avançar para técnicas como DP.
+Mesmo assim, eu não quero achar um conjunto máximo e sim vários que violem a restrição para adicionar de uma vez.
+
+Uma vez que um conjunto é removido, podemos guarda-lo em uma lista.
+Assim, antes de partirmos para resolver o problema de MIS, podemos percorrer a lista e ver quais delas foram violadas.
+
+Depois que obtermos a solução ótima para esse problema (quando não houver mais conjunto a ser adicionado de forma que melhore), utilizamos o branching afim de resolver o problema da integralidadde.
+Normalmente, dividiriamos o espaço de busca em utilizar ou não o conjunto independente, mas isso tornaria inviável pela quantidade de conjunto que seria necessário checar antes de adicionar.
+Assim, podemos utilizar a ideia de separar no fato de dois vértices irem juntos ou não na solução.
+
+Por fim, comentamos sobre a imprecisão numérica dos solvers e que, se o peso do conjunto adicionado não for maior que 1+epslon, o gurobi nem irá pivotar.
+Rafael pediu para eu já setar o epslon do gurobi pro menor possível.
+* 12 de Abril
+- manter o delta das alteraçoes no grafo ao invez de copiar
+  - conflitos (adicionar) e joins (juntar dois vértices)
+  - para decidir qual vértice vamos juntar, queremos achar um par u,v, tal que minimize a soma de duas vezes o peso dos conjuntos que eles estão juntos menos a soma dos pesos dos conjuntos que eles estão juntos
+- achar um incubente inicial bom, com algo guloso
+- Rain-foster rule de branch
+- [ ] escrever para o rafael de bin packing
+- [ ] pesquisar sobre as plataformas que ele havia dito
+- [ ] supostamente, o código deveria ser um git a parte

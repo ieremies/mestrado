@@ -1,0 +1,17 @@
+#+Title: Outras habilidades
+#+category: mest
+
+Neste documento estão contidas habilidades e projetos que estão indiretamente ligadas ao meu mestrado.
+
+* Airports and Railways
+Durante o WOPOCA, eu comecei a trabalhar nesse problema proposto em [cite:@Adamaszek2016AirportsRailwaysFacility] e com algoritmo de aproximação [cite:@Adamaszek2018ApproximatingAirportsRailways].
+
+Chegamos a formular dois PLI (veja [[id:dcd9a6d5-46e7-4e23-9307-ae29bfd35f75][airport and railways]]) e eu comecei a codar.
+
+- Não sei exatamente qual o processo de começar a trabalhar com um problema novo, propor instâncias ou o que seria suficiente para uma publicação inicial (?).
+- Acho que seria uma boa oportunidade de treinar meu C++ e o LEMON.
+- Geração de Colunas?
+* Codar a la maratona
+O pessoal do wopoca tava comentando sobre trabalhar em big tech e saber codar esses probleminhas mais simples.
+* C++
+Provavelmente assistir um tutorial de C++ no youtube e acompanhar com o "C++ primer" e o "Efficient C++".
