@@ -1,4 +1,4 @@
-% Created 2023-03-07 Tue 16:01
+% Created 2023-04-05 qua 10:33
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -13,7 +13,7 @@
 \usepackage{capt-of}
 \usepackage{hyperref}
 \usepackage{todonotes}
-\usepackage[brazil]{babel}
+\usepackage[brazil, portuges]{babel}
 \usepackage{amsthm}
 \usepackage{setspace}
 \doublespacing
@@ -41,34 +41,16 @@ Além de ser um tradicional problema de teoria dos grafos, o problema se apresen
 Tais aplicações vão desda alocação de recursos como registradores até o gerenciamento de eventos.
 
 Soluções exatas para este problema utilizam técnicas como enumeração com \emph{Branch-and-Bound} \autocite{Furini2016ImprovedDSATURBased}, programação dinâmica \autocites{Eppstein2006SmallMaximalIndependent}[][]{Byskov2002ChromaticNumberTime} ou programação linear inteira.
-Nesse projeto, almejamos a última e aplicar algoritmos de \emph{Branch-and-Price} para superar os resultados da literatura.
+Nesse projeto, almejamos aplicar a última e utilizar algoritmos de \emph{Branch-and-Price} para superar os resultados da literatura.
 Acreditamos que nosso trabalho se diferencia ao aplicar técnicas recentes para tais algoritmos, o que pode levar a uma melhora do estado-da-arte.
 Dessa forma, objetivamos resultados competitivos nas instâncias consolidadas na literatura, bem como possíveis novas formulações, cortes e estratégias para melhor resolvê-las.
 \end{abstract}
 
 \section{Introdução}
-\label{sec:org9beb733}
-Dado um grafo não direcionado, uma \textbf{coloração própria} deste é uma alocação de cores tal que nenhum vértice seja adjacente a outro de mesma cor.
-O \textbf{Problema de Coloração de Vértices} (VCP) requer que encontremos uma coloração própria usando o menor número possível de cores.
-Decidir se um grafo possui uma coloração própria que usa até \(k \geq 3\) cores é um problema NP-completo \autocite{Garey1979ComputersIntractabilityGuide}, de forma que o problema de otimização também é NP-difícil.
-
-Muitas vezes, deseja-se alocar eventos ou recursos sem que hajam conflitos, seja na divisão de tarefas num cenário de fábricas ou escritórios, ou na organização de eventos.
-Assim, desejamos construir uma alocação de eventos a horários sem que, por exemplo, requeira que uma pessoa esteja em dois locais simultaneamente.
-Tal problema pode ser convertido a um de coloração transformando cada evento a um vértice no qual dois vértices estão ligados se há necessidade de ao menos uma pessoa estar em ambos eventos.
-Assim, numa solução, cada cor irá representar um horário para os eventos acontecerem.
-
-Além dessa, como discutido por \textcite{Malaguti2010SurveyVertexColoring}, diversas são as aplicações do problema, como: agendamento \autocite{Leighton1979GraphColoringAlgorithm}, tabela de horários \autocite{Werra1985introductiontimetabling}, alocação de registradores \autocite{Chow1990prioritybasedcoloring}, comunicação de redes \autocite{Caprara2007PassengerRailwayOptimization} e alocação de banda \autocite{Gamst1986Somelowerbounds}.
-
-As aplicações acima deixam claro que encontrar uma boa (ou até ótima) solução para o problema é crucial.
-Cenários reais, muitas vezes, lidam com centenas de milhares de vértices, tornando necessário também resolvermos de forma rápida.
-
-Neste projeto, utilizaremos de Programação Linear Inteira para resolver o problema de forma exata, como discutido na Seção \ref{metodologia}.
-É importante mencionar que Programação Dinâmica também é comumente utilizada \autocites{Eppstein2006SmallMaximalIndependent}[][]{Byskov2002ChromaticNumberTime}, mas que vê apenas desenvolvimentos teóricos sem grande aplicabilidade prática no VCP.
-Já técnicas de enumeração baseado em \emph{branch-and-bound} \autocite{Brelaz1979Newmethodscolor} possuem resultados práticos melhores que programação dinâmica, mas ainda são superados por técnicas de programação linear inteira.
-Por fim, recomendamos as seguintes revisões bibliográficas sobre o problema \autocites{Malaguti2010SurveyVertexColoring}[][]{Lewis2015GuideGraphColouring}[][]{Husfeldt2015Graphcolouringalgorithms}[][]{Lima2018ExactAlgorithmsGraph}.
+\label{sec:org8ee3af0}
 
 \subsection{Modelo matemático}
-\label{sec:orgc0aa383}
+\label{sec:orgc0786b8}
 Durante essa proposta, utilizaremos algumas notações que apresentaremos a seguir.
 
 Seja \(G = (V,E)\) um grafo simples não direcionado, denotamos como \(n = |V|\) a quantidade de vértices e \(m = |E|\) a quantidade de arestas.
@@ -79,14 +61,14 @@ Muitas vezes, nos referimos a uma coloração própria apenas como coloração.
 Já uma coloração parcial é a atribuição, segundo as mesmas regras, de uma parte dos vértices e, em geral, utilizaremos essa definição para soluções em construção.
 O número cromático de \(G\),  \(\chi(G)\), é a menor quantidade de cores que pode constituir uma coloração do grafo \(G\).
 Por fim, usaremos \(H\) como limitante superior ao número cromático.
-Uma cor \(h\) é dita válida para o vértice \(v\) se ela não foi atribuida a nenhum outro vértice da visinhança aberta de \(v\).
+Uma cor \(h\) é dita válida para o vértice \(v\) se ela não foi atribuida a nenhum vértice da visinhança aberta de \(v\).
 
 Um conjunto \(S \subseteq V\) é dito independente em \(G\) se, e somente se, não existem arestas em \(E\) que conectem dois elementos de \(S\).
 Perceba que o conjunto de vértices coloridos com mesma cor deve ser um conjunto independente.
 
 \subsection{Problemas similares}
-\label{sec:org393d7f3}
-O problema de \textbf{Multicoloração de Banda} (do inglês, BMCP) é a combinação de dois problemas: Coloração de Banda e Multicoloração.
+\label{sec:org93a7c96}
+O problema de \textbf{Multicoloração de Banda} (BMCP) é a combinação de dois problemas: Coloração de Banda e Multicoloração.
 No problema de \textbf{Coloração de Banda}, a diferença entre a cor de cada par de vértices adjacentes deve ser, ao menos, a distância entre os dois vértices.
 No problema de \textbf{Multicoloração} uma certa quantidade de cores devem ser alocadas a cada vértice, de forma que um par qualquer de vértices adjacentes não possuam uma cor em comum.
 
@@ -95,7 +77,7 @@ Este problema permite que situações mais complexas que o VCP sejam modeladas, 
 
 Por outro lado, muitas vezes, o recurso que queremos alocar é limitado.
 Para refletir isso, podemos colocar um peso em cada vértice e restringir a soma dos pesos dos vértices alocados a cada uma das cores, uma restrição de capacidade.
-Este problema é conhecido como VCP Limitado (do inglês, BVCP) ou \textbf{Problema de Empacotamento com Conflito} \autocite{Connolly1991KnapsackProblemsAlgorithms}.
+Este problema é conhecido como VCP Limitado (BVCP) ou \textbf{Problema de Empacotamento com Conflito} \autocite{Connolly1991KnapsackProblemsAlgorithms}.
 
 Tal restrição de capacidade pode ser adicionada à formulação de atribuição (ASS) para modelar o problema de BVCP sem grandes dificuldades.
 
@@ -108,12 +90,12 @@ A variante de \textbf{soma mínima} pede para encontramos a coloração com a me
 Já a \textbf{equitativa,} é o desafio de encontrar uma coloração que distribua as cores de forma onde a diferença entre a cardinalidade da cor atribuída a dois vértices adjacentes seja pequena \autocite{Meyer1973EquitableColoring}.
 
 \section{Metodologia}
-\label{sec:org66e2cac}
+\label{sec:org31f081f}
 \label{metodologia}
 A seguir, apresentamos as técnicas que almejamos utilizar bem como abordagens já presentes na literatura disponível.
 
 \subsection{Programação Linear Inteira}
-\label{sec:org792aa94}
+\label{sec:org43027ee}
 \textbf{Programação Linear} é uma técnica de otimização a partir da modelagem de \textbf{programas lineares}.
 Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) \autocite{Chvatal1983LinearProgramming} . Um programa linear pode ser escrito da seguinte forma:
 \begin{alignat*}{4}
@@ -130,7 +112,7 @@ Para isso, restringimos as variáveis aos inteiros, fazendo assim um \textbf{Pro
 
 O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente muito mais complexo.
 Para encontramos boas soluções viáveis para esse tipo de programa, algoritmos como o simplex não são o suficiente.
-Para isso, utilizamos técnicas como \textbf{branch-and-bound}, que consiste em dividir o problema em subproblemas menores e, durante o processo, encontrar limitantes que permitam diminuir o espaço de busca.
+Para isso, utilizamos técnicas como \emph{branch-and-bound}, que consiste em dividir o problema em subproblemas menores e, durante o processo, encontrar limitantes que permitam diminuir o espaço de busca.
 
 Por fim, é interessante nesse momento traçar o paralelo com a \textbf{Combinatória Poliédrica}.
 Definimos um \textbf{poliedro} como um subconjunto \(P \subseteq \mathbb{R}^n\) tal que ele possa ser descrito por meio de inequações lineares em tal espaço, similar aos programas lineares apresentados acima.
@@ -142,7 +124,7 @@ A seguir, apresentamos as metodologias e técnicas que nos são relevantes para 
 Em geral, as instâncias usadas para os resultados de experimentos computacionais são as apresentadas em \autocite{GraphColoringInstances}, que foram atualizadas com o passar dos anos.
 
 \subsection{Atribuição}
-\label{sec:orgc9b81f9}
+\label{sec:org0833170}
 É possível perceber que \(n\) cores são suficientes para colorir um grafo \(G\). Podemos então definir dois conjuntos de variáveis binárias: \(x_{ih}\) se o vértice \(i\) é colorido com a cor \(h\) e \(y_h\) se a cor \(h\) é utilizada. Dessa forma, construímos a seguinte formulação.
 
 \begin{alignat*}{4}
@@ -172,7 +154,7 @@ Um algoritmo de \emph{branch-and-bound} consiste em, durante a árvore de \emph{
 Já \textcite{MendezDiaz2008CuttingPlaneAlgorithm} apresentam mais duas variações da formulação ASS: uma onde a quantidade de vértices cuja cor \(h+1\) é atribuída não pode ser maior que a quantidade atribuída a cor \(h\) e outro onde conjuntos independentes são ordenados pelo menor índice e apenas a cor \(h\) pode ser atribuída ao \(h-\text{ésimo}\) conjunto.
 
 \subsection{Representantes}
-\label{sec:orgd7017b7}
+\label{sec:org3a16297}
 \textcite{Campelo2004CliquesHolesVertex} propuseram uma formulação baseada em representantes, em que cada cor é representada por um vértice.
 Para tal, utilizam a variável binária \(x_{vu}\), para todo \(u, v \in V\) não adjacentes, a fim de representar se o vértice \(v\) é representante da cor de \(u\) e \(x_{vv}\) se \(v\) é o próprio representante de sua cor.
 Seja \(\bar{N}(v)\) o conjunto de vértices não adjacentes de \(v\), esta formulação pode ser escrita como
@@ -188,13 +170,12 @@ Como \textcite{Campelo2008AsymmetricRepresentativesFormulation} discutem, existe
 Eles propõem acrescentar uma ordenação para que apenas o menor vértice possa ser o representante, porém esta versão possui um número exponencial de variáveis e portanto requer técnicas como \emph{branch-and-price}, abordada mais afundo na Seção \ref{conjuntos_independentes}.
 Os autores também apresentam diversas restrições válidas a fim de reforçar o modelo.
 
-Por fim, \textcite{Campos2015Polyhedralstudiesvertex} debruçam-se sobre essa formulação, realizando a caracterização completa do politopo para algumas classes de grafos.
 Experimentos computacionais foram feitos por \textcite{Jabrayilov2018NewIntegerLinear} mostrando a capacidade deste modelo de competir com as demais formulações.
 
 \subsection{Conjuntos independentes}
-\label{sec:org5a97e05}
+\label{sec:org63d45c4}
 \label{conjuntos_independentes}
-Proposto por \textcite{Mehrotra1996ColumnGenerationApproach}, outra forma de entender o problema é imaginá-lo como um \textbf{problema de cobertura de conjuntos} (do inglês, SC) onde os conjuntos disponíveis são os conjuntos independentes dos vértices.
+Proposto por \textcite{Mehrotra1996ColumnGenerationApproach}, outra forma de entender o problema é imaginá-lo como um \textbf{problema de cobertura de conjuntos} (SC) onde os conjuntos disponíveis são os conjuntos independentes dos vértices.
 
 Assim, seja \(S\) a família de conjuntos impendentes do grafo \(G\), a variável binária \(x_s\) representa se o conjunto \(s \in S\) está sendo usado ou não na solução. Nossa formulação então se dá por:
 \begin{alignat}{4}
@@ -214,13 +195,13 @@ Neste algoritmo, a decisão de qual variável será adicionada é feita pelo sub
 & \mbox{sujeito a}&& \quad & z_i + z_j &\leq 1 & \quad & (i,j) \in E \\
 &                 &&   & z_i       & \in \{0,1\} &    & i \in V
 \end{alignat*}
-onde \(z_i\) é uma variável binária que indica se o vértice \(i\) está incluso no conjunto independente e \(\pi_i\) é o valor ótimo da variável dual associado a restrição \eqref{rest9}.
+onde \(z_i\) é uma variável binária que indica se o vértice \(i\) está incluso no conjunto independente e \(\pi_i\) é o valor ótimo da variável dual associado à restrição \eqref{rest9}.
 Tal problema pode ser resolvido de forma heurística para encontrar a coluna de custo reduzido com valor negativo.
 Em caso de soluções fracionárias, os autores sugerem uma estratégia que garante que os subproblemas continuam a ser de coloração de vértices e apenas requer que o grafo original seja alterado.
 
 Além disso, \textcite{Malaguti2011ExactApproachVertex} propõem meta-heurísticas para inicialização e geração de colunas bem como novos esquemas de branching.
 
-Similar a este último modelo, \textcite{Hansen2009Setcoveringpacking} propuseram a formulação chamada de \textbf{Empacotamento de conjunto} (do inglês, SP)
+Similar a este último modelo, \textcite{Hansen2009Setcoveringpacking} propuseram a formulação chamada de \textbf{Empacotamento de conjunto} (SP)
 \begin{alignat*}{4}
 \mathrm{(SP)} \quad & \omit\rlap{minimize  $\displaystyle \sum_{s \in \Omega} (|s| - 1)x_s$} \\
 & \mbox{sujeito a}&& \quad & \sum_{s \in \Omega: i \in s} x_{s}&\leq 1 & \quad & i \in V \\
@@ -242,8 +223,8 @@ Mais uma vez, resultados computacionais provam que a ideia é competitiva com as
 Recentemente, \textcite{Morrison2016SolvingPricingProblem} propuseram uma estratégia utilizando diagramas de decisão para agilizar a resolução do problema de precificação que, segundo seus experimentos, possui bons resultados práticos bem como fornece limites inferiores durante o processo.
 
 \subsection{Ordenação parcial hibrida}
-\label{sec:org9851cd3}
-Apresentado inicialmente por \textcite{Jabrayilov2018NewIntegerLinear} e posteriormente melhorado \autocite{Jabrayilov2022StrengthenedPartialOrdering}, utilizamos um misto do modelo de atribuição e a ordenação parcial.
+\label{sec:org686716b}
+Apresentado inicialmente por \textcite{Jabrayilov2018NewIntegerLinear}, essa formulação utiliza um misto do modelo de atribuição e a ordenação parcial.
 Para isto, definimos uma ordenação parcial da união do conjunto de vértices e do conjunto ordenado de cores \((1, \dots, H)\) e, portanto, determinamos a ordem relativa de cada vértice com respeito a cada cor.
 Dizemos que o vértice \(v\) é colorido com a cor \(h\) se \(h-1 \succ v\) e \(h \nsucc v\) (no caso de \(h=1\), se \(h \nsucc v\)).
 
@@ -265,10 +246,8 @@ O primeiro conjunto de restrições garante que nenhum vértice é maior que a c
 Já o segundo e terceiro correlacionam as variáveis de ordenação parcial com as de atribuição, enquanto que o quarto e quinto garantem que dois vértices adjacentes não são coloridos com a mesma cor.
 Por fim o sexto, força que \(q\) seja o vértice com a maior cor que, juntamente com o sétimo, são utilizados para reforçar a formulação.
 
-Segundo os resultados experimentais de \autocite{Jabrayilov2022StrengthenedPartialOrdering}, essa formulação domina os modelos anteriores nas instâncias DIMACS \autocite{GraphColoringInstances} esparsas (densidade \(\frac{2|E|}{|V|(|V|-1)} \leq 0.1\)).
-
 \subsection{Diagrama de decisões binárias ordenadas}
-\label{sec:orga3845e0}
+\label{sec:org3cc8b06}
 Por fim, mais recentemente, \textcite{Hoeve2021Graphcoloringdecision} aplica técnicas de diagrama de decisão.
 Nesta, representamos cada atribuição por um arco que liga o ``estado da solução'' antes e depois de tomá-la.
 Mais formalmente, para um problema \(P\) definido por um conjunto de variáveis ordenadas \(X = \{x_1,x_2,\dots ,x_n\}\), construímos um diagrama de decisão, um grafo simples acíclico de \(n+1\) níveis.
@@ -286,14 +265,14 @@ Neste, os números dentro dos nós representam o conjunto de vértices disponív
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=250px]{../diagrama_decisao.png}
+\includegraphics[width=250px]{./diagrama_decisao.png}
 \caption{\label{fig:diagrama_decisão}Imagem retirada de \autocite{Hoeve2021Graphcoloringdecision}. Ao lado esquerdo, um grafo, e ao lado direito, um correspondente diagrama de decisão.}
 \end{figure}
 
 Os autores relatam ter obtido resultados competitivos com outros estados-da-arte utilizando estratégias específicas da literatura de diagrama de decisões para resolver as dificuldades apresentadas acima.
 
 \section{Objetivos}
-\label{sec:org3d61eef}
+\label{sec:org26f3f3a}
 Recentemente, houve avanços significativos na abordagem de branch-and-price para o problema de coloração, resultando em vários trabalhos publicados para outros problemas que utilizam e melhoram essa técnica. Um exemplo notável é o trabalho de \textcite{Lima2022Exactsolutionnetwork}, que apresenta técnicas fortes que melhoram o estado da arte para problemas como o Problema de Empacotamento.
 
 Os autores propõem um modelo baseado em fluxo de arcos para auxiliar em algoritmos de geração de colunas.
@@ -315,7 +294,7 @@ Por fim, como apresentado no começo desse projeto, diversos são os problemas s
 Assim, podemos também voltar nossas técnicas e implementações a tais variantes.
 
 \section{Cronograma}
-\label{sec:org962eeed}
+\label{sec:orgd65f956}
 O projeto está dividido em etapas distintas, cada uma com um objetivo específico.
 A primeira fase é de revisão bibliográfica, onde serão dedicados \(2\) trimestres para estudar a literatura existente sobre o assunto.
 Reforçamos que, apesar deste ser o foco da primeira etapa, a revisão da bibliografia será permanente.
@@ -351,13 +330,13 @@ Para o ano de \(2023\), estão programadas \(3\) aulas semanais, o que se manté
 Acreditamos que tal atividade muito acrescentará no desenvolvimento do aluno como acadêmico, transmitindo os conhecimentos adquiridos à comunidade e ajudando na divulgação científica.
 
 \section{Material e método}
-\label{sec:org03f415d}
+\label{sec:org01d4144}
 Para o desenvolvimento do projeto, o aluno utilizará-se de artigos e materiais de consulta disponibilizados pela UNICAMP de maneira gratuita, grande parte desses de forma online ou por meio da Biblioteca do Instituto de Matemática, Estatística e Computação Científica.
 
 Ademais, serão realizados encontros semanais entre o aluno e o orientador para debater os conteúdos estudados e acompanhar o progresso do projeto.
 
 \section{Avaliação dos resultados}
-\label{sec:org7e46238}
+\label{sec:org1e7177c}
 Os algoritmos e modelos propostos serão comparados com as instâncias presentes na literatura, como as \textcite{GraphColoringInstances} e, caso necessário, novas instâncias poderão ser geradas.
 
 Os resultados dos experimentos computacionais serão comparados utilizando técnicas como \textbf{Performance Profile} apresentado por \textcite{Dolan2002Benchmarkingoptimizationsoftware}.
