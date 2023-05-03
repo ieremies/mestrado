@@ -4,25 +4,59 @@
 [[org:../proj/mest/docs/reunioes.org][Reuniões]] | [[org:../proj/mest/docs/disciplinas.org][Disciplinas]] | [[org:../proj/mest/docs/habilidades.org][Habilidades]]
 
 * Tarefas
-** TODO Branching :code:
-** TODO Como resolver o MWSS :study:
-[cite:@Held2012Maximumweightstable]
-** Artigos
+** TODO MVP de branch-and-bound
+DEADLINE: <2023-04-25 Tue>
+Fazer copiando o grafo mesmo e remontando o problema.
+O importante é que funcione.
+
+** TODO Script de teste de sanidade
+DEADLINE: <2023-04-26 Wed>
+- Perguntar ao prof como tenho acesso às máquinas do loco.
+
+Algo que confirme que minhas versões estão encontrando o ótimo e se as soluções são válidas.
+Algo similar a testes unitários.
+
+Creio que possa pegar os valores ótimos na literatura.
+
+** TODO Heurística primal
+Para obter um descente limitante superior.
+
+** TODO Coletar estatísticas de gargalos
+Você pode olhar para o tempo de algumas partes (como geração de colunas), ou outras estatísticas como número de nós, número de colunas geradas, evolução do uppper e do lower bound, etc.
+Dá para olhar um pouco o que o gurobi mostra de estatística e tentar reproduzir.
+
+Talvez ter um script para pegar esses dados e salvá-los seja interessante.
+
+** TODO Otimizar
+- Fazer com que não copiemos o grafo e sim somente "deltas" de conflitos e joins
+  Talvez fazer o grafo virar um singleton?
+- Não regerar o modelo toda vez.
+  Eu só preciso adicionar restrições.
+
+** TODO Plataformas de avaliação
+DEADLINE: <2023-04-29 Sat>
+Prof pediu para testar e comparar https://eecs-autograder.github.io/autograder.io/, replit e github classroom.
+** TODO Parecer do Artigo
+DEADLINE: <2023-05-03 Wed>
+
+** outros artigos
 *** Gualandi 2012 - Exact Solution of GCP via Constraint Programming and Column Generation
 [cite:@Gualandi2012ExactSolutionGraph]
-*** TODO Pessoa 2021 - Solving Bin Packing Problems Using VRPSolver Models
+*** Pessoa 2021 - Solving Bin Packing Problems Using VRPSolver Models
 [cite:@Pessoa2021SolvingBinPacking]
-*** TODO Lima 2022 - Exact solution of network flow models with strong relaxations [0%]
+*** Lima 2022 - Exact solution of network flow models with strong relaxations [0%]
 :LOGBOOK:
 CLOCK: [2023-02-28 ter 15:45]--[2023-02-28 ter 16:40] =>  0:55
 :END:
 [cite:@Lima2022Exactsolutionnetwork]
-*** TODO Desrosiers 2005
+*** Desrosiers 2005
 [cite:@Desrosiers2005ColumnGenerationGerad]
 Citado por [cite:@Lima2018ExactAlgorithmsGraph] como referência para geração de colunas.
-*** TODO DW decompositions
+*** DW decompositions
 [cite:@AndradeUmalgoritmoexato]
 *** Paper do Renan
-*** TODO Conferir sobre a ferramenta [[https://matilda.unimelb.edu.au/matilda/our-methodology][Matilda]]
+*** Conferir sobre a ferramenta [[https://matilda.unimelb.edu.au/matilda/our-methodology][Matilda]]
 Renan falou que na oficina que ele tava comentaram sobre a ferramenta.
 Parace ser algo para analizar a dificuldade de instâncias.
+*** https://drops.dagstuhl.de/opus/volltexte/2022/16655/
+*** https://link.springer.com/chapter/10.1007/978-3-030-45771-6_31

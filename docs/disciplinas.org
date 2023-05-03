@@ -16,9 +16,10 @@ PED no segundo semestre:
 - MC202 com o Rafael, segundas a tarde inteira.
 - MC202 com o GPT, terças as 21.
 
-* TODO Solicitar PIF
-DEADLINE: <2023-04-12 Wed>
+* DONE Solicitar PIF
+CLOSED: [2023-04-24 Mon 19:34] DEADLINE: <2023-04-12 Wed>
 Rafael já me mandou o documento no slack.
 
 * TODO Proficiência em inglês
+SCHEDULED: <2023-05-03 qua>
 Eles disseram que iam mandar isso no começo de abril.
