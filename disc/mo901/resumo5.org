@@ -1,0 +1,11 @@
+#+title: H.IAAC: Pushing AI Systems to its boundaries
+#+subtitle: Seminário 5
+#+options: toc:nil num:nil date:nil
+
+A palestra sobre inteligência artificial apresentou o projeto de Arquiteturas Cognitivas do HUB, iniciativa do Ministério da Ciência, Tecnologia e Inovações, com coordenação da Softex e execução da UNICAMP e Instituto Eldorado. O objetivo do projeto é desenvolver e disseminar conhecimento sobre tecnologias capazes de integrar diversos recursos de inteligência em dispositivos embarcados, expandindo os limites da AI.
+
+Foi mencionado que Deep Learning não é mais suficiente para tomar decisões em ambientes não controlados, e que a técnica Neural-Symbolic tenta ligar os modelos numéricos a sentidos e conceitos, para que sejam capazes de tomar decisões fora do contexto que foram treinados. Além disso, foi discutido que agentes inteligentes são sistemas capazes de sensorear um ambiente, criar um modelo dele e agir de maneira inteligente sobre ele, e que são necessários sistemas de AI integrados para tomar decisões mais elaboradas.
+
+Outro tópico abordado foi o uso das arquiteturas cognitivas, que são sistemas computacionais de uso geral que utilizam-se de modelos cognitivos da mente humana, de forma à implementar versões computacionais das habilidades cognitivas. O processo começa pela percepção, que é o processo de adquirir, interpretar e selecionar informações sensoriais. A atenção é o processo por meio do qual certas informações são selecionadas para processamentos posteriores e outras informações são descartadas. Na memória, conseguimos armazenar experiências, mas a qualidade desse armazenamento é afetado pela emoção. Nossos sistemas cognitivos podem usar a detecção das emoções do usuário para dar prioridade a algumas memórias.
+
+Em resumo, a palestra apresentou a importância de integrar recursos de inteligência em dispositivos embarcados, utilizando técnicas como Neural-Symbolic para tomar decisões fora do contexto treinado e implementando arquiteturas cognitivas baseadas nos modelos cognitivos da mente humana para realizar tarefas como percepção, atenção e memória de forma mais eficiente.

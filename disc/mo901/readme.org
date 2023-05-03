@@ -1,9 +1,8 @@
 #+Title: Seminários em Computação
 #+category: semi
 
-* Resumos
-** TODO Seminário 1 - Transformação Digital – Computação Escalar & Dados Digitais Intensivos
-DEADLINE: <2023-03-17 Fri>
+* DONE Seminário 1 - Transformação Digital – Computação Escalar & Dados Digitais Intensivos
+CLOSED: [2023-04-17 Mon 11:12] DEADLINE: <2023-03-17 Fri>
 CLOCK: [2023-03-17 Fri 11:37]--[2023-03-17 Fri 12:45] =>  1:08
 
 A computação escalável com uso intensivo de dados (DISC) é uma abordagem centrada em dados digitais que utiliza modelos de programação de alto nível e clusters de hardware para processamento. A estratégia de downsizing, que tentava diminuir o tamanho dos computadores, foi substituída pela abordagem de rightsizing, que permite a utilização de diferentes níveis de computação (edge, fog e cloud) para executar tarefas específicas de forma mais eficiente.
@@ -13,8 +12,8 @@ No contexto da DISC, os dados são coletados na borda, limpos e organizados para
 A DISC é aplicada em cenários de workflows de dados, paralelização massiva, logística de dados, processamento de stream, entre outros. É importante considerar a escalabilidade de entrada e saída de dados, a capacidade de armazenamento e o desempenho de acesso aos dados. Além disso, é necessário utilizar ferramentas específicas para cada uma dessas tarefas.
 
 A simulação apropriada, de pós-processamento, in-situ e in-transit também é uma parte importante da abordagem DISC. Em resumo, a DISC é uma abordagem centrada em dados que requer uma organização e armazenamento eficientes dos dados, além de ferramentas específicas para processamento e simulação (pós-processamento, in-situ e in-transit).
-** TODO Seminário 2 - Exploiting the Computing Continuum with self-distributing services.
-DEADLINE: <2023-03-17 Fri>
+* DONE Seminário 2 - Exploiting the Computing Continuum with self-distributing services.
+CLOSED: [2023-04-17 Mon 11:12] DEADLINE: <2023-03-17 Fri>
 :LOGBOOK:
 CLOCK: [2023-03-17 Fri 14:00]--[2023-03-17 Fri 14:45] =>  0:45
 :END:
@@ -27,7 +26,8 @@ Serviços como contêineres e Kubernetes permitem a mobilidade do código nas di
 Para quebrar um sistema e movê-lo de camada, é necessário primeiro transformá-lo de uma aplicação monolítica em microsserviços autônomos sem estado.
 
 Os sistemas de software emergentes são sistemas autônomos e autoadaptativos que utilizam algoritmos de aprendizado por reforço para gerenciar suas componentes. Esse agente inteligente pode trocar as componentes em tempo de execução e determinar a melhor configuração com base no impacto nos recursos e funcionalidades. Esse conceito também pode ser usado para determinar a colocação das componentes em diferentes camadas ou clusters de rede. Embora isso possa aumentar os requisitos de rede, o off-loading de carga computacional pode ser benéfico em muitos casos.
-** TODO Seminário 3 - Federated learning
+* DONE Seminário 3 - Federated learning
+CLOSED: [2023-04-17 Mon 11:12]
 A abordagem mais utilizada é centralizar os dados.
 Isso tem problemas, em especial em termos de privacidade, seria melhor manter os dados na borda, no dispositivo que o coleto..
 Assim, aprendizado federado utiliza um conjunto de dados locais para conjuntamente de outros dispositivos treinar o modelo.
@@ -51,7 +51,8 @@ Algoritmos de agregação:
 - FedSim :: agrupa clientes como gradientes similares em agregaçõe locais.
 
 Desafios relacionados a aprendizado federado continuam, com privacidade, dados insuficiêntes, heterogenoidade estatística, latência e mobilidade.
-** TODO Seminário 4 - Um relato de experiências de cooperação academia/empresas no tecnológico do Brasil
+* DONE Seminário 4 - Um relato de experiências de cooperação academia/empresas no tecnológico do Brasil
+CLOSED: [2023-04-17 Mon 11:12]
 O apresentador tem grande histórico de experiências em criar empresas de dentro da Universidade.
 Já um outro tipo de experiência é colaborações com start-up ajudando e guiando
 
@@ -65,3 +66,28 @@ Identificar problemas interessantes do ponto de vista acadêmico e tentar gerar 
 O apresentador ainda comenta mais duas formas de interação universidade e empresa:
 Projeto de P&D pela lei de informática, mas, que segundo ele, não foi uma boa experiência.
 Embrapii: empresa brasileira de pesquisa e inovação, como uma EMBRAPA de tecnologia
+* DONE Seminário 5 - H.IAAC: Pushing AI Systems to its boundaries
+CLOSED: [2023-05-02 ter 16:22] DEADLINE: <2023-04-28 Fri>
+O projeto de arquiteturas cognitivas do HUB nasceu por iniciativa do Ministério da Ciência, Tecnologia e Inovações, com coordenação da Softex e execução da UNICAMP e Instituto Eldorado.
+Possui como objetivo desenvolver e disseminar conhecimento sobre tecnologias capazes de integrar diversos recursos de inteligência em dispositivos embarcados, expandindo os limites da AI.
+
+Vivemos num mundo com uma enorme quantidade de informações e queremos tomar boas decisões.
+Por que associar AI e Arquiteturas Cognitivas? Deep Learning não é mais suficiente para tomar decisões em ambientes não controlados, aprendizado com reforço ganhou muito espaço nos últimos anos.
+Neural-Sumbolic é uma técnica que tenta ligar os modelos numéricos a sentidos e conceitos, para que sejam capazes de tomar decisões fora do contexto que foram treinados.
+
+Agentes inteligentes são sistemas capazes de sensorear um ambiente, criar um modelo dele e agir de maneira inteligente sobre ele. Assim, são necessários sistemas de AI integrados para tomar decisões mais elaborados.
+
+Arquiteturas cognitivas são sistemas computacionais de uso geral que utilizam-se de modelos cognitivos da mente humana, de forma à implementar versões computacionais das habilidades cognitivas.
+
+O processo começa pela percepção, processo de adquirir, interpretar e selecionar informações sensoriais. Atenção é o processo por meio do qual certas informações são selecionadas para processamentos posteriores e outras informações são descartadas. Na memória conseguimos armazenar experiências, mas a qualidade desse armazenamento é afetado pela emoção. Nossos sistemas cognitivos podem usar a detecção das emoções do usuário para dar prioridade a algumas memórias.
+
+* TODO Seminário 6 - How to live with Syntethic Realities
+DEADLINE: <2023-06-02 sex>
+# Gravada no youtube https://youtu.be/huf6xigwb-E
+* TODO Seminário 7 - Higher education and affirmative action effects
+DEADLINE: <2023-05-05 Fri>
+# Eu faltei essa
+# apresentação de um artigo de mesmo nome
+* TODO Seminário 8 - Anti-Fake Technology (AFT): Devolvendo a Verdade à Sociedade
+DEADLINE: <2023-05-12 sex> SCHEDULED: <2023-05-03 qua 13:00>
+# Não vale nota, mas pode abonar uma falta.
