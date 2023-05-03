@@ -1,0 +1,129 @@
+#+Title: Trabalho 2
+#+Subtitle: Processamento Digital de Imagem
+#+Author: Ieremies Vieira da Fonseca Romero
+#+PROPERTY: header-args:python :session a
+#+PROPERTY: header-args:python :results silent
+#+PROPERTY: header-args:python :tangle funcs.py
+
+
+* Introdução
+O processamento digital de imagens é uma área de estudo fundamental em Ciência da Computação, que visa o tratamento e manipulação de imagens digitais por meio de técnicas e algoritmos computacionais.
+A análise e processamento de imagens digitais é uma tarefa complexa e multidisciplinar, que envolve conhecimentos em matemática, estatística, computação gráfica, processamento de sinais e outras áreas correlatas.
+
+O objetivo deste trabalho é apresentar uma série de processamentos básicos em imagens digitais, abordando desde a leitura e escrita de imagens até operações de filtragem.
+Para o desenvolvimento das operações, será empregada a vetorização de comandos, que permite processar as imagens de forma mais eficiente e rápida, através da aplicação de operações vetoriais em vez de operações matriciais.
+
+* O programa
+Neste trabalho, utilizamos as bibliotecas =numpy= 1.24.1 e OpenCV 4.7.0.72 utilizado via =cv2=.
+Em especial, utilizamos a versão /contrib/ do /opencv-python/ (=opencv-contrib-python=).
+#+begin_src python
+import cv2 # pip install opencv-contrib-python
+import numpy as np
+#+end_src
+
+Há duas formas de utilizar o código deste projeto:
+- script.py :: Executa todas as funções em todas as imagens e salva o seus respectivos resultados.
+- iterativo :: utilizando =python -i funcs.py=, é possível interagir com cada uma das funções no terminal.
+
+Cada uma das questões do enúnciado é resolvido por uma função contida no arquivo =funcs.py=.
+Todas as funções possuem como primeiro parâmetro a imagem sob a qual ela irá atuar.
+
+Para leitura e escrita das imagens, utilizaremos as seguintes funções do =cv2=.
+#+begin_src python :tangle no
+# read the pgm image
+cv2.imread('in.pgm', -1) # TODO why -1?
+cv2.imwrite('out.pgm', img)
+#+end_src
+
+* Global e Otsu
+Para estes método usamos a função =cv2.threshold= que recebe a imagem a sofrer a limiarização, o valor $T$ de limitante, o valor máximo ($255$) e o tipo do resultado (=cv2.THRESH_BINARY=).
+
+Esses parâmetros serão suficientes para o método global.
+#+begin_src python
+def lin_global(img, T=128):
+    _, img_thresholded = cv2.threshold(img, T, 255, cv2.THRESH_BINARY)
+    return img_thresholded
+#+end_src
+
+Já para o método de Otsu, substituimos o limitante para zero e o indicamos o novo método de limiarização (=cv2.THRESH_BINARY = cv2.THRESH_OTSU=).
+#+begin_src python
+def otsu(img):
+    _, img_thresholded = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    return img_thresholded
+#+end_src
+* TODO Bernsen
+Para as próximas técnicas de limiarização, utilizaremos o módulo =cv2.ximgproc=, disponível na /contrib/ do módulo /opencv-python/.
+
+=cv2.ADAPTIVE_THRESH_MEAN_C= significa que o limiar será calculado usando a média dos pixels na janela) e o valor máximo de diferença entre os pixels da janela.
+#+begin_src python
+def bernsen(img, window_size=25, contrast_threshold=5):
+    return cv2.ximgproc.threshold_local(
+        img,
+        window_size,
+        cv2.THRESH_BINARY,
+        cv2.ADAPTIVE_THRESH_MEAN_C,
+        contrast_threshold,
+    )
+
+#+end_src
+* Niblack e Sauvola e Pietaksinen
+No módulo =cv2.ximgproc=, também está disponível a função =niBlackThreshold=, que recebe a imagem (=img=), o limite superior (=255=), o tipo de limiarização (=cv2.THRESH_BINARY=), o tamanho do bloco a ser utilizado na média local (=7=) e o valor de $k$, utilizado para ajustar a fração da borda que pertence ao objeto (=0.1=).
+
+Para o método de Niblack, isso será o suficiente.
+#+begin_src python
+def niblack(img):
+    return cv2.ximgproc.niBlackThreshold(img, 255, cv2.THRESH_BINARY, 7, 0.1 )
+#+end_src
+
+Já para o método de Sauvola e Pietaksinen, passaremos um parâmetro a mais indicando o método de binarização.
+#+begin_src python
+def sauvola(img):
+    return cv2.ximgproc.niBlackThreshold(
+        img, 255, cv2.THRESH_BINARY, 7, 0.1, cv2.ximgproc.BINARIZATION_SAUVOLA
+    )
+#+end_src
+
+* TODO Phansalskar, More e Sabal
+* TODO Contraste
+#+begin_src python
+def contraste(img, window_size=25, use_max=True):
+    if use_max:
+        _, img_thresholded = cv2.threshold(
+            img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
+        )
+    else:
+        _, img_thresholded = cv2.threshold(
+            img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
+        )
+    return img_thresholded
+
+#+end_src
+* Média e mediana
+Para os próximos dois métodos, utilizaremos a função =cv2.adaptiveThreshold=.
+Ela recebe a imagem fonte (=img=), o limite superior (=255=), o método adaptativo, o tipo de limiarização (=cv2.THRESH_BINARY=, binária), o tamanho da janela que será utilizada (=window_size=, por padrão $25$) e uma constante a ser subtraída da média ou mediana (=contrast_threshold=, por padrão 5).
+
+Para o método da média, utilizamos o método =cv2.ADAPTIVE_THRESH_MEAN_C=.
+#+begin_src python
+def media(img, window_size=25, contrast_threshold=5):
+    return cv2.adaptiveThreshold(
+        img,
+        255,
+        cv2.ADAPTIVE_THRESH_MEAN_C,
+        cv2.THRESH_BINARY,
+        window_size,
+        contrast_threshold,
+    )
+#+end_src
+
+Para o método da mediana, utilizamos o método =cv2.ADAPTIVE_THRESH_MEDIAN_C=.
+#+begin_src python
+def mediana(img, window_size=25, contrast_threshold=5):
+    return cv2.adaptiveThreshold(
+        img,
+        255,
+        cv2.ADAPTIVE_THRESH_MEDIAN_C,
+        cv2.THRESH_BINARY,
+        window_size,
+        contrast_threshold,
+    )
+#+end_src
