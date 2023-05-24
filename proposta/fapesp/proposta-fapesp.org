@@ -92,7 +92,7 @@ Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar 
 \end{alignat*}
 
 Para encontrar soluções viáveis com valores ótimos, conhecemos o algoritmo *simplex* que, apesar de ter complexidade exponencial, no caso médio executa em tempo polinomial [cite:@Borgwardt1986SimplexMethodAlgorithms].
-Além deste, é importante mencionar os métodos de ponto interno [cite:@Karmarkar1984newpolynomialtime] e elipsoide [cite:@Bland1981FeatureArticleTheEllipsoid] como alternativas ao simplex.
+Além deste, é importante mencionar os métodos dos pontos interiores [cite:@Karmarkar1984newpolynomialtime] e elipsoide [cite:@Bland1981FeatureArticleTheEllipsoid] como alternativas ao simplex.
 
 # Programação Linear Inteira
 Para alguns problemas, como o de coloração de grafos, não faz sentido falar em soluções fracionárias, afinal, não conseguimos designar "meia cor" a um vértice.
