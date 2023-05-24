@@ -1,6 +1,8 @@
 #+Title: Trabalho 2
 #+Subtitle: Processamento Digital de Imagem
 #+Author: Ieremies Vieira da Fonseca Romero
+#+Options: toc:nil num:nil date:nil
+#+LATEX_CLASS_OPTIONS: [twocolumn, 10pt]
 #+PROPERTY: header-args:python :session a
 #+PROPERTY: header-args:python :results silent
 #+PROPERTY: header-args:python :tangle funcs.py
@@ -15,18 +17,20 @@ Para o desenvolvimento das operações, será empregada a vetorização de coman
 
 * O programa
 Neste trabalho, utilizamos as bibliotecas =numpy= 1.24.1 e OpenCV 4.7.0.72 utilizado via =cv2=.
-Em especial, utilizamos a versão /contrib/ do /opencv-python/ (=opencv-contrib-python=).
 #+begin_src python
-import cv2 # pip install opencv-contrib-python
+import cv2
 import numpy as np
 #+end_src
+
+#+RESULTS:
+: None
 
 Há duas formas de utilizar o código deste projeto:
 - script.py :: Executa todas as funções em todas as imagens e salva o seus respectivos resultados.
 - iterativo :: utilizando =python -i funcs.py=, é possível interagir com cada uma das funções no terminal.
 
 Cada uma das questões do enúnciado é resolvido por uma função contida no arquivo =funcs.py=.
-Todas as funções possuem como primeiro parâmetro a imagem sob a qual ela irá atuar.
+Todas as funções possuem como primeiro parâmetro a imagem ou janela sob a qual ela irá atuar.
 
 Para leitura e escrita das imagens, utilizaremos as seguintes funções do =cv2=.
 #+begin_src python :tangle no
@@ -35,95 +39,184 @@ cv2.imread('in.pgm', -1) # TODO why -1?
 cv2.imwrite('out.pgm', img)
 #+end_src
 
-* Global e Otsu
-Para estes método usamos a função =cv2.threshold= que recebe a imagem a sofrer a limiarização, o valor $T$ de limitante, o valor máximo ($255$) e o tipo do resultado (=cv2.THRESH_BINARY=).
-
-Esses parâmetros serão suficientes para o método global.
-#+begin_src python
-def lin_global(img, T=128):
-    _, img_thresholded = cv2.threshold(img, T, 255, cv2.THRESH_BINARY)
-    return img_thresholded
+Para criar os histogramas, utilizaremos função =histogram= da biblioteca numpy.
+#+begin_src python :tangle no
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+img = cv2.imread('img/sonnet.pgm', -1)
+hist, _ = np.histogram(img, bins=256, range=[0, 255])
+plt.hist(hist, bins=256, range=[0,255], histtype='stepfilled')
+plt.show()
 #+end_src
 
-Já para o método de Otsu, substituimos o limitante para zero e o indicamos o novo método de limiarização (=cv2.THRESH_BINARY = cv2.THRESH_OTSU=).
+#+RESULTS:
+: None
+
+* Global e Otsu
+Os primeiros dois métodos que apresentaremos são chamados de globais.
+Estes utilizam o mesmo limiar para toda a imagem.
+
+O método global recebe um certo valor de limiar, (=threshold=, por padrão $128$).
+#+begin_src python
+def lin_global(img, threshold=128):
+    # todos os pixels começam com preto
+    res = np.zeros_like(img)
+    # pixels com valor abaixo do limiar
+    # são definidos como branco
+    res[img < threshold] = 255
+    return res
+#+end_src
+#+Caption: Método global com limiar padrão ($128$) aplicado à imagem "baboon.pgm" com 53.85% dos pixels em preto.
+[[./out/baboon-lin_global.png]]
+
+Já para o método de Otsu calcula o limiar baseado na variância intraclasse. Neste caso, utilizaremos a função =cv2.threshold= com método =cv2.THRESH_OTSU=.
 #+begin_src python
 def otsu(img):
-    _, img_thresholded = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    return img_thresholded
+    _, res = cv2.threshold(img, 0, 255,
+                           cv2.THRESH_BINARY
+                           + cv2.THRESH_OTSU)
+    return res
 #+end_src
-* TODO Bernsen
-Para as próximas técnicas de limiarização, utilizaremos o módulo =cv2.ximgproc=, disponível na /contrib/ do módulo /opencv-python/.
+#+Caption: Método de Otsu aplicado à imagem "baboon.pgm" com 40.89% dos pixels em preto.
+[[./out/baboon-otsu.png]]
 
-=cv2.ADAPTIVE_THRESH_MEAN_C= significa que o limiar será calculado usando a média dos pixels na janela) e o valor máximo de diferença entre os pixels da janela.
+* Local
+Todas as funções de limiarização locais realizam um processo similar:
+- Percorrer a imagem selecionando as "janelas" de um tamanho específico (por padrão, $25$).
+- Para cada janela, determinar o limiar via algum cálculo, a depender do método (passado pelo parâmetro =f=)
+- O valor do pixel central da janela é determinado em comparação do limiar do passo anterior.
+
+Assim, podemos resolver os métodos de limiarização locais utilizando a função =local= descrita a seguir.
 #+begin_src python
-def bernsen(img, window_size=25, contrast_threshold=5):
-    return cv2.ximgproc.threshold_local(
-        img,
-        window_size,
-        cv2.THRESH_BINARY,
-        cv2.ADAPTIVE_THRESH_MEAN_C,
-        contrast_threshold,
-    )
+def local(img, f, window_size=25):
+    # dimensões da imagem original
+    height, width = img.shape
+    # tamanho da janela
+    w = window_size // 2
+    # nova matriz para o resultado
+    res = np.zeros_like(img)
 
+    for i in range(height):
+        for j in range(width):
+            # limites da janela deslizante
+            i_min = max(i - w, 0)
+            i_max = min(i + w + 1, height)
+            j_min = max(j - w, 0)
+            j_max = min(j + w + 1, width)
+
+            # A janela em questão
+            window = img[i_min:i_max,
+                         j_min:j_max]
+
+            # Utiliza a função indicada
+            # para calcular o limiar
+            threshold = f(window)
+
+            # em todos os casos, se o
+            # valor do pixel é menor
+            # que o limiar, ele é co-
+            # lorido de branco
+            if img[i,j] < threshold:
+                res[i,j] = 255
+    return res
 #+end_src
+Assim, é possível utilizar a função invocando apenas =local(img, bernsen)=.
+
+É importante perceber que, diferentemente do Trabalho 1, quando estamos tratando de limiarização, não se faz necessário realizar o "padding" para as bordas.
+Nesse caso, utilizamos apenas janelas que cabem inteiramente na imagem.
+* Bernsen
+O método de Bernsen utiliza o contraste dentro da janela para determinar o limiar.
+Podemos calculá-lo a partir da média entre o maior e o menor valores na janela.
+#+begin_src python
+def bernsen(window):
+    # valor máximo e mínimo
+    # dentro da janela
+    max_val = int(np.max(window))
+    min_val = int(np.min(window))
+
+    return (max_val + min_val) // 2
+#+end_src
+#+Caption: Método de Bernsen aplicado à imagem "baboon.pgm" com 52.01% dos pixels em preto.
+[[./out/baboon-bernsen.png]]
+
+É importante pontuar nesse momento o uso da função =int=.
+Esta é utilizada para indicar ao python o uso de um valor inteiro e impedir o /overflow/ que ocorreria na soma do =return=.
+Esse processo irá se repetir daqui pra frente
+
 * Niblack e Sauvola e Pietaksinen
-No módulo =cv2.ximgproc=, também está disponível a função =niBlackThreshold=, que recebe a imagem (=img=), o limite superior (=255=), o tipo de limiarização (=cv2.THRESH_BINARY=), o tamanho do bloco a ser utilizado na média local (=7=) e o valor de $k$, utilizado para ajustar a fração da borda que pertence ao objeto (=0.1=).
-
-Para o método de Niblack, isso será o suficiente.
+O método de Niblack utiliza as métricas estatísticas de média e desvio padrão para calular o limiar baseado na fórmula $\mu(x,y) + k \sigma(x,y)$, onde $\mu(x,y)$ é a média das intensidades na janela e $\sigma(x,y)$ o desvio padrão nela.
+Assim, utilizando as funções =numpy.mean= e =numpy.std=, podemos calculá-lo da seguinte forma.
 #+begin_src python
-def niblack(img):
-    return cv2.ximgproc.niBlackThreshold(img, 255, cv2.THRESH_BINARY, 7, 0.1 )
+def niblack(window, k=-0.2):
+    # obter o valor médio e o desvio
+    # padrão dentro da janela
+    mean_val = int(np.mean(window))
+    std_dev = int(np.std(window))
+
+    # calcular o limiar usando a
+    # fórmula de Niblack
+    return mean_val + k * std_dev
+#+end_src
+#+Caption: Método de Niblack aplicado à imagem "sonnet.pgm" com 77% dos pixels em preto.
+[[./out/sonnet-niblack.png]]
+
+Já o método de Sauvola e Pietaksinen utilizam uma ideia similar mas com uma fómula diferente que tenta compensar a má iluminação de documentos:
+\[\mu(x, y)\left[1+k\left(\frac{\sigma(x, y)}{R}-1\right)\right] \]
+#+begin_src python
+def sauvola(window, k=0.5, R=128):
+    mean_val = int(np.mean(window))
+    std_dev = int(np.std(window))
+
+    # fórmula de Sauvola e Pietaksinen
+    aux = (1 + k * ((std_dev / R) - 1))
+    return mean_val * aux
 #+end_src
 
-Já para o método de Sauvola e Pietaksinen, passaremos um parâmetro a mais indicando o método de binarização.
+* Phansalskar, More e Sabal
+O método de Phansalskar, More e Sabal pode ser utilizado em imagens de baixo contraste.
+Similarmente à notação usada nos dois métodos anteriores, temos que nosso limiar é igual à
+\[\mu(x, y)\left[1+p \exp (-q\ \mu(x, y))+k\left(\frac{\sigma(x, y)}{R}-1\right)\right] \]
+Como sugerido, por padrão, utilizaremos os valores de =p= como $2$, de =q= como $10$, =k= como $0.25$ e =R= como $0.5$.
+Calcular o limiar agora se trata apenas de resolver a fórmula (utilizaremos =aux= para representar o termo mais a direita).
 #+begin_src python
-def sauvola(img):
-    return cv2.ximgproc.niBlackThreshold(
-        img, 255, cv2.THRESH_BINARY, 7, 0.1, cv2.ximgproc.BINARIZATION_SAUVOLA
-    )
+from math import exp
+def phansalskar(window, p=2, q=10,
+                k=0.25, R=0.5):
+    mean_val = int(np.mean(window))
+    std_dev = int(np.std(window))
+    # componente a direita da fórmula
+    aux = 1 + p * exp(-q * mean_val)
+    aux += k * ( ( std_dev / R ) - 1 )
+    # média vezes o componente a direita
+    return mean_val * aux
 #+end_src
-
-* TODO Phansalskar, More e Sabal
-* TODO Contraste
+* Contraste
+O método do contraste nos pede que atrelemos o valor de preto (objeto) àqueles pixels que estão mais próximos do maior valor e fundo (branco) aqueles mais próximo do menor valor.
+Assim, isso equivale a dizer que o limiar é a média entre o maior e o menor valores na janela.
 #+begin_src python
-def contraste(img, window_size=25, use_max=True):
-    if use_max:
-        _, img_thresholded = cv2.threshold(
-            img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
-        )
-    else:
-        _, img_thresholded = cv2.threshold(
-            img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
-        )
-    return img_thresholded
-
+def contraste(window):
+    img_min = int(np.min(window))
+    img_max = int(np.max(window))
+    # média
+    return (img_max + img_min) // 2
 #+end_src
-* Média e mediana
-Para os próximos dois métodos, utilizaremos a função =cv2.adaptiveThreshold=.
-Ela recebe a imagem fonte (=img=), o limite superior (=255=), o método adaptativo, o tipo de limiarização (=cv2.THRESH_BINARY=, binária), o tamanho da janela que será utilizada (=window_size=, por padrão $25$) e uma constante a ser subtraída da média ou mediana (=contrast_threshold=, por padrão 5).
+#+Caption: Método de contraste aplicado à imagem "peppers.pgm" com  54.18% em preto.
+[[./out/peppers-contraste.png]]
 
-Para o método da média, utilizamos o método =cv2.ADAPTIVE_THRESH_MEAN_C=.
+Por fim, outros dois métodos mais simples de determinar o limiar é pela média e mediana dos valores na janela.
+Para o método da média, utilizamos a função =numpy.mean= e um valor constante a ser reduzido de cada limiar (=cte=, por padrão, $5$).
 #+begin_src python
-def media(img, window_size=25, contrast_threshold=5):
-    return cv2.adaptiveThreshold(
-        img,
-        255,
-        cv2.ADAPTIVE_THRESH_MEAN_C,
-        cv2.THRESH_BINARY,
-        window_size,
-        contrast_threshold,
-    )
+def media(window, cte=5):
+    return int(np.mean(window)) - cte
 #+end_src
+#+Caption: Método de média aplicado à imagem "peppers.pgm" com 74.00% em preto.
+[[./out/peppers-media.png]]
 
-Para o método da mediana, utilizamos o método =cv2.ADAPTIVE_THRESH_MEDIAN_C=.
+Já para a mediana, apenas a função =numpy.median= será suficiente.
 #+begin_src python
-def mediana(img, window_size=25, contrast_threshold=5):
-    return cv2.adaptiveThreshold(
-        img,
-        255,
-        cv2.ADAPTIVE_THRESH_MEDIAN_C,
-        cv2.THRESH_BINARY,
-        window_size,
-        contrast_threshold,
-    )
+def mediana(window):
+    return np.median(window)
 #+end_src
+#+Caption: Método de mediana aplicado à imagem "peppers.pgm" com 54.63% em preto.
+[[./out/peppers-mediana.png]]

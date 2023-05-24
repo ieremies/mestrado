@@ -1,6 +1,8 @@
 #+Title: Seminários em Computação
 #+category: semi
 
+Total de faltas: 1 /
+
 * DONE Seminário 1 - Transformação Digital – Computação Escalar & Dados Digitais Intensivos
 CLOSED: [2023-04-17 Mon 11:12] DEADLINE: <2023-03-17 Fri>
 CLOCK: [2023-03-17 Fri 11:37]--[2023-03-17 Fri 12:45] =>  1:08
@@ -84,10 +86,35 @@ O processo começa pela percepção, processo de adquirir, interpretar e selecio
 * TODO Seminário 6 - How to live with Syntethic Realities
 DEADLINE: <2023-06-02 sex>
 # Gravada no youtube https://youtu.be/huf6xigwb-E
-* TODO Seminário 7 - Higher education and affirmative action effects
-DEADLINE: <2023-05-05 Fri>
+* KILL Seminário 7 - Higher education and affirmative action effects
+CLOSED: [2023-05-12 Fri 14:21] DEADLINE: <2023-05-05 Fri>
 # Eu faltei essa
 # apresentação de um artigo de mesmo nome
-* TODO Seminário 8 - Anti-Fake Technology (AFT): Devolvendo a Verdade à Sociedade
-DEADLINE: <2023-05-12 sex> SCHEDULED: <2023-05-03 qua 13:00>
+* KILL Seminário 8 - Anti-Fake Technology (AFT): Devolvendo a Verdade à Sociedade
+CLOSED: [2023-05-12 Fri 14:25] DEADLINE: <2023-05-12 sex> SCHEDULED: <2023-05-03 qua 13:00>
 # Não vale nota, mas pode abonar uma falta.
+* TODO Seminário 9 - Disseminação de Dados Pessoais Vitais Para Apoio às Tomadas de Decisão em Situações Emergenciais em Ambientes Externos
+
+Infraestrutura de rede que, apesar de ser urbano, isso não é sinônimo de tranquilidade e harmonia.
+Em eventos críticos (uma queda ou acidente) o compartilhamento de informações e dados pessoais sensíveis e segurança de tais dados bem como o controle ao acesso a estes
+Há uma maior dependência nas infraestruturas da rede que, em situações críticas podem ser comprometidas.
+Além disso, situações como estas nos faz depender de pessoas que não conhecemos.
+
+Tempo é algo importante: cada minuto em parada respiratória ou cardíaca reduz consideradamente as chances de sobreviver.
+
+Como garantir a confidencialidade na disseminação de dados sensíveis pessoais em ambientes dinâmicos em apoio às tomadas de decisão diante de situações emergenciais de saúde.
+
+Os conceitos básicos por trás dessa solução confiança social (mensurar comportamentos e interpretar as relações), controle de acesso (baseado em papéis e na confiança) e interesse comum (relações de agrupamento de dispositivos por interesses).
+
+Apoiado nesses conceitos, eles propuseram o STEALTH (Social Thrust Health Information Access Control ) o qual permite que pessoas, baseado em suas competências e interesses sociais, tem acesso aos dados que fazem sentido.
+Por exemplo, podemos permitir que um médico tenha acesso aos dados em caso de ser necessário assistência médica.
+
+Tal tecnologia é capaz de manter uma rede de apoio baseado nas competências de cada um. No momento que acontece um evento crítico, os agentes mais próximos e mais competentes são acionados e com eles são compartilhados os dados, de acordo com a competência de cada indivíduo.
+* TODO Seminário 10 - Modelagem matemática para propragação de influência em redes sociais.
+Cada indivíduo é modelado por um vértice num grafo de conexão.
+Quando modelamos informações, esta tem uma certa velocidade de propagação baseado na qualidade e conexão da rede.
+Já para opiniões, nos importamos com a quantidade de vizinhos conectados que possuem a opinião.
+Podemos analisar tais redes calculando o tempo necessário para disseminar a opinião por toda a rede?
+Qual o número mínimo de influenciadores que eu preciso no passo inicial par ating toda a rede?
+
+Convexidade geogética: um conjunto de vértices é dito convexo se todos os caminhos mínimos passam apenas por nós do conjunto
