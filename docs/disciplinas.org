@@ -20,6 +20,6 @@ PED no segundo semestre:
 CLOSED: [2023-04-24 Mon 19:34] DEADLINE: <2023-04-12 Wed>
 Rafael já me mandou o documento no slack.
 
-* TODO Proficiência em inglês
-SCHEDULED: <2023-05-03 qua>
+* DONE Proficiência em inglês
+CLOSED: [2023-05-03 qua 15:37] SCHEDULED: <2023-05-03 qua>
 Eles disseram que iam mandar isso no começo de abril.

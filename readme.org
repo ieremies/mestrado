@@ -3,9 +3,22 @@
 
 [[org:../proj/mest/docs/reunioes.org][Reuniões]] | [[org:../proj/mest/docs/disciplinas.org][Disciplinas]] | [[org:../proj/mest/docs/habilidades.org][Habilidades]]
 
+* FAPESP
+- [ ] Proposta não é original
+- [ ] Revisão das possibilidades de abordagem não está completa nem aprofundada
+- [ ] O texto produzido tem falhas de escrita
+  - usa 'visinhança` ao invés de `vizinhança`;
+  - método do ponto interno ao invés de método dos pontos interiores,
+  - apresenta definição de faceta na página 10, no momento de apresentar a formalização, quando tem um seção destina a definições, onde esta não entra,...),
+- As referências bibliográficas estão fora do padrão, mencionando cada artigo em periódito como capítulo de livro de conferência ou com editores
+- Conceito B em PLI
+- Mencionar o artigo
+- Atualizar o Lattes
+- Expressões estranhas frutos de traduções incomúns
+
 * Tarefas
-** TODO MVP de branch-and-bound
-DEADLINE: <2023-04-25 Tue>
+** DONE MVP de branch-and-bound
+CLOSED: [2023-05-02 ter 16:27] DEADLINE: <2023-04-25 Tue>
 Fazer copiando o grafo mesmo e remontando o problema.
 O importante é que funcione.
 
@@ -34,10 +47,9 @@ Talvez ter um script para pegar esses dados e salvá-los seja interessante.
   Eu só preciso adicionar restrições.
 
 ** TODO Plataformas de avaliação
-DEADLINE: <2023-04-29 Sat>
 Prof pediu para testar e comparar https://eecs-autograder.github.io/autograder.io/, replit e github classroom.
-** TODO Parecer do Artigo
-DEADLINE: <2023-05-03 Wed>
+** DONE Parecer do Artigo
+CLOSED: [2023-05-18 Thu 17:22] DEADLINE: <2023-05-03 Wed>
 
 ** outros artigos
 *** Gualandi 2012 - Exact Solution of GCP via Constraint Programming and Column Generation

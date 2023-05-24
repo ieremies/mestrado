@@ -68,3 +68,31 @@ Rafael pediu para eu já setar o epslon do gurobi pro menor possível.
 - [ ] escrever para o rafael de bin packing
 - [ ] pesquisar sobre as plataformas que ele havia dito
 - [ ] supostamente, o código deveria ser um git a parte
+* 3 de Maio
+Pré:
+- Máquina do LOCo / script :: acho que seria mais interessante eu desenvolver o script já pensando em como eu executaria na máquina
+- Grafo :: tava pensando em trocar, tirar o lemon e implementar o meu grafo. Além disso, para o delta, stack.
+  Eu posso fazer a instância ser singleton.
+  O solver.cpp se importa apenas com a lista de vértices (vértices - joins)
+  O pricing.cpp se importa com a lista de edges (edges + conflitos)
+  Union-find com rollback?
+
+Cortes do primal pra melhorar a relaxação inical (para branching-and-price)
+Subset-row cuts caso particular de rank 1 GC-cuts (paper do renan)
+A soma da quantidade de vezes que eu uso os conjuntos que contem {a,b,c} tem que ser menor que 1 fr
+Gerar conjuntos (diferentes) -> como a literatura resolve o problema de gerar conjuntos relevantes
+* Reunião em grupo
+- checktex
+- latexident
+- texdoc
+* 17 de maio
+Cortes:
+- Conferir cuts que foram largados
+- Gomory cuts rank 1
+Qualquer vértice com com grau menor que o lower_bound pode ser omitido
+Vértices com a mesma vizinhança, posso resolver isso com hashs rápidos de recalcular.
+# Teste se isso reduziria ou não.
+Vértices universais podem ser coloridos com a própria cor.
+
+Calcular um bound rápido para conseguir limpar o grafo de forma rápida
+Achar um max k-core é polinomial?
