@@ -1,0 +1,56 @@
+% Created 2023-05-26 Fri 14:28
+% Intended LaTeX compiler: pdflatex
+\documentclass[twocolumn, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{todonotes}
+\usepackage[brazil, portuges]{babel}
+\usepackage{amsthm}
+\author{Ieremies Vieira da Fonseca Romero}
+\date{}
+\title{Trabalho 3\\\medskip
+\large Processamento Digital de Imagem}
+\hypersetup{
+ pdfauthor={Ieremies Vieira da Fonseca Romero},
+ pdftitle={Trabalho 3},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6.1)}, 
+ pdflang={Portuges}}
+\usepackage[date=year]{biblatex}
+\addbibresource{~/arq/bib.bib}
+\begin{document}
+
+\maketitle
+Conferir se zero é preto usando uma iamgem pequena com meu nome ou algo assim
+
+\begin{verbatim}
+import cv2
+import numpy as np
+
+img = cv2.imread('bitmap.pbm', cv2.IMREAD_UNCHANGED)
+img[img == 0] = 1   # all black pixels to 1
+img[img == 255] = 0 # all whites pixels to 0
+\end{verbatim}
+Agora nós temos uma imagem representada por zeros e uns onde o texto é demarcado pelos pixels com valor de \(1\).
+
+
+\begin{verbatim}
+def save(img):
+    # turn back to gray scale
+    img[img == 0] = 255
+    img[img == 1] = 0
+    cv2.imwrite('out.png', img)
+
+save(img)
+\end{verbatim}
+\end{document}
