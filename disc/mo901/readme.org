@@ -93,7 +93,20 @@ CLOSED: [2023-05-12 Fri 14:21] DEADLINE: <2023-05-05 Fri>
 * KILL Seminário 8 - Anti-Fake Technology (AFT): Devolvendo a Verdade à Sociedade
 CLOSED: [2023-05-12 Fri 14:25] DEADLINE: <2023-05-12 sex> SCHEDULED: <2023-05-03 qua 13:00>
 # Não vale nota, mas pode abonar uma falta.
-* TODO Seminário 9 - Disseminação de Dados Pessoais Vitais Para Apoio às Tomadas de Decisão em Situações Emergenciais em Ambientes Externos
+* DONE Seminário 9 - Modelagem matemática para propragação de influência em redes sociais.
+CLOSED: [2023-05-26 Fri 14:16]
+Cada indivíduo é modelado por um vértice num grafo de conexão.
+Quando modelamos informações, esta tem uma certa velocidade de propagação baseado na qualidade e conexão da rede.
+Já para opiniões, nos importamos com a quantidade de vizinhos conectados que possuem a opinião.
+Podemos analisar tais redes calculando o tempo necessário para disseminar a opinião por toda a rede?
+Qual o número mínimo de influenciadores que eu preciso no passo inicial par ating toda a rede?
+
+Convexidade geogética: um conjunto de vértices é dito convexo se todos os caminhos mínimos passam apenas por nós do conjunto.
+
+Em aplicações no mundo real, podemos ter que cada pessoa possui um requisito diferente de vizinhos para que esta seja influenciada ou que a rede altera-se com o tempo.
+O importante, para muitas empresas, é saber qual o número mínimo de influenciadores necessários para conseguir disseminar uma certa opinião de seu interesse.
+* DONE Seminário 10 - Disseminação de Dados Pessoais Vitais Para Apoio às Tomadas de Decisão em Situações Emergenciais em Ambientes Externos
+CLOSED: [2023-05-26 Fri 14:16]
 
 Infraestrutura de rede que, apesar de ser urbano, isso não é sinônimo de tranquilidade e harmonia.
 Em eventos críticos (uma queda ou acidente) o compartilhamento de informações e dados pessoais sensíveis e segurança de tais dados bem como o controle ao acesso a estes
@@ -110,11 +123,3 @@ Apoiado nesses conceitos, eles propuseram o STEALTH (Social Thrust Health Inform
 Por exemplo, podemos permitir que um médico tenha acesso aos dados em caso de ser necessário assistência médica.
 
 Tal tecnologia é capaz de manter uma rede de apoio baseado nas competências de cada um. No momento que acontece um evento crítico, os agentes mais próximos e mais competentes são acionados e com eles são compartilhados os dados, de acordo com a competência de cada indivíduo.
-* TODO Seminário 10 - Modelagem matemática para propragação de influência em redes sociais.
-Cada indivíduo é modelado por um vértice num grafo de conexão.
-Quando modelamos informações, esta tem uma certa velocidade de propagação baseado na qualidade e conexão da rede.
-Já para opiniões, nos importamos com a quantidade de vizinhos conectados que possuem a opinião.
-Podemos analisar tais redes calculando o tempo necessário para disseminar a opinião por toda a rede?
-Qual o número mínimo de influenciadores que eu preciso no passo inicial par ating toda a rede?
-
-Convexidade geogética: um conjunto de vértices é dito convexo se todos os caminhos mínimos passam apenas por nós do conjunto

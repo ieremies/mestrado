@@ -7,14 +7,20 @@
 - [ ] Proposta não é original
 - [ ] Revisão das possibilidades de abordagem não está completa nem aprofundada
 - [ ] O texto produzido tem falhas de escrita
-  - usa 'visinhança` ao invés de `vizinhança`;
-  - método do ponto interno ao invés de método dos pontos interiores,
   - apresenta definição de faceta na página 10, no momento de apresentar a formalização, quando tem um seção destina a definições, onde esta não entra,...),
 - As referências bibliográficas estão fora do padrão, mencionando cada artigo em periódito como capítulo de livro de conferência ou com editores
-- Conceito B em PLI
-- Mencionar o artigo
-- Atualizar o Lattes
-- Expressões estranhas frutos de traduções incomúns
+- Conceito B em PLI -> posso atualizar com o novo histórico da pós
+- Mencionar o artigo -> mas tá na súmula
+- Atualizar o Lattes -> ?
+- Expressões estranhas frutos de traduções incomúns -> ?
+
+adsad
+- Ressaltar as perpecitvas importntes
+- A pesquisa m si é original pq a nossa proposta é aplicar outras técnicas para esse problema, dentro do branch-and-price -> e possivelmente projetar novas, adaptar que não é necessárimenta trivial e aplicar técnicas.
+  Ser mais direto ao ponto de que vai dar resultado, ser mais ambicioso.
+- Colocar o paper do Jair
+- Completar escrevendo um pouco mais sobre cada paper (em especial DP )
+- Revisar as referências
 
 * Tarefas
 ** DONE MVP de branch-and-bound
