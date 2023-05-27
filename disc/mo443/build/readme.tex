@@ -1,0 +1,399 @@
+% Created 2023-05-17 Wed 17:45
+% Intended LaTeX compiler: pdflatex
+\documentclass[twocolumn, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{todonotes}
+\usepackage[brazil, portuges]{babel}
+\usepackage{amsthm}
+\author{Ieremies Vieira da Fonseca Romero}
+\date{}
+\title{MO443 - Processamento de Imagem Digital\\\medskip
+\large Prof. Helio}
+\hypersetup{
+ pdfauthor={Ieremies Vieira da Fonseca Romero},
+ pdftitle={MO443 - Processamento de Imagem Digital},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.6.1)}, 
+ pdflang={Portuges}}
+\usepackage[date=year]{biblatex}
+\addbibresource{~/arq/bib.bib}
+\begin{document}
+
+\maketitle
+\href{https://www.ic.unicamp.br/\~helio/}{Helio Pedrini's Homepage}
+
+\section*{Slides [50\%]}
+\label{sec:org7cdfdbc}
+\subsection*{Introdução}
+\label{sec:org0680d5a}
+\subsection*{Fundamentos}
+\label{sec:org06fa83f}
+Amostragem discretiza o espaço e quantização diz o número de níveis de cinza.
+
+Precisamos de uma amostra a cada 1/2B onde 2B é o tamanho da banda [-B, B] (limite de nyquist).
+Caso não seja usado uma frequência de banda suficientemente larga, sinais com frequência alta são reconstruídos com frequências baixas causando \textbf{aliasing}.
+
+Resolução espacial tem a ver com o quanto de espaço real um pixel representa.
+\subsection*{Realce}
+\label{sec:org82cfe64}
+\subsection*{Filtragem em frequência}
+\label{sec:orge4f8abe}
+\subsubsection*{Fundamentos}
+\label{sec:orge46044c}
+Sinal :: representação de um fenômeno a partir da variação de características físicas ao longo do tempo ou espaço
+Tipos de sinais:
+\begin{description}
+\item[{contínuos}] estados são definidos ininterruptamente
+\item[{discretos}] estados definido em instantes específicos
+\item[{analógicos}] estados podem assumir qualquer valor real ou complexo
+\item[{digitais}] estados podem assumir um subconjuntod e valores discretos enumeráveis
+\end{description}
+
+Sinais analógicos podem ser convertidos em sinais digitais a partir da amostragem, quantização e codificação.
+Na amostragem, o espaço (tempo) de amostragem é dividido em partes discretas. Na quantização há a aproximação do valor de amplitude ao conjunto finito de possibilidades. Codificação corresponde à correlação de tais níveis a um código.
+
+\subsubsection*{Transformadas de imagens}
+\label{sec:org4dadf5f}
+Operações que alteram o espaço de representação de uma imagem para outro domínio de forma que:
+\begin{itemize}
+\item a informação presente na imagem seja preservada no domínio da transformada
+\item a transformada seja reversível
+\end{itemize}
+
+Um exemplo destas é a transformada de Fourrier
+
+\subsubsection*{Amostragem}
+\label{sec:org53d46ed}
+representação de um sinal contínuo por um número finito de valores
+
+\textbf{Teorema da amostragem} é possível rescontruir um sinal (de banda limitada) contínuo  a partir de suas amostras se a frequência de amostragem exceder duas vezes a largura da banda.
+
+\textbf{Transformada discreta de Fourier} (DFT) converte um conjunto finito de N amostras uniformemente espaçadas numa função de senoidais complexas.
+
+\subsubsection*{Convolução}
+\label{sec:org240df4b}
+To entendendo nada, as parece ser a soma dos sinais, um vindo da esquerda pra direita e outro da direita para esquerda.
+\subsection*{Segmentação}
+\label{sec:org1b56c36}
+Particionar o conjunto de dados em estruturas com conteúdo semântico -> após determinarmos os objetos, caracterimo-nos por meio de suas propriedades.
+
+Os métodos se baseam nas descontinuidades (mudanças abruptas) e similaridades.
+
+Detectar pontos pode ocorrer por meio da máscara
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ieremies/org/.attach/3d/cbe9d4-8b2b-4e9d-a16c-58de824c3af1/_20230510_211241screenshot.png}
+\end{center}
+Para segmentos de reta, fazemos algo similar só que com um traço em diversas direções.
+
+\subsubsection*{Detecção de bordas}
+\label{sec:org03e2dc9}
+Podemos fazê-la a partir do entendimento da mudança brusca nos níveis de cinza, observando a primeira e segunda derivadas.
+
+Assim, podemos também utilizar o conceito de gradiente, dada a natureza \(\mathbb{Z}^2\) das imagens.
+A direção do gradiente, quando sua maginitude é suficientemente grande, indica a orientação da borda do objeto.
+Podemos obter uma aproximação suficientemente descente da magnitude do gradiente somando a derivada em cada direção ou pegando a maior delas.
+Já do ângulo, tiramos o \(arctan(\frac{g_x}{g_y})\).
+Exsitem diversas máscara que aproximam o gradiente.
+
+\subsubsection*{Laplaciano}
+\label{sec:orgdb4db57}
+\(\triangledown^2\)
+Operador que pode ser utilizado no gradiente e é aproximado por uma máscara 3x3 na qual o pixel central é positivo e todos os outros negativos. Idealmente, os mais próximo possuem valores ainda maiores.
+
+\subsubsection*{Laplaciano do gaussiano e diferença do gaussiano}
+\label{sec:org620fefa}
+As derivadas segundas são sensíveis a ruídos.
+Podemos reduzi-los aplicando um filtro gaussiano e, posteriormente, detectamos bordas pelo cruzamento em zero da segunda derivada e um pico significativo na primeira.
+
+Resolvendo a equação do laplaciano do gaussiano, temos uma função que parece um chapeu mexicano invertido.
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ieremies/org/.attach/3d/cbe9d4-8b2b-4e9d-a16c-58de824c3af1/_20230514_194521screenshot.png}
+\end{center}
+Há evidências que o olho faz algo similar.
+
+Ele pode ser aproximado pela convolução de uma máscara que é a diferença entre duas funções Gaussianas com valores de \(\sigma\) significativamente diferentes.
+\subsubsection*{Canny}
+\label{sec:org1d45b3f}
+\begin{itemize}
+\item Gaussiano
+\item computa-se a magnitude e direção do gradiente a partir das derivadas parciais
+\item borda é pontos cuja magnitude seja localmente máxima na direção do gradiente (supressão não máxima)
+\item Usa-se um limiar para remover os fragmentos expúrios
+\end{itemize}
+\subsubsection*{Boie e Cox}
+\label{sec:org223b6b2}
+Similar ao Canny, mas usam o cruzamento do zero na derivada segunda.
+\subsubsection*{Transformada de Hugh}
+\label{sec:orge5e0786}
+Técnica para determinar se uma curva passa por um certo conjunto de pontos.
+Para retas, usamos o fato que a reta deve possuir os mesmos coeficientes angulares e lineares, ou fazemos isso usando coordenadas polares, onde \(\rho\) é a distância da origem à reta e \(\theta\) é o ângulo.
+O espaço (\(\rho\), \(\theta\)) chamado espaço de Hough, pontos colineares no espaço (x,y) correspondem a curvas senoidais que se interceptam.
+
+Para implementa-lo, discretizamos o espaço \((\rho,\theta)\) e cada célula do espaço é considerada uma célula de acumulação.
+Testamos várias combinações e somamos baseado na quantidade de pontos colineares para tais combinações.
+Picos são usados para determinar segmentos reais na imagem.
+
+Útil para várias retas, já que apresentaram-se na forma de diversos picos e é insensível a ruídos e descontinuidades, já que estes representaram apenas uma redução do máximo local.
+O problema é na detecção de formas com mais parâmetros, o que aumenta a computação necessária -> podemos reduzir isso usando o gradiente das curvas.
+
+O mesmo é feito para circunferências. Já para formas em geral, utilizamos a ideia de manter uma tabela de distãncia e ângulo de cada ponto da forma e utilizamos a ideia de acumulção da mesma forma.
+\subsubsection*{Limiarização}
+\label{sec:orge93a0e5}
+Classsificação dos pixels baseado num limiar que os separada em objeto e fundo.
+No caso global, toda a imagem obedece o mesmo valor, no caso local, este é calculado baseado numa janela da imagem, o que é severamente influenciado pelo tamanho da janela.
+
+No método global, uma forma é tentar minimizar o erro da distribuição da gaussianas que definem o histograma dos pixels.
+
+\subsubsection*{Segmentação de regiões}
+\label{sec:orge54069e}
+\begin{enumerate}
+\item Cada pixel deve pertencer a uma região da imagem
+\item Pixels satisfazem critérios de conectividade
+\item Regiões devem ser disjuntas
+\item Pixels de uma certa região devem satisfazer uma propriedade
+\item Regiões adjacentes devem diferer em tal propriedade
+\end{enumerate}
+
+Técnicas:
+\begin{description}
+\item[{Crecimento de regiões}] Agrega pixels com propriedades similares e, portanto, precisa de pixels sementes de onde começar
+\item[{Segmentação de regiões}] começamos de uma grande região com a imagem inteira e vamos dividindo (quadtree).
+\end{description}
+
+\subsection*{Representação e descrição}
+\label{sec:org11156c3}
+Um objeto pode ser descrito por suas características externas (bordas) ou internas (pixels que compõem).
+Para descrevê-lo, precisamos de uma forma que seja pouco afetado pela presença de ruído.
+
+\subsubsection*{Esquemas de representação}
+\label{sec:orga712d9d}
+\begin{itemize}
+\item Freeman - código da cadeia
+\label{sec:org910d051}
+cada número representa a direção do próximo pixel da borda (zero é sempre pra direita, crescendo no sentido horário).
+Ele varia conforme o pixel inicial, mas podemos normalizar encontrando o menor número inteiro que o represente.
+Para torná-lo invariante com a mudança de escala, a borda pode ser reamostrada em uma grade de espamaento conveniente.
+Diferença no código da cadeia é a soma das diferenças entre cada dígito e o próximo (mod vizinhança).
+Uma mesma borda rotacionada possui a mesma diferença no código da cadeia independente da horientação, o que caracteriza o mesmo objeto.
+Vantagens: redução do espaç de armazenamento
+Desvantagem: sensibilidade a pequenas perturbações ao longo da borda.
+\item Polígonos
+\label{sec:orge52c244}
+Representamos a forma a partir de um polígono, dado uma precisão.
+Em cortonos fechados, podemos torna-la exata se a quantidade de vértices for igual ao número de pontos na borda.
+Isso pode ser caro, mas tem certas técnicas para aproximar em tempo aceitável.
+Uma forma de fazer a borda é dividir em segmentos, toda vez que a distância perpendicular exceder o erro aceitável, esse ponto torna-se um novo vértice.
+\item Assinatura
+\label{sec:orgad030b4}
+Função de onda da distância do centro a borda
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ieremies/org/.attach/f7/9cc512-7365-4853-9fe5-ec45714f0f10/_20230508_204328screenshot.png}
+\end{center}
+Invariante em relação a tranlação, mas precisamos determinar um ponto inicial para ser indiferente a rotação ou normalizar os vetores para obter a invariância em relação à escala.
+\item Fecho convexo
+\label{sec:orgdeb7990}
+Menor polígono convexo que abrange o objeto
+\item Esqueleto de um objeto
+\label{sec:orgbac61c8}
+\begin{itemize}
+\item ponto médio: conjuntos de pontos que equidistam de bordas (baseado nas maiores esferas)
+\item transformada de distância: mapa da distância entre cada ponto interior, valores mais altos formam o esqueleto
+\item diagrama de voroni: para uma forma de n vértices, repartimos o plano em n subconjuntos tais que os pontos interiores daquele conjunto estão mais próximos do que de qualquer outro ponto.
+\end{itemize}
+\end{itemize}
+\subsubsection*{Técnicas de afinamento}
+\label{sec:org7af5875}
+Técnicas de afinamentos devem se atentar a não torna-lo desconexo ou causa erosão excessiva.
+\begin{itemize}
+\item Zhang e Suen:
+\label{sec:orged7c182}
+um pixel é removido se
+\begin{itemize}
+\item tem mais que um e menos que 7 vizinhos,
+\item se o número de transições de branco para preto na vizinhança ordenada é 1
+\item se ao menos um dos pixels cima direita baixo é fundo
+\item se ao menos um dos pixels direita baixo esquerda é fundo
+\end{itemize}
+Depois repetimos o processo, só que agora nas útlimas duas instruções usamos baixo esquerda cima e esquerda cima direita.
+Repetimos tudo até não haver mais remoções.
+
+\item Holt
+\label{sec:orgd7c9427}
+Refina o método de Zhang: passos de zhang removendo serrilhamento a partir da percepção de que pixels que formam uma escada pode ser removidos sem quebrar a conectividade do objeto.
+\item Stentiford e Mortimer
+\label{sec:orgd61eea5}
+Quatro máscaras 3x3 com 0 1 1 no meio em cada uma das direções.
+Um ponto final é um ponto que só possui um pixel preto como vizinho, este não pode ser removido.
+\end{itemize}
+\subsubsection*{Descritores de borda}
+\label{sec:orgbc0bc3b}
+\begin{description}
+\item[{Diâmetro}] a maior distância entre dois pontos da borda.
+\item[{Perímetro}] o número de pixels na borda.
+\item[{Curvatura}] a medida do angulo de dois segmentos de reta da borda (arctg).
+\item[{Energia de deformação}] 
+\end{description}
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ieremies/org/.attach/cd/b63161-ae5d-4537-acf6-00aeb54f3428/_20230509_151257screenshot.png}
+\end{center}
+\subsubsection*{Descritores de região}
+\label{sec:orgc6f45e5}
+\begin{description}
+\item[{Área}] a soma dos pixels 1 ou pela soma abaixo
+\end{description}
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ieremies/proj/mest/disc/mo443/_20230509_144318screenshot.png}
+\end{center}
+\begin{description}
+\item[{Compacidade}] o quadrado do perímetro dividido pela área, o círculo possui a menor compacidade
+\item[{Projeções horizontal e vertical}] para um pixel (x,y) a projeção horizontal é a soma dos pixels na linha y (respc para vertical)
+\item[{Propriedades topológicas}] O número de buracos ou componentes conexas são propriedades invariantes das formas.
+O número de Euler é dado como E = C - H (conexas - buracos) também é uma propriedade topológica
+\item[{eixo maior}] o comprimeto do maior segmento de reta (respc menor).
+\item[{excentricidade}] o comprimento do maior dividido pelo menor.
+\item[{Retângulo envolvente}] o retângulo de menor dimensões que envolve o objeto bidimensional e cujos lados são paralelos aos eixos.
+\item[{Convexidade}] mede o grau ocm que o um objeto difere de um objeto convexo, pode ser dada pelo perímetro convexo dividido pelo perímetro real (o valor será 1 para o bjetos convexos).
+\item[{Retangularidade}] a área do objeto dividido pela área do retângulo envolvente.
+\item[{Solidez}] mede a densidade de um objeto, área do objeto dividio pela área do fecho convexo (1 para sólidos e menor que 1 para objetos com bordas irregulares ou buracos).
+\end{description}
+\begin{itemize}
+\item Momento
+\label{sec:orgdd21872}
+\end{itemize}
+\subsubsection*{Sintáticos ou relacionais}
+\label{sec:org5e0afed}
+\ldots{}
+\subsection*{Morfologia matemática}
+\label{sec:orgfd08e12}
+Contrução de opearadores para descrição de objetos.
+\subsubsection*{Fundamentos matemáticos}
+\label{sec:org8fdedbf}
+Teoria de conjuntos \(\{(x,y) | f(x,y) = 1\} \in \mathbb{Z}^2\), ou seja, conjunto dos pontos 1.
+Assim definimos própriamente união, intersecção, translação  (\(A + p = \{a + p | a \in A\}\)), reflexão (\(\{-a | a \in A\}\)), complemento e diferença.
+Operador morfológico: mapeamento entre um conjunto A que define uma imagem e um conjunto B, chamado de elemento estruturante.
+
+\begin{description}
+\item[{Adição de Minkowski (dilatação)}] \(\oplus\) para cada ponto da imagem, carimbamos o B. (comutativa, associativa).
+\item[{Subtração de Minkowski (erosão)}] \(\ominus\) para cada ponto da imagem, se o B cabe inteiro, a origem é marcada.
+\end{description}
+É importante marcar que, para as duas operações, os elementos da primeira imagem não estão necessáriamente contidos, qunado dizemos ``carimbar'', referimos a colocar na imagem resultante que inicialmente é vazia.
+
+As propriedades de associatividade e distributividade podem nos ajudar a reduzir os elementos estruturantes à componentes menores.
+\begin{description}
+\item[{Abertura}] (círculo vazio) de A por B é denotada por \((A \ominus B) \oplus B\) -> parte estreitas são removidas
+\item[{Fechamento}] (circulo preenchido) de A por B é denotoda \((A \oplus B) \ominus B\) -> buracos são preenchidos
+\item[{Acerto-ou-erro}] de A por B\textsubscript{1} e B\textsubscript{2} é definida por \(A\circledast (B_1, B_2) = (A \ominus B) \cap (A^c \ominus B_2)\), ou seja, o resultante possui todos os pontos nos quais B\textsubscript{1} coincide com A e não coincide nenhum com B\textsubscript{2}
+\end{description}
+
+Usaremos tais operadores para extrair características de objetos
+\begin{itemize}
+\item Extração de borda
+\label{sec:org922d9f2}
+\(E(A) = A - (A \ominus B)\), já que a erosão vai deixar só os pixels de dentro (gradiente interno), é como se eu tivesse marcando a borda por dentro.
+Ou \(E(A) = (A \oplus B) - A\), já que a dilatação vai crescer um pouco o objeto (gradiente externo), é como se eu estive marcando a borda por fora.
+Ou \(E(A) = (A \oplus B) - (A \ominus B)\), que é a soma dos dois anteriores (gradiente morfológico).
+\item Preenchimento de regiões
+\label{sec:orgea768f4}
+Fazemos a dilatação a partir de um ponto semente dentro do objeto. A cada iteração dilatamos mais, mas também tiramos os elementos que pertencem à borda, para que não ultrapassemo-na.
+\item Extração de componentes conexos
+\label{sec:orgf0ef213}
+Fazemos a dilatação a partir de uma semente e retiramos todos que não estão em A. Assim, quando não há mais mudança, é porque percorremos todos os pixels conectados destes componente.
+\item Fecho convexo
+\label{sec:org06a6e14}
+Sejam B\textsubscript{1}, B\textsubscript{2}, B\textsubscript{3} e B\textsubscript{4}, o processo consiste em realizar a o acerto-ou-erro para B\textsubscript{1} afim de formar D\textsubscript{1} e assim respectivamente para os demais. O fecho convexo é a união dos D\textsubscript{i}.
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ieremies/org/.attach/1e/8bdef7-069f-41c6-b41d-bd15874a1a41/_20230509_172345screenshot.png}
+\end{center}
+
+\item Afinamento e espessamento
+\label{sec:org52e5592}
+Afinamento :: \(A \otimes B = A - (A \circledast B)\), em que \(B = (B_1, B_2)\) distintos.
+Espessamento :: \(A \otimes B = A \cup (A \circledast B)\), em que \(B = (B_1, B_2)\) distintos.
+\item Extração do esqueleto
+\label{sec:org2a8d848}
+\item Imagens monocromáticas
+\label{sec:org89e1b10}
+Para imagens monocromáticas, operamos com valores de intensidade.
+Na dilatação, aplica-se a translação do elemento estruturante sobre todas as posições da imagem e para cada uma os valores do elemento estruturantes tomando-se o máximo.
+A erosão é similar, tomando-se o mínimo. Vale mencionar que colocamos o valor final na origem.
+
+A abertura e fechamento podem ser modificados a partir disso. A visão geométrica na qual ordenamos o os pixels e a altura é a intensidade.
+\begin{center}
+\includegraphics[width=.9\linewidth]{/home/ieremies/org/.attach/1a/ba1cf8-500e-4d3f-af12-f47ec39417a3/_20230509_173600screenshot.png}
+\end{center}
+\item Realce de contraste
+\label{sec:org1ee8b60}
+\begin{description}
+\item[{top-hat}] a diferença entre a imagem e sua abertura
+\item[{botton-hat}] a diferença seu fechamento e imagem.
+\end{description}
+
+Podemos realçar o contraste da imagem somando a ela o top-hat e subtriando depois o botton-hat.
+O borramento pode ser reduzido a partir da substituição do pixel original pelo pixel correspondente na abertura ou fechamento, o que estiver mais próximo do original.
+\item Granulometria
+\label{sec:org2a794ad}
+Estimativa da distribuição dos tamanhos dos objetos.
+Podemos fazê-lo contando o número de componentes conexos após cada operação de abertura (progressivamente removendo os elementos em ordem crescente de tamanho).
+\item Atenuação de ruído
+\label{sec:org46f3025}
+Podemos atenuar o ruído sal e pimenta com operações sucetivas de abertura e fechamento.
+\end{itemize}
+
+\subsection*{Lista 1}
+\label{sec:org0379fd6}
+\begin{enumerate}
+\item Podemos diferentes diagramas para cada cor coponente da imagem (RGB) ou estabelecer alguma relação entre os valores das 3 cores e um número, como a soma ou composição de um inteiro.
+\item Filtro da média suaviza a imagem e elimina altas frequências, já a mediana exarceba diferenças entre regiões.
+\item As 4 características principais do filtro gaussiano são suficientes para mostrar que ele é bom para suavizar (separabilidade, simétrico, alguma coisa do desvio padrão, controle).
+\item -
+\item Detectar mudanças brucas, não sofrer grandes alterações com ruído e detectar mudanças na direção desejada, evitar descontinuidades, fina e contínua, evitar fragmentos expúrios, eficiente.
+\item Profundidade: quantidade de bits para cada pixels.
+Resolução espacial: quantidade de detalhes do ambiente.
+\item está conectado, 9 componentes na vizinhança-4 e 4 na vizinhança-8
+\item O gradiente indica a direção e frequência com a qual a intensidade da imagem está mudando. Valores maiores indicam mudanças bruscas, o que indica bordas no sentido perpendicular a direção do gradiente.
+\item ??????
+\item -
+\item -
+\item -
+\item A entropia é uma medida da quantidade de informações contidas na imagem que se baseia na probabilidade de cada valor de intensidade aparecer. Quanto mais espalhada em cada valor possível, maior a entropia.
+\item Tais operações são utilizadas na erosão e abertura de objetos, bem como detecção de bordas e preenchimento.
+\item A amostragem define as linhas e colunas e está relacionado
+\item Por ser derivado de segunda ordem ele é sucetivo a ruído.
+\item ????
+\item A(s) bin(s) com maior quantidade
+\item -
+\item Dois vetores que multiplicadas dão a matriz que queremos. Se for possível, temos que é separavel
+\end{enumerate}
+
+Um filtro passa alta retorna zero numa região homogênea
+Na convolução o Kernel tem que sofrer uma rotação de 180 (??)
+
+
+\section*{Provas}
+\label{sec:org5898047}
+\subsection*{P1}
+\label{sec:org14e1dea}
+\subsection*{P2}
+\label{sec:orgb030bb4}
+\section*{Trabalhos}
+\label{sec:org78e3003}
+\subsection*{Trabalho 1}
+\label{sec:orgca62dd2}
+\subsection*{Trabalho 2}
+\label{sec:orgc89dcf8}
+\subsection*{Trabalho 3}
+\label{sec:org442fddd}
+\end{document}
