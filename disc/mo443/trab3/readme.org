@@ -5,60 +5,11 @@
 #+LATEX_CLASS_OPTIONS: [twocolumn, 10pt]
 #+PROPERTY: header-args:python :session a
 #+PROPERTY: header-args:python :results silent
-#+PROPERTY: header-args:python :tangle funcs.py
 
-Conferir se zero é preto usando uma iamgem pequena com meu nome ou algo assim
-
-#+begin_src python
-import cv2
-import numpy as np
-
-img = cv2.imread('bitmap.pbm', cv2.IMREAD_UNCHANGED)
-img[img == 0] = 1   # all black pixels to 1
-img[img == 255] = 0 # all whites pixels to 0
-#+end_src
+* Introdução
 Agora nós temos uma imagem representada por zeros e uns onde o texto é demarcado pelos pixels com valor de $1$.
 Filtramos qualquer componente conexa com menos de $370$ pixels.
 
-|    x |    y |    w |   h | # black | % black | v trans | h trans |
-|------+------+------+-----+---------+---------+---------+---------|
-| 1039 |   28 | 1150 |  25 |   24201 | 0.15823 |    1148 |      22 |
-|   32 |   36 |   42 |  21 |     866 | 0.01814 |      41 |      20 |
-|  264 |  139 |  572 | 561 |  315070 | 0.01814 |     569 |     558 |
-| 1142 |  147 | 1046 |  40 |   26026 | 0.37796 |    1043 |      37 |
-| 1142 |  198 | 1046 |  40 |   27655 | 0.33903 |    1043 |      37 |
-| 1142 |  248 |  636 |  39 |   16418 | 0.33809 |     633 |      36 |
-| 1182 |  298 | 1007 |  39 |   27082 | 0.31042 |    1004 |      36 |
-| 1142 |  348 | 1047 |  40 |   24980 | 0.40310 |    1044 |      37 |
-| 1144 |  399 | 1045 |  38 |   23916 | 0.39736 |    1043 |      33 |
-| 1143 |  448 | 1046 |  40 |   27645 | 0.33927 |    1044 |      37 |
-| 1144 |  499 | 1046 |  40 |   25112 | 0.39981 |    1043 |      37 |
-| 1146 |  548 | 1044 |  40 |   27850 | 0.33309 |    1041 |      37 |
-| 1144 |  599 | 1046 |  39 |   25728 | 0.36932 |    1044 |      36 |
-| 1144 |  649 | 1046 |  39 |   29589 | 0.27467 |    1044 |      36 |
-| 1145 |  700 |  435 |  31 |   10046 | 0.25502 |     433 |      29 |
-| 1411 |  768 |  780 |  37 |   19093 | 0.33843 |     777 |      33 |
-|  362 |  771 |  367 | 349 |   21828 | 0.82835 |     360 |     340 |
-| 1186 |  771 |  102 |  36 |    2650 | 0.27832 |      99 |      33 |
-| 1411 |  815 |  261 |  37 |    7153 | 0.25929 |     259 |      34 |
-| 1410 |  860 |  781 |  38 |   19602 | 0.33951 |     780 |      35 |
-| 1186 |  862 |  157 |  37 |    3384 | 0.41746 |     155 |      34 |
-| 1411 |  907 |  290 |  38 |    9325 | 0.15381 |     288 |      36 |
-| 1411 |  952 |  780 |  30 |   17480 | 0.25214 |     779 |      28 |
-| 1187 |  955 |  183 |  36 |    5171 | 0.21509 |     180 |      34 |
-| 1413 |  999 |  274 |  38 |    8155 | 0.21677 |     271 |      36 |
-| 1411 | 1044 |  781 |  38 |   18713 | 0.36947 |     779 |      35 |
-| 1187 | 1046 |  181 |  37 |    4129 | 0.38346 |     179 |      32 |
-| 1413 | 1092 |  289 |  37 |    9015 | 0.15693 |     287 |      35 |
-| 1412 | 1136 |  781 |  39 |   19180 | 0.36964 |     778 |      36 |
-| 1188 | 1138 |  138 |  29 |    3543 | 0.11469 |     136 |      27 |
-| 1413 | 1182 |  782 |  39 |   19421 | 0.36320 |     779 |      36 |
-|  173 | 1186 |  914 |  33 |   17322 | 0.42534 |     912 |      31 |
-|   40 | 1190 |   96 |  30 |    1355 | 0.52951 |      94 |      25 |
-|  522 | 1225 |   83 |  31 |    1547 | 0.39876 |      80 |      28 |
-| 1413 | 1227 |  780 |  39 |   21070 | 0.30726 |     777 |      36 |
-| 1413 | 1274 |  780 |  38 |   19083 | 0.35617 |     778 |      35 |
-| 1414 | 1321 |  384 |  37 |    9646 | 0.32109 |     381 |      34 |
 #+begin_src python
 def save(img):
     # turn back to gray scale
@@ -68,3 +19,208 @@ def save(img):
 
 save(img)
 #+end_src
+
+* O programa
+Neste trabalho, utilizamos as bibliotecas =numpy= 1.24.1 e OpenCV 4.7.0.72 utilizado via =cv2=.
+#+begin_src python
+import cv2
+import numpy as np
+#+end_src
+
+Para leitura de imagens, utilizaremos a função do =cv2= e modificaremos os pixels brancos em $0$ e os preto em $1$ para realizar os métodos de morfologia.
+#+begin_src python
+import cv2
+import numpy as np
+
+img = cv2.imread('bitmap.pbm',
+                 cv2.IMREAD_UNCHANGED)
+img[img == 0] = 1   # all black pixels to 1
+img[img == 255] = 0 # all whites pixels to 0
+#+end_src
+Ressaltamos apenas o uso de =cv2.IMREAD_UNCHANGED= para que a função de leitura não altera-se os valores.
+
+Para escrita, o método irá variar baseado em qual estágio do processo estamos. Utilizaremos a nossa função =save= para desfazer a conversão descrita acima e salvar novamente como uma imagem binária.
+#+begin_src python
+def save(file, img):
+    aux = img.copy()
+    aux[aux == 0] = 255
+    aux[aux == 1] = 0
+    cv2.imwrite(file, aux)
+#+end_src
+
+Já ao final, depois de transformar-mos a imagem original em /RGB/ utilizando a função
+=cv2.cvtColor=, então usaremos o =cv2.imwrite=.
+
+* Dilatações e erosões
+Como descrito no enúnciado, primeiramente realizaremos a dilatação e posterior erosão, o que é chamado de operação de *fechamento*. Realizaremos uma vez utilizando um elemento estruturante de dimensões $(1,100)$ e outra vez com um elemento de dimensões $(200,1)$. Assim, um foca na horizontal enquanto outro na vertical.
+
+#+begin_src python
+kernel1=np.ones((1, 100), np.uint8)
+img1=cv2.dilate(img, kernel1, iterations=1)
+img1=cv2.erode(img1, kernel1, iterations=1)
+
+kernel2=np.ones((200, 1), np.uint8)
+img2=cv2.dilate(img, kernel2, iterations=1)
+img2=cv2.erode(img2, kernel2, iterations=1)
+#+end_src
+#+Caption: Resultado do primeiro fechamento, /kernel/ $(1,100)$.
+[[./img/step2.png]]
+
+#+Caption: Resultado do segundo fechamento, /kernel/ $(200,1)$.
+[[./img/step4.png]]
+
+Por fim, juntaremos ambas imagens geradas por meio de um operador lógico de /and/ e utilizamos a função =cv2.morphologyEx= com parâmetro =cv2.MORPH_CLOSE= e um operador morfológico de dimensão $(1,30)$ para realizar o fechamento.
+#+begin_src python
+img = cv2.bitwise_and(img1, img2)
+
+kernel = np.ones((1, 30), np.uint8)
+img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+#+end_src
+
+#+Caption: Resultado da intersecção entre as imagens produzidas nos passos anteriores.
+[[./img/step5.png]]
+
+#+Caption: Resultado da operação de fechamento, /kernel/ $(1,30)$.
+[[./img/step6.png]]
+
+Assim, ao final, possuímos componentes conexas que muito se assemelham à região que a linha de texto ocupava, com exceção das imagens.
+Precisamos, por tanto, analisar mais a fundo as propriedades destas regiões para determinar quais são textos e quais não o são.
+
+* Componentes conexas
+O primeiro passo é detectar as componentes conexas que aparecem na image.
+Para tal, utilizamores a função =cv2.connectedComponentsWithStats=.
+Esta recebe a imagem sob a qual aplicaremos o algoritmo de detecção de componentes conexas, bem como o tipo de vizinhança (utilizaremos $8$).
+Demais parâmetros são utilizados para indicar onde esta função irá colocar os resultados, mas neste caso, iremos recebe-los no retorno desta e os mantemos como =None=.
+#+begin_src python
+nlabels, _, stats, _ =
+    cv2.connectedComponentsWithStats(
+        img, None, None, None, 8, cv2.CV_32S
+    )
+#+end_src
+
+Assim, possuímos uma lista de dados sobre as componentes (lista =stats=) e a quantidade destas (inteiro =nlabels=).
+A variável =stats= possui =nlabels= elementos com as informações de cada componente conexo.
+Estas incluem: as coordenadas do canto superior esquerdo do retângulo ao redor da componente e as dimensões de tal retângulo, bem como outras informações que não nos serão úteis nesse momento.
+
+Com tais informações, podemos remover janelas da imagem original que correspondem a tais componentes conexas e, a partir destas janelas, analisar certas estatísticas que nos permitirão determinar se o conteúdo delas é ou não texto.
+
+#+begin_src python
+# read original image
+img = cv2.imread("bitmap.pbm",
+                 cv2.IMREAD_UNCHANGED)
+text = [] # data about the windows
+for i in range(nlabels):
+    x, y, w, h = stats[i][:4]
+    crop = img[y : y + h, x : x + w]
+    text.append([x, y, w, h, b])
+    text[-1].append(percentage(crop))
+    text[-1].append(v_transitions(crop))
+    text[-1].append(h_transitions(crop))
+#+end_src
+
+A primeira estatística interessante é o percentual de pixels pretos em cada janela.
+Calculamo-no utilizando a nossa função =percentage=.
+#+begin_src python
+def percentage(img) -> float:
+    black = np.count_nonzero(img == 0)
+    total = img.shape[0] * img.shape[1]
+    return round(black / total, 2)
+#+end_src
+Observamos que a maioria das janelas possuíam
+
+Outro dado interessante é a quantidade de transições verticais ou horizontais de pixels brancos para pretos em relação ao número total de pixels pretos.
+Podemos encontrar tal dado com as nossas funções =h_transitions= e =v_transitions=.
+Por questões de espaço, aqui só reproduziremos uma delas, mas a outra é similar.
+# TODO tá errado isso aqui!!!!!!!!!!!!!!!!!!!!!
+#+begin_src python
+def h_transitions(img) -> int:
+    transitions = 0
+    for i in range(img.shape[0] - 1):
+        for j in range(img.shape[1]):
+            if (img[i][j] == 0 and
+                img[i + 1][j] == 255):
+                transitions += 1
+    black = np.count_nonzero(img == 0)
+    if black == 0:
+        return 0
+    return round(transitions / black, 3)
+#+end_src
+
+Com tais informações em mãos, determinamos que as componente que realmente representam texto são aquelas que possuem percentual de pixels pretos entre $9\%$ e $40\%$ e frequência de transições de pixels brancos para pretos entre $9\%$ e $40\%$.
+Por fim, adicionamos uma retrição na altura da componente conexa em especial para eliminar a componente que envolve a imagem inteira.
+#+begin_src python
+text = [
+    comp
+    for comp in text
+    if (
+        20 < comp[3] < 50
+        and 0.09 < comp[5] < 0.4
+        and 0.09 < comp[6] < 0.4
+        and 0.09 < comp[7] < 0.4
+    )
+]
+#+end_src
+
+Por fim, nossa variável =text= possui as informações sobre cada /bounding box/ de cada linha.
+Podemos desenha-las numa imagem /RGB/ com a cor verde para ilustrar.
+#+begin_src python
+img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+for line in text:
+    x, y, w, h = line[:4]
+    img = cv2.rectangle(img, # imagem
+                        (x, y), # toplef
+                        (x + w, y + h),
+                        (0, 255, 0), # color
+                        2) # thickness
+#+end_src
+#+Caption: Linhas detectadas cercadas por suas /bounding boxes/ em verde.
+[[./img/lines.png]]
+
+* Palavras
+Para detectar então cada palavra individualmente, podemos aplicar técnicas similares, mas agora apenas em janelas da imagem as quais sabemos ser texto.
+Através de experimentação e se baseando na teoria, buscamos realizar a dilatação vertical e horizontal (elementos estruturantes $(1,10)$ e $(10,1)$) das imagens e posterior fechamento (elemento estruturante $(1,3)$).
+
+#+Caption: Linha de texto inicial.
+[[./img/line1.png]]
+
+#+Caption: Linha de texto dilatada com /kernels/ $(1,10)$ e $(10,1)$.
+[[./img/line3.png]]
+
+#+Caption: Linha de texto após fechamento com /kernel/ $(1,3)$.
+[[./img/line4.png]]
+
+Assim, cada palavra se tornou um conexo "borrão", o que nos permite utilizar a mesma função de componentes conexas para determinas suas posições.
+#+begin_src python
+def detect_words(img):
+    kernel1 = np.ones((1, 10), np.uint8)
+    img = cv2.dilate(img, kernel1,
+                     iterations=1)
+
+    kernel2 = np.ones((10, 1), np.uint8)
+    img = cv2.dilate(img, kernel2,
+                     iterations=1)
+
+    kernel3 = np.ones((1, 3), np.uint8)
+    img = cv2.morphologyEx(img,
+                           cv2.MORPH_CLOSE,
+                           kernel3)
+
+    return (
+        cv2.connectedComponentsWithStats
+            (img,None,None,None,8,cv2.CV_32S)
+    )
+#+end_src
+
+Por fim, podemos usar as /bounding boxes/ azuis para marcar as palavras e repetirmos o processo para cada linha.
+Perceba que, as vezes, nosso algoritmo interpreta sequências como =(Fig.= como uma palavra.
+
+#+Caption: Linha com as palavras marcadas em /bouding boxes/ azuis.
+[[./img/line5.png]]
+
+* Conclusão
+Neste trabalho, fomos capazes de aplicar os operadores morfológicos e, com isso, detectar $35$ linhas de texto e $241$ palavras.
+#+Caption: Imagem final. Linhas estão marcadas por caixas verdes e palavras por caixas azuis.
+[[./img/out.png]]
+
+Como trabalhos futuros, ressaltamos a possibilidade de utilizar técnicas de clusterização para determinar as condições que caracterizam texto, como fizemos manualmente aqui. Assim seríamos capazes de processar textos mais diversos.
+Além disso, baseado nas propriedades de componentes conexos de cada caractere, como a quantidade de buracos, pode ser feita a detecção de cada um deles e transcrição para texto.

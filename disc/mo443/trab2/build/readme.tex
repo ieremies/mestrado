@@ -1,4 +1,4 @@
-% Created 2023-05-05 Fri 22:17
+% Created 2023-05-28 Sun 18:00
 % Intended LaTeX compiler: pdflatex
 \documentclass[twocolumn, 10pt]{article}
 \usepackage[utf8]{inputenc}
@@ -34,7 +34,7 @@
 
 
 \section*{Introdução}
-\label{sec:org0ec3531}
+\label{sec:org0c74d5a}
 O processamento digital de imagens é uma área de estudo fundamental em Ciência da Computação, que visa o tratamento e manipulação de imagens digitais por meio de técnicas e algoritmos computacionais.
 A análise e processamento de imagens digitais é uma tarefa complexa e multidisciplinar, que envolve conhecimentos em matemática, estatística, computação gráfica, processamento de sinais e outras áreas correlatas.
 
@@ -42,7 +42,7 @@ O objetivo deste trabalho é apresentar uma série de processamentos básicos em
 Para o desenvolvimento das operações, será empregada a vetorização de comandos, que permite processar as imagens de forma mais eficiente e rápida, através da aplicação de operações vetoriais em vez de operações matriciais.
 
 \section*{O programa}
-\label{sec:orgff38b50}
+\label{sec:org60b6f49}
 Neste trabalho, utilizamos as bibliotecas \texttt{numpy} 1.24.1 e OpenCV 4.7.0.72 utilizado via \texttt{cv2}.
 \begin{verbatim}
 import cv2
@@ -76,8 +76,9 @@ plt.hist(hist, bins=256, range=[0,255], histtype='stepfilled')
 plt.show()
 \end{verbatim}
 
+Assim, neste trabalho, basta interpretar o arquivo \texttt{trab3.py}.
 \section*{Global e Otsu}
-\label{sec:org60b4382}
+\label{sec:orga849713}
 Os primeiros dois métodos que apresentaremos são chamados de globais.
 Estes utilizam o mesmo limiar para toda a imagem.
 
@@ -112,7 +113,7 @@ def otsu(img):
 \end{figure}
 
 \section*{Local}
-\label{sec:org24f3565}
+\label{sec:org1f489e9}
 Todas as funções de limiarização locais realizam um processo similar:
 \begin{itemize}
 \item Percorrer a imagem selecionando as ``janelas'' de um tamanho específico (por padrão, \(25\)).
@@ -159,7 +160,7 @@ Assim, é possível utilizar a função invocando apenas \texttt{local(img, bern
 É importante perceber que, diferentemente do Trabalho 1, quando estamos tratando de limiarização, não se faz necessário realizar o ``padding'' para as bordas.
 Nesse caso, utilizamos apenas janelas que cabem inteiramente na imagem.
 \section*{Bernsen}
-\label{sec:org8cc2694}
+\label{sec:org99d612b}
 O método de Bernsen utiliza o contraste dentro da janela para determinar o limiar.
 Podemos calculá-lo a partir da média entre o maior e o menor valores na janela.
 \begin{verbatim}
@@ -182,7 +183,7 @@ Esta é utilizada para indicar ao python o uso de um valor inteiro e impedir o \
 Esse processo irá se repetir daqui pra frente
 
 \section*{Niblack e Sauvola e Pietaksinen}
-\label{sec:org0614476}
+\label{sec:org208e72e}
 O método de Niblack utiliza as métricas estatísticas de média e desvio padrão para calular o limiar baseado na fórmula \(\mu(x,y) + k \sigma(x,y)\), onde \(\mu(x,y)\) é a média das intensidades na janela e \(\sigma(x,y)\) o desvio padrão nela.
 Assim, utilizando as funções \texttt{numpy.mean} e \texttt{numpy.std}, podemos calculá-lo da seguinte forma.
 \begin{verbatim}
@@ -215,7 +216,7 @@ def sauvola(window, k=0.5, R=128):
 \end{verbatim}
 
 \section*{Phansalskar, More e Sabal}
-\label{sec:org0166470}
+\label{sec:org0007126}
 O método de Phansalskar, More e Sabal pode ser utilizado em imagens de baixo contraste.
 Similarmente à notação usada nos dois métodos anteriores, temos que nosso limiar é igual à
 \[\mu(x, y)\left[1+p \exp (-q\ \mu(x, y))+k\left(\frac{\sigma(x, y)}{R}-1\right)\right] \]
@@ -234,7 +235,7 @@ def phansalskar(window, p=2, q=10,
     return mean_val * aux
 \end{verbatim}
 \section*{Contraste}
-\label{sec:org76e750e}
+\label{sec:org94633de}
 O método do contraste nos pede que atrelemos o valor de preto (objeto) àqueles pixels que estão mais próximos do maior valor e fundo (branco) aqueles mais próximo do menor valor.
 Assim, isso equivale a dizer que o limiar é a média entre o maior e o menor valores na janela.
 \begin{verbatim}

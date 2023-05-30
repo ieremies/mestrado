@@ -50,9 +50,7 @@ plt.hist(hist, bins=256, range=[0,255], histtype='stepfilled')
 plt.show()
 #+end_src
 
-#+RESULTS:
-: None
-
+Assim, neste trabalho, basta interpretar o arquivo =trab3.py=.
 * Global e Otsu
 Os primeiros dois métodos que apresentaremos são chamados de globais.
 Estes utilizam o mesmo limiar para toda a imagem.

@@ -25,25 +25,31 @@ def percentage(img) -> float:
 def h_transitions(img) -> int:
     """
     Returns the number of horizontal transitions of color.
-    TODO tá errado, conferir com oq ue ele pediu
     """
     transitions = 0
-    for j in range(crop.shape[0] - 1):
-        if crop[j][crop.shape[1] // 2] != crop[j + 1][crop.shape[1] // 2]:
-            transitions += 1
-    return transitions
+    for i in range(img.shape[0] - 1):
+        for j in range(img.shape[1]):
+            if img[i][j] == 0 and img[i + 1][j] == 255:
+                transitions += 1
+    black = np.count_nonzero(img == 0)
+    if black == 0:
+        return 0
+    return round(transitions / black, 3)
 
 
 def v_transitions(img) -> int:
     """
     Returns the number of horizontal transitions of color.
-    TODO tá errado, conferir com oq ue ele pediu
     """
     transitions = 0
-    for j in range(crop.shape[1] - 1):
-        if crop[crop.shape[0] // 2][j] != crop[crop.shape[0] // 2][j + 1]:
-            transitions += 1
-    return transitions
+    for j in range(img.shape[1] - 1):
+        for i in range(img.shape[0]):
+            if img[i][j] == 0 and img[i][j + 1] == 255:
+                transitions += 1
+    black = np.count_nonzero(img == 0)
+    if black == 0:
+        return 0
+    return round(transitions / black, 3)
 
 
 # Read the image
@@ -55,25 +61,25 @@ img[img == 255] = 0  # all whites pixels to 0
 kernel1 = np.ones((1, 100), np.uint8)
 img1 = cv2.dilate(img, kernel1, iterations=1)
 img1 = cv2.erode(img1, kernel1, iterations=1)
-save("step2.png", img1)
+save("img/step2.png", img1)
 
 # Apply steps 3 and 4
 kernel2 = np.ones((200, 1), np.uint8)
 img2 = cv2.dilate(img, kernel2, iterations=1)
 img2 = cv2.erode(img2, kernel2, iterations=1)
-save("step4.png", img2)
+save("img/step4.png", img2)
 
 # bitwise and (step 5)
 img = cv2.bitwise_and(img1, img2)
-save("step5.png", img)
+save("img/step5.png", img)
 
 # closing operation
 kernel = np.ones((1, 30), np.uint8)
 img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
-save("step6.png", img)
+save("img/step6.png", img)
 
 # detect connected components
-nlabels, labels, stats, centroids = cv2.connectedComponentsWithStats(
+nlabels, _, stats, _ = cv2.connectedComponentsWithStats(
     img, None, None, None, 8, cv2.CV_32S
 )
 
@@ -103,7 +109,19 @@ for i in range(nlabels):
 
 # Text has to have height between 20 and 50 and percentage of black pixels
 # between 10% and 40%.
-text = [comp for comp in text if 20 < comp[3] < 50 and 0.1 < comp[5] < 0.4]
+text = [
+    comp
+    for comp in text
+    if (
+        20 < comp[3] < 50
+        and 0.09 < comp[5] < 0.4
+        and 0.09 < comp[6] < 0.4
+        and 0.09 < comp[7] < 0.4
+    )
+]
+print("x", "y", "w", "h", "b", "%", "vt", "ht", sep="\t")
+for t in text:
+    print(*t, sep="\t")
 
 
 def detect_words(img):
