@@ -21,6 +21,24 @@ Dessa forma, objetivamos resultados competitivos nas instâncias consolidadas na
 #+end_abstract
 
 * Introdução
+Dado um grafo não direcionado, uma *coloração própria* deste é uma alocação de cores tal que nenhum vértice seja adjacente a outro de mesma cor.
+O *Problema de Coloração de Vértices* (VCP) requer que encontremos uma coloração própria usando o menor número possível de cores.
+Decidir se um grafo possui uma coloração própria que usa até $k \geq 3$ cores é um problema NP-completo [cite:@Garey1979ComputersIntractabilityGuide], de forma que o problema de otimização também é NP-difícil.
+
+Muitas vezes, deseja-se alocar eventos ou recursos sem que hajam conflitos, seja na divisão de tarefas num cenário de fábricas ou escritórios, ou na organização de eventos.
+Assim, desejamos construir uma alocação de eventos a horários sem que, por exemplo, requeira que uma pessoa esteja em dois locais simultaneamente.
+Tal problema pode ser convertido a um de coloração transformando cada evento a um vértice no qual dois vértices estão ligados se há necessidade de ao menos uma pessoa estar em ambos eventos.
+Assim, numa solução, cada cor irá representar um horário para os eventos acontecerem.
+
+Além dessa, como discutido por [cite/text:@Malaguti2010surveyvertexcoloring], diversas são as aplicações do problema, como: agendamento [cite:@Leighton1979GraphColoringAlgorithm], tabela de horários [cite:@Werra1985introductiontimetabling], alocação de registradores [cite:@Chow1990prioritybasedcoloring], comunicação de redes [cite:@Caprara2007PassengerRailwayOptimization] e alocação de banda [cite:@Gamst1986Somelowerbounds].
+
+As aplicações acima deixam claro que encontrar uma boa (ou até ótima) solução para o problema é crucial.
+Cenários reais, muitas vezes, lidam com centenas de milhares de vértices, tornando necessário também resolvermos de forma rápida.
+
+Neste projeto, utilizaremos de Programação Linear Inteira para resolver o problema de forma exata, como discutido na Seção [[metodologia]].
+É importante mencionar que Programação Dinâmica também é comumente utilizada [cite:@Eppstein2006SmallMaximalIndependent; @Byskov2002ChromaticNumberTime], mas que vê apenas desenvolvimentos teóricos sem grande aplicabilidade prática no VCP.
+Já técnicas de enumeração baseado em /branch-and-bound/ [cite:@Brelaz1979Newmethodscolor] possuem resultados práticos melhores que programação dinâmica, mas ainda são superados por técnicas de programação linear inteira.
+Por fim, recomendamos as seguintes revisões bibliográficas sobre o problema  [cite:@Malaguti2010surveyvertexcoloring; @Lewis2015GuideGraphColouring; @Husfeldt2015Graphcolouringalgorithms; @Lima2018ExactAlgorithmsGraph].
 
 ** Modelo matemático
 Durante essa proposta, utilizaremos algumas notações que apresentaremos a seguir.
@@ -222,12 +240,12 @@ Se conseguíssemos achar um diagrama de decisão que correspondesse exatamente a
 Infelizmente, tal diagrama pode conter um número exponencial de nós, o que requer técnicas mais sofisticadas.
 Além disso, quando a solução não é exata, a qualidade da solução depende da ordenação das variáveis.
 
-Por exemplo, observe a Figura ref:fig:diagrama_decisão.
+Por exemplo, observe a Figura ref:fig:diagrama_decisao.
 Ao lado esquerdo está descrito um grafo e ao lado direito, um correspondente diagrama de decisão.
 Neste, os números dentro dos nós representam o conjunto de vértices disponíveis, ou seja o estado, enquanto os arcos tracejados correspondem aos 0-arcos e os contínuos, os 1-arcos.
 
 #+caption: Imagem retirada de [cite:@Hoeve2021Graphcoloringdecision]. Ao lado esquerdo, um grafo, e ao lado direito, um correspondente diagrama de decisão.
-#+name: fig:diagrama_decisão
+#+name: fig:diagrama_decisao
 #+attr_latex: :width 250px
 [[./diagrama_decisao.png]]
 
