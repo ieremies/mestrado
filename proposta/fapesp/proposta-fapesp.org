@@ -68,7 +68,7 @@ Este problema permite que situações mais complexas que o VCP sejam modeladas, 
 
 Por outro lado, muitas vezes, o recurso que queremos alocar é limitado.
 Para refletir isso, podemos colocar um peso em cada vértice e restringir a soma dos pesos dos vértices alocados a cada uma das cores, uma restrição de capacidade.
-Este problema é conhecido como VCP Limitado (BVCP) ou *Problema de Empacotamento com Conflito*  [cite/t:@Connolly1990KnapsackProblemsAlgorithms].
+Este problema é conhecido como VCP Limitado (BVCP) ou *Problema de Empacotamento com Conflito* [cite/t:@Connolly1990KnapsackProblemsAlgorithms].
 
 Tal restrição de capacidade pode ser adicionada à formulação de atribuição (ASS) para modelar o problema de BVCP sem grandes dificuldades.
 
