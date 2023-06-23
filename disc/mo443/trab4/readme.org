@@ -1,0 +1,101 @@
+#+Title: Trabalho 3
+#+Subtitle: Processamento Digital de Imagem
+#+Author: Ieremies Vieira da Fonseca Romero
+#+Options: toc:nil num:nil date:nil
+#+LATEX_CLASS_OPTIONS: [twocolumn, 10pt]
+#+PROPERTY: header-args:python :session a
+#+PROPERTY: header-args:python :results silent
+#+PROPERTY: header-args:python :tangle script.py
+
+
+* Introdução
+O processamento digital de imagens é uma área de estudo fundamental em Ciência da Computação, que visa o tratamento e manipulação de imagens digitais por meio de técnicas e algoritmos computacionais.
+A análise e processamento de imagens digitais é uma tarefa complexa e multidisciplinar, que envolve conhecimentos em matemática, estatística, computação gráfica, processamento de sinais e outras áreas correlatas.
+
+O objetivo deste trabalho é apresentar uma série de processamentos básicos em imagens digitais, abordando desde a leitura e escrita de imagens até operações de filtragem.
+Para o desenvolvimento das operações, será empregada a vetorização de comandos, que permite processar as imagens de forma mais eficiente e rápida, através da aplicação de operações vetoriais em vez de operações matriciais.
+
+* O programa
+Neste trabalho, utilizamos as bibliotecas =numpy= 1.24.1 e OpenCV 4.7.0.72 utilizado via =cv2=.
+#+begin_src python
+import cv2
+import numpy as np
+#+end_src
+
+Cada uma das preposições do enúnciado é resolvido por uma função contida no arquivo =funcs.py=.
+Todas as funções possuem como primeiro parâmetro a imagem ou janela sob a qual ela irá atuar.
+
+Para leitura e escrita das imagens, utilizaremos as seguintes funções do =cv2=.
+#+begin_src python :tangle no
+# read the pgm image
+cv2.imread('in.pgm', -1)
+cv2.imwrite('out.pgm', img)
+#+end_src
+
+* Perspectiva
+Defina os pontos de origem e destino da projeção perspectiva:
+#+begin_src python
+# Pontos de origem
+points_src = np.array([[37, 51], [342, 42], [485, 467], [73, 380]], dtype=np.float32)
+
+# Pontos de destino
+points_dst = np.array([[0, 0], [511, 0], [511, 511], [0, 511]], dtype=np.float32)
+#+end_src
+
+Calcule a matriz de transformação usando a função =cv2.getPerspectiveTransform=:
+#+begin_src python
+matrix = cv2.getPerspectiveTransform(points_src, points_dst)
+#+end_src
+
+Aplique a projeção perspectiva em uma imagem ou coordenadas de pontos de interesse:
+#+begin_src python
+image = cv2.imread('baboon_perspectiva.png')
+
+# Aplicar a transformação
+result = cv2.warpPerspective(
+    image, matrix, (512, 512)
+)  # (512, 512) é o tamanho da imagem de saída
+
+cv2.imwrite('./out.png', result)
+#+end_src
+
+* Transformações geométricas
+#+begin_src python
+def scale_and_rotate_image(image, scale_factor, angle):
+    # Obter a altura e largura da imagem
+    height, width = image.shape[:2]
+
+    # Calcular o centro da imagem
+    center = (width // 2, height // 2)
+
+    # Definir a matriz de transformação para escala
+    scale_matrix = np.array(
+        [[scale_factor, 0, 0], [0, scale_factor, 0], [0, 0, 1]], dtype=np.float32
+    )
+
+    # Definir a matriz de transformação para rotação
+    rotation_matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
+
+    # Aplicar as transformações de escala e rotação
+    scaled_image = cv2.warpAffine(image, scale_matrix, (width, height))
+    scaled_rotated_image = cv2.warpAffine(
+        scaled_image, rotation_matrix, (width, height)
+    )
+
+    return scaled_rotated_image
+
+# Carregar a imagem
+image = cv2.imread(
+    "baboon_perspectiva.png"
+)
+
+# Definir o fator de escala e o ângulo de rotação
+scale_factor = 0.8  # Fator de escala: 0.8 significa 80% do tamanho original
+angle = 30.0  # Ângulo de rotação: 30 graus no sentido anti-horário
+
+# Aplicar as transformações
+transformed_image = scale_and_rotate_image(image, scale_factor, angle)
+
+# Exibir a imagem original e a transformada
+cv2.imwrite("./out.png", transformed_image)
+#+end_src

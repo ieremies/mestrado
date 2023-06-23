@@ -1,0 +1,14 @@
+#+title: RISC-V is inevitable
+#+subtitle: Seminário 12
+#+LANGUAGE: en
+#+options: toc:nil num:nil date:nil
+
+The talk centered around the inevitability and growing popularity of RISC-V, an open instruction set architecture (ISA) designed to have numerous implementations. The speaker questioned the rationale behind entrusting software investment to a proprietary ISA when open standards now exist. They emphasized that although proprietary ISAs and their associated companies have come and gone, an open ISA offers more stability and long-term benefits.
+
+The prevalence of multiple ISAs within a System-on-Chip (SoC) was highlighted, either due to size constraints or closed nature of other ISAs. RISC-V, managed by RISC-V International, a non-profit organization, emerged as an open standard with widespread industry support.
+
+The talk explored the reasons behind RISC-V's popularity, citing a paradigm shift in the business model. Rather than adapting to different ISAs, companies now have the freedom to select what they need and then compete with vendors to fulfill those requirements. The open nature of RISC-V simplifies its usage and facilitates vertical integration of various components.
+
+Another key aspect discussed was the advantage of RISC-V's variable-length instructions. Modern instruction sets no longer fit within the confines of 32 bits. The flexibility of variable-length instructions enables efficient code size for embedded applications and dynamic code footprint for server environments.
+
+In conclusion, the talk emphasized that RISC-V is gaining traction as an inevitable force in the industry. Its open standard, coupled with inherent advantages and increasing vendor competition, positions it to become the go-to choice for the best processors. By embracing RISC-V, companies can benefit from the simplicity, versatility, and long-term stability offered by this open ISA.
