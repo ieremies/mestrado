@@ -9,12 +9,15 @@ Meu planejamento de disciplinas e atividades durante o mestrado.
 * Segundo Semestre:
 - Gerência de Redes de Computadores - SC com o Prof Edmundo (ter e qui 10)
 - Combinatória Poliédrica - com Prof Rafael. (ter e qui 14)
-- Pesquisa Operacional - com o Prof Usberti (sex 19) (já fiz, só falar com ele)
-- Teoria dos Grafos I - TC com a Profa Chris. (seg 21, qua 19) (ñ vou matricular)
+
+Possibilidades:
+- MO444A Sandra
+- MO401A Sandro
 
 PED no segundo semestre:
 - MC202 com o Rafael, segundas a tarde inteira.
-- MC202 com o GPT, terças as 21.
+** TODO Remover disciplina alteração
+DEADLINE: <2023-08-06 dom>
 
 * DONE Solicitar PIF
 CLOSED: [2023-04-24 Mon 19:34] DEADLINE: <2023-04-12 Wed>

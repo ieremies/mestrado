@@ -1,7 +1,8 @@
 #+Title: Seminários em Computação
 #+category: semi
 
-Total de faltas: 1 /
+Total de faltas: 1 / 13
+Total de nota: 2 / 12
 
 * DONE Seminário 1 - Transformação Digital – Computação Escalar & Dados Digitais Intensivos
 CLOSED: [2023-04-17 Mon 11:12] DEADLINE: <2023-03-17 Fri>
@@ -93,7 +94,20 @@ CLOSED: [2023-05-12 Fri 14:21] DEADLINE: <2023-05-05 Fri>
 * KILL Seminário 8 - Anti-Fake Technology (AFT): Devolvendo a Verdade à Sociedade
 CLOSED: [2023-05-12 Fri 14:25] DEADLINE: <2023-05-12 sex> SCHEDULED: <2023-05-03 qua 13:00>
 # Não vale nota, mas pode abonar uma falta.
-* TODO Seminário 9 - Disseminação de Dados Pessoais Vitais Para Apoio às Tomadas de Decisão em Situações Emergenciais em Ambientes Externos
+* DONE Seminário 9 - Modelagem matemática para propragação de influência em redes sociais.
+CLOSED: [2023-05-26 Fri 14:16]
+Cada indivíduo é modelado por um vértice num grafo de conexão.
+Quando modelamos informações, esta tem uma certa velocidade de propagação baseado na qualidade e conexão da rede.
+Já para opiniões, nos importamos com a quantidade de vizinhos conectados que possuem a opinião.
+Podemos analisar tais redes calculando o tempo necessário para disseminar a opinião por toda a rede?
+Qual o número mínimo de influenciadores que eu preciso no passo inicial par ating toda a rede?
+
+Convexidade geogética: um conjunto de vértices é dito convexo se todos os caminhos mínimos passam apenas por nós do conjunto.
+
+Em aplicações no mundo real, podemos ter que cada pessoa possui um requisito diferente de vizinhos para que esta seja influenciada ou que a rede altera-se com o tempo.
+O importante, para muitas empresas, é saber qual o número mínimo de influenciadores necessários para conseguir disseminar uma certa opinião de seu interesse.
+* DONE Seminário 10 - Disseminação de Dados Pessoais Vitais Para Apoio às Tomadas de Decisão em Situações Emergenciais em Ambientes Externos
+CLOSED: [2023-05-26 Fri 14:16]
 
 Infraestrutura de rede que, apesar de ser urbano, isso não é sinônimo de tranquilidade e harmonia.
 Em eventos críticos (uma queda ou acidente) o compartilhamento de informações e dados pessoais sensíveis e segurança de tais dados bem como o controle ao acesso a estes
@@ -110,11 +124,52 @@ Apoiado nesses conceitos, eles propuseram o STEALTH (Social Thrust Health Inform
 Por exemplo, podemos permitir que um médico tenha acesso aos dados em caso de ser necessário assistência médica.
 
 Tal tecnologia é capaz de manter uma rede de apoio baseado nas competências de cada um. No momento que acontece um evento crítico, os agentes mais próximos e mais competentes são acionados e com eles são compartilhados os dados, de acordo com a competência de cada indivíduo.
-* TODO Seminário 10 - Modelagem matemática para propragação de influência em redes sociais.
-Cada indivíduo é modelado por um vértice num grafo de conexão.
-Quando modelamos informações, esta tem uma certa velocidade de propagação baseado na qualidade e conexão da rede.
-Já para opiniões, nos importamos com a quantidade de vizinhos conectados que possuem a opinião.
-Podemos analisar tais redes calculando o tempo necessário para disseminar a opinião por toda a rede?
-Qual o número mínimo de influenciadores que eu preciso no passo inicial par ating toda a rede?
+* TODO Seminário 11 - Internet das Coisas Móveis (IoMT) e Coordenação de UAVs para aplicações do meio ambiente
+Nossas vidas, nossa economia e até o meio ambiente funcionam baseados na movimentação física e geográfica (de coisas, humanos e veículos).
+PRecisamos ter acesso a todas essas coisas "enquanto se movimentam" o que gera a necessidade de conectividade sem fio e intermitente.
+É necessário coordenar e orquestrar as coisas móveis, produtos ou veículos.
 
-Convexidade geogética: um conjunto de vértices é dito convexo se todos os caminhos mínimos passam apenas por nós do conjunto
+A Internet das Coisas Móveis (IoMT) ocorre quando:
+1. Existe um movimento relativo entre coletores e hubs e os objetos inteligentes (dispositivos IoT).
+2. A alcançabilidade do rádio WPAN entre eles torna a conectividade intermitente.
+3. O conjunto de dispositivos IoT atendidos por cada coletor é varável.
+
+O projeto começou quando os pesquisadores perceberam que o smartphone é um excelente hub para coleta de tais dados.
+
+Os pesquisadores também participaram do projeto GrADyS juntamente com a força aérea para coordenar quadcopteros e utiliza-los para transportar dados entre redes mesh.
+
+Protocolo DADCA adota uma heurística flexível e simples para dispositivos IoT estacionários.
+Adota um padrão de zig zags para cobrir uma área maior e transferir dados entre drone e para as estações de base.
+* TODO Seminário 12 - RISC-V is inevitable
+Open standard are a common thing, but sometimes we have proprietary implementations of those.
+But for ISA it hasn't been done, althought proprietary came and go, including its companies.
+
+Why entrust your software investment to a proprietary ISA?
+
+Is not uncommon to have multiple ISA in a SoC, either because it's too big to be implmented or becouse any other ISA is closed.
+
+RISC-V Background, designed as an architecture to have a lot of implementations. The ISA is managed by RISC-V International is a non-profit entity serving menbers and the industry.
+
+Why is it so popular? this movement is happening because the new business model changes everything: you first chose what you want and then compete the vendors to see who will supply, instead of having to adapt for each ISA possible. Since it's an open standard, is simpler to use and allow companies to have a more vertical integration of parts.
+
+RISC-V will have the best processors since inherent ISA advantage becoming apparent and many vendor competing for sockets
+
+Why RISC-V instructions variable-length? A modern instruction set does not fit in 32-bits, statisc code size critical for embeded applications and dynamic code footprint critical for server.
+* TODO Seminário 13
+Modelo de linguagem é uma distribuição de probabilidade sobre as palavras, almeja identificar qual a próxima palavra.
+
+GPT (Generative pre-trained transformer) é um modelo de linguagem neural.
+Generativo: ser capaz de produzir conteúdos com fluidez semelhante aos conteúdos gerados por humanos.
+Pré-treinado: o treinamento não é realizado de forma online, o que é bastante custoso.
+
+Processamento de língua natural é um campo interdisciplinar envolvendo ciência da computação, inteligência artificial e linguística focado na interação entre computadores e línguas humanas.
+Abordagens mais tradicionais, um texto era representado computacionalmente como um saco de palavras ("bag-of-words"). Já outras utilizam conjuntos de palavras consecutivas.
+
+Apesar disso, essas representações não fazem correlações entre significados similares, para isso utilizamos um "word-embedding" na qual atrelamos a cada palavra um vetor de valores reais de forma com que palavras similares ficam geometricamente próximas.
+O problema surge quando palavras assumem significados diferentes em contextos diferentes, tal problema é resolvido por modelos como GPT e BERT, utilizando o contexto.
+
+Transformer: modelo de aprendizado profundo que utiliza um mecanismo de auto-atenção para identificar o peso de cada parte dos dados de entrada. Modelos inicialmente usados na tradução de textos utilizando arquiteturas do tipo encode-decoder
+
+GPT são uma família de grandes modelos de linguagem (LLM) que possuem muitos parâmetros. Versões como GPT3 possuem centenas de bilhões de parâmetros. Já o chat-GPT é um modelo treinado para conversas
+
+Por fim a palestra ressalta coisas que o chat-GPT não é: não é uma enciclopédia digital

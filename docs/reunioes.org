@@ -93,6 +93,39 @@ Qualquer vértice com com grau menor que o lower_bound pode ser omitido
 Vértices com a mesma vizinhança, posso resolver isso com hashs rápidos de recalcular.
 # Teste se isso reduziria ou não.
 Vértices universais podem ser coloridos com a própria cor.
+#+begin_src
+if (g.deg(u) == g.get_n())
+#+end_src
 
 Calcular um bound rápido para conseguir limpar o grafo de forma rápida
 Achar um max k-core é polinomial?
+* 14 de Junho
+Instâncias "interessantes":
+- DSJC125.9
+- myciel2
+
+School1_nsh / queen16_16  mostra como demoramos muito para resolver a precificação.
+
+peterson / dodecahedron é o melhor exemplo de branching
+
+Olhando para instância queen13_13 dá para perceber que são muitas as iterações do problema de precificação que não alteram efetivamente o valor do dual
+
+Grafos randômicos são bem fáceis.
+
+1-fullins_3 é um bom exemplo de como eu fico rodando com branching e não chego a lugar algun
+
+[cite:@Lewis2015GuideGraphColouring] e se fizermos branching no uso dos conjuntos independentes?
+
+RFL apresentado no [cite:@Lewis2015GuideGraphColouring] possui o melhor bound com uma complexidade de O(nm)
+
+Seria muito ruim eu definir TL só no script, fica mais fácil de matar o processo assim...
+
+Conferir se eu to colocando restrições que já foram inseridas
+O eps é propagado, então faz com que eu tenho um (1+eps).
+Na hora de pegar o valor do dual, eu preciso fazer $\epsilon \lfloor \lambda_v \epsilon^{-1} \rfloor$
+Confere que essa multiplicação não estoura o double
+Talvez multiplicar os valores e desabilitar o scaling
+
+Branch and bound combinatório
+* 21 de Junho
+Profiler de funções
