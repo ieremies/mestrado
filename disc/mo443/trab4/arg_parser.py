@@ -9,7 +9,7 @@ prog [-a ângulo]
 Onde:
 -a ângulo de rotação medido em graus no sentido anti-horário
 -e fator de escala
--d dimens~ao da imagem de saída em pixels
+-d dimensão da imagem de saída em pixels
 -m método de interpolação utilizado
 -i imagem de entrada no formato PNG
 -o imagem de sa´ıda no formato PNG (após transformação)
@@ -17,7 +17,9 @@ Onde:
 
 import argparse
 
-parser = argparse.ArgumentParser(description="Processa imagens")
+parser = argparse.ArgumentParser(
+    description="Realiza a rotação e escala de uma imagem."
+)
 parser.add_argument(
     "-a",
     "--angulo",
