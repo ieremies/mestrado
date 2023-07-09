@@ -288,7 +288,7 @@ Os autores utilizam cortes de rank-$1$ com memória limitada para melhorar tal p
 Além disso, eles usam *propagação de etiquetas*, técnica comum na resolução de problemas de precificação que pode ser interessante para o nosso problema.
 
 Tendo em vista que tais técnicas ainda não foram aplicadas ao problema de coloração, objetivamos principalmente aplicarmo-nas tais bem como desenvolver qualquer necessidade de modificação ou melhoria.
-Além disso, consideramos estudar a adição de algoritmos de planos de corte, algo que já foi estudado brevemente na literatura, mas que ainda não viu grande impacto prático. [cite/text:@Schindl2005Somecombinatorialoptimization] introduziu alguns resultados poliédricos sobre a formulação de cobertura de conjuntos, [cite/text:@Hansen2009Setcoveringpacking] tentaram aplicar alguns cortes (sem muito sucesso) mas [cite/text:@Hulst2021branchpricecut] conseguiu avanços significativos em sua tese.
+Além disso, consideramos estudar a adição de algoritmos de planos de corte, algo que já foi estudado brevemente na literatura, mas que ainda não viu grande impacto prático. [cite/text:@Schindl2005Somecombinatorialoptimization] introduziu alguns resultados poliédricos sobre a formulação de cobertura de conjuntos, [cite/text:@Hansen2009Setcoveringpacking] tentaram aplicar alguns cortes (sem muito sucesso) mas [cite/text:@Hulst2021branchpricecut] mostrou em sua dissertação que ainda há o que estudar nessa vertente.
 
 Por fim, como apresentado no começo desse projeto, diversos são os problemas similares ou generalizações bem como as aplicações de tais.
 Assim, podemos também voltar nossas técnicas e implementações a tais variantes.
@@ -338,6 +338,7 @@ Além disso, pretendemos utilizar técnicas de análise estatística como aprese
 
 Por fim, como previsto, serão elaborados relatórios com os resultados obtidos bem como qualquer artigo que seja relevante.
 
+# Remover espaçamento duplo/coluna dupla
 #+PRINT_BIBLIOGRAPHY:
 
 # Local Variables:
