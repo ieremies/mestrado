@@ -1,14 +1,11 @@
 #+Title: Programação Linear Inteira aplicada a problemas de Coloração em Grafos
 #+Author: Ieremies Vieira da Fonseca Romero
 #+options: toc:nil date:nil
-#+language: pt-br
 #+EXCLUDE_TAGS: noexport
 #+latex_header: \usepackage{setspace}
 #+latex_header: \doublespacing
 #+latex_header: \newtheorem{prep}{Preposição}[section]
 #+latex_header: \usepackage[a4paper, total={6in, 8in}]{geometry}
-#+latex_header: \usepackage[backend=biber,ittitles,justify,indent,sccite,giveninits,date=year]{biblatex}
-#+latex_header: \renewbibmacro{in:}{\ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
 
 # Resumo: máximo de 20 linhas
 #+begin_abstract
@@ -17,14 +14,11 @@ No problema de coloração de vértices, dado um grafo, procuramos uma coloraç�
 Além de ser um tradicional problema de teoria dos grafos, o problema se apresenta como NP-difícil e resolvê-lo de forma exata é extremamente relevante na atualidade.
 Tais aplicações vão desda alocação de recursos como registradores até o gerenciamento de eventos.
 
-Soluções exatas para este problema utilizam técnicas como enumeração com /Branch-and-Bound/ [cite:@Furini2016ImprovedDSATURBased], programação dinâmica [cite:@Eppstein2003SmallMaximalIndependent; @Byskov2002ChromaticNumberTime] ou programação linear inteira.
+Soluções exatas para este problema utilizam técnicas como enumeração com /Branch-and-Bound/ [cite:@Furini2016ImprovedDSATURBased], programação dinâmica [cite:@Eppstein2006SmallMaximalIndependent; @Byskov2002ChromaticNumberTime] ou programação linear inteira.
 Nesse projeto, almejamos aplicar a última e utilizar algoritmos de /Branch-and-Price/ para superar os resultados da literatura.
-
-Nosso trabalho se diferencia ao aplicar técnicas recentes em /branch-and-price/ [cite:@Pessoa2021SolvingBinPacking; @Lima2022Exactsolutionnetwork] cuja eficácia já foi demonstrada em outros problemas, o que pode levar a uma melhora do estado-da-arte.
+Acreditamos que nosso trabalho se diferencia ao aplicar técnicas recentes para tais algoritmos, o que pode levar a uma melhora do estado-da-arte.
 Dessa forma, objetivamos resultados competitivos nas instâncias consolidadas na literatura, bem como possíveis novas formulações, cortes e estratégias para melhor resolvê-las.
 #+end_abstract
-
-# TODO talvez algo sobre bounds?
 
 * Introdução
 Dado um grafo não direcionado, uma *coloração própria* deste é uma alocação de cores tal que nenhum vértice seja adjacente a outro de mesma cor.
@@ -32,9 +26,9 @@ O *Problema de Coloração de Vértices* (VCP) requer que encontremos uma colora
 Decidir se um grafo possui uma coloração própria que usa até $k \geq 3$ cores é um problema NP-completo [cite:@Garey1979ComputersIntractabilityGuide], de forma que o problema de otimização também é NP-difícil.
 
 Muitas vezes, deseja-se alocar eventos ou recursos sem que hajam conflitos, seja na divisão de tarefas num cenário de fábricas ou escritórios, ou na organização de eventos.
-Assim, desejamos construir uma alocação desses a horários sem que, por exemplo, requeira que uma pessoa esteja em dois locais simultaneamente.
+Assim, desejamos construir uma alocação de eventos a horários sem que, por exemplo, requeira que uma pessoa esteja em dois locais simultaneamente.
 Tal problema pode ser convertido a um de coloração transformando cada evento a um vértice no qual dois vértices estão ligados se há necessidade de ao menos uma pessoa estar em ambos eventos.
-Assim, em uma solução, cada cor irá representar um horário para os eventos acontecerem.
+Assim, numa solução, cada cor irá representar um horário para os eventos acontecerem.
 
 Além dessa, como discutido por [cite/text:@Malaguti2010surveyvertexcoloring], diversas são as aplicações do problema, como: agendamento [cite:@Leighton1979GraphColoringAlgorithm], tabela de horários [cite:@Werra1985introductiontimetabling], alocação de registradores [cite:@Chow1990prioritybasedcoloring], comunicação de redes [cite:@Caprara2007PassengerRailwayOptimization] e alocação de banda [cite:@Gamst1986Somelowerbounds].
 
@@ -44,21 +38,20 @@ Cenários reais, muitas vezes, lidam com centenas de milhares de vértices, torn
 Neste projeto, utilizaremos de Programação Linear Inteira para resolver o problema de forma exata, como discutido na Seção [[metodologia]].
 É importante mencionar que Programação Dinâmica também é comumente utilizada [cite:@Eppstein2006SmallMaximalIndependent; @Byskov2002ChromaticNumberTime], mas que vê apenas desenvolvimentos teóricos sem grande aplicabilidade prática no VCP.
 Já técnicas de enumeração baseado em /branch-and-bound/ [cite:@Brelaz1979Newmethodscolor] possuem resultados práticos melhores que programação dinâmica, mas ainda são superados por técnicas de programação linear inteira.
-Recentemente, observamos avanços significativos utilizando técnicas de enumeração e /SAT/ por [cite/text:@Hebrard2020ConstraintSatisfiabilityReasoning].
 Por fim, recomendamos as seguintes revisões bibliográficas sobre o problema  [cite:@Malaguti2010surveyvertexcoloring; @Lewis2015GuideGraphColouring; @Husfeldt2015Graphcolouringalgorithms; @Lima2018ExactAlgorithmsGraph].
 
 ** Modelo matemático
 Durante essa proposta, utilizaremos algumas notações que apresentaremos a seguir.
 
 Seja $G = (V,E)$ um grafo simples não direcionado, denotamos como $n = |V|$ a quantidade de vértices e $m = |E|$ a quantidade de arestas.
-Dizemos que a vizinhança aberta $N(v)$ de um vértice\nbsp$v \in V$ no grafo $G$ é o conjunto de vértices adjacentes a $v$.
+Dizemos que a vizinhança aberta $N(v)$ de um vértice $v \in V$ no grafo $G$ é o conjunto de vértices adjacentes a $v$, ou seja, $N(v) = \{u \in V : (u,v) \in E\}$.
 Já a vizinhança fechada $N[v] = N(v) \cup \{v\}$ é a vizinhança aberta adicionado do vértice $v$.
 
 Muitas vezes, nos referimos a uma coloração própria apenas como coloração.
 Já uma coloração parcial é a atribuição, segundo as mesmas regras, de uma parte dos vértices e, em geral, utilizaremos essa definição para soluções em construção.
-O número cromático de\nbsp$G$, chamado de $\chi(G)$, é a menor quantidade de cores que pode constituir uma coloração do grafo $G$.
+O número cromático de $G$,  $\chi(G)$, é a menor quantidade de cores que pode constituir uma coloração do grafo $G$.
 Por fim, usaremos $H$ como limitante superior ao número cromático.
-Uma cor $h$ é dita válida para o vértice $v$ se ela não foi atribuída a nenhum vértice da vizinhança aberta de $v$.
+Uma cor $h$ é dita válida para o vértice $v$ se ela não foi atribuida a nenhum vértice da visinhança aberta de $v$.
 
 Um conjunto $S \subseteq V$ é dito independente em $G$ se, e somente se, não existem arestas em $E$ que conectem dois elementos de $S$.
 Perceba que o conjunto de vértices coloridos com mesma cor deve ser um conjunto independente.
@@ -73,11 +66,11 @@ Este problema permite que situações mais complexas que o VCP sejam modeladas, 
 
 Por outro lado, muitas vezes, o recurso que queremos alocar é limitado.
 Para refletir isso, podemos colocar um peso em cada vértice e restringir a soma dos pesos dos vértices alocados a cada uma das cores, uma restrição de capacidade.
-Este problema é conhecido como VCP Limitado (BVCP) ou *Problema de Empacotamento com Conflito* [cite/t:@Connolly1990KnapsackProblemsAlgorithms].
+Este problema é conhecido como VCP Limitado (BVCP) ou *Problema de Empacotamento com Conflito* [cite:@Connolly1991KnapsackProblemsAlgorithms].
 
 Tal restrição de capacidade pode ser adicionada à formulação de atribuição (ASS) para modelar o problema de BVCP sem grandes dificuldades.
 
-Por fim, podemos atrelar a cada vértice, um peso e definir o custo de uma cor como o maior peso dentre os vértices que ela colore.
+Por fim, podemos atrelar a cada vértice um peso e definir o custo de uma cor como o maior peso dentre os vértices que ela colore.
 Assim, no *Problema de Coloração com Pesos*, queremos reduzir o custo total das cores.
 Esse problema vê aplicações na /Alocação de Máquinas com Compatibilidade de Tarefas/ e /Problema de Decomposição de Matriz em Divisão de tempo para Alocação de Tráfico de Múltiplo Acessos/ [cite:@Werra1985introductiontimetabling; @Escoffier2006WeightedColoringfurther; @Finke2008Batchprocessinginterval].
 
@@ -91,19 +84,19 @@ A seguir, apresentamos as técnicas que almejamos utilizar bem como abordagens j
 
 ** Programação Linear Inteira
 *Programação Linear* é uma técnica de otimização a partir da modelagem de *programas lineares*.
-Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) [cite:@Chvatal1983LinearProgramming]. Um programa linear pode ser escrito da seguinte forma:
+Nestes, definimos uma função objetivo, a qual queremos maximizar ou minimizar com suas variáveis sujeitas a um conjunto de restrições lineares (equações ou inequações lineares) [cite:@Chvatal1983LinearProgramming] . Um programa linear pode ser escrito da seguinte forma:
 \begin{alignat*}{4}
 & \omit\rlap{minimize \quad \quad $\displaystyle cx$} \\
 & \mbox{sujeito a}&& \quad & Ax & \geq b  & \quad &  \\
 &                 &&       & x               & \in \mathbb{R}_+ &      &
 \end{alignat*}
 
-Para encontrar soluções viáveis com valores ótimos, conhecemos o algoritmo *simplex* que, apesar de ter complexidade exponencial, no caso médio executa em tempo polinomial\nbsp[cite:@Borgwardt1986SimplexMethodAlgorithms].
-Além deste, é importante mencionar os métodos dos pontos interiores [cite:@Karmarkar1984newpolynomialtime] e elipsoide\nbsp[cite:@Bland1981FeatureArticleTheEllipsoid] como alternativas.
+Para encontrar soluções viáveis com valores ótimos, conhecemos o algoritmo *simplex* que, apesar de ter complexidade exponencial, no caso médio executa em tempo polinomial [cite:@Borgwardt1986SimplexMethodAlgorithms].
+Além deste, é importante mencionar os métodos de ponto interno [cite:@Karmarkar1984newpolynomialtime] e elipsóide [cite:@Bland1981FeatureArticleTheEllipsoid] como alternativas ao simplex.
 
 # Programação Linear Inteira
 Para alguns problemas, como o de coloração de grafos, não faz sentido falar em soluções fracionárias, afinal, não conseguimos designar "meia cor" a um vértice.
-Para isso, restringimos as variáveis aos inteiros, tornando-o assim um *Programa Linear Inteiro*. Caso apenas um subconjunto das variáveis possuam a restrição de integralidade, chamamos esse programa de linear misto.
+Para isso, restringimos as variáveis aos inteiros, fazendo assim um *Programa Linear Inteiro*. Caso apenas um subconjunto das variáveis possuam a restrição de integralidade, chamamos esse programa de linear misto.
 
 O que a princípio pode parecer uma pequena alteração, torna o problema computacionalmente muito mais complexo.
 Para encontramos boas soluções viáveis para esse tipo de programa, algoritmos como o simplex não são o suficiente.
@@ -114,10 +107,9 @@ Definimos um *poliedro* como um subconjunto $P \subseteq \mathbb{R}^n$ tal que e
 Caso esse poliedro seja limitado, o chamamos de *politopo*.
 Dizemos que um subconjunto do poliedro definido por uma inequação é uma *face*.
 Se esta não for igual ao poliedro inteiro, dizemos ser própria e, caso também não seja vazia, dizemos ser não-trivial.
-Uma *faceta* pode ser definida como uma face própria maximal, ou seja, uma face própria que não está contida em nenhuma outra.
 
 A seguir, apresentamos as metodologias e técnicas que nos são relevantes para resolver o problema de forma exata.
-Em geral, as instâncias usadas para os resultados de experimentos computacionais são as apresentadas por [cite/t:@DIMACSGraphColoringInstances], que foram atualizadas com o passar dos anos.
+Em geral, as instâncias usadas para os resultados de experimentos computacionais são as apresentadas em [cite:@GraphColoringInstances], que foram atualizadas com o passar dos anos.
 
 ** Atribuição
 É possível perceber que $n$ cores são suficientes para colorir um grafo $G$. Podemos então definir dois conjuntos de variáveis binárias: $x_{ih}$ se o vértice $i$ é colorido com a cor $h$ e $y_h$ se a cor $h$ é utilizada. Dessa forma, construímos a seguinte formulação.
@@ -131,27 +123,24 @@ Em geral, as instâncias usadas para os resultados de experimentos computacionai
 &                 &&   & y_i       & \in \{0,1\} &   & i \in V
 \end{alignat*}
 Apesar de sua claridade e simplicidade, tal formulação vê pouca aplicação prática sem que apliquemos técnicas mais sofisticadas.
-# TODO que técnicas?
 
 Esse fato se dá por dois motivos:
 a. Muitas soluções são simétricas umas às outras, já que as cores são indistinguíveis. Uma solução que utiliza $k$ cores possui $\frac{n!}{(n-k)!}$ permutações de cores do que é, efetivamente, a mesma solução.
 b. A relaxação linear do modelo (quando a restrição de integridade é removida) é extremamente fraca. Assim, resolvê-la ainda nos deixa muito distante da solução ótima inteira.
 
-De modo a resolver tais problemas, [cite/text:@MendezDiaz2006BranchCutAlgorithm] adicionaram a restrição
+Afim de resolver tais problemas, [cite/text:@MendezDiaz2006BranchCutAlgorithm] adicionaram a restrição
 \[ y_h \geq y_{h+1} \quad h = 1, \dots, n-1 \]
 que garante que a cor $h+1$ só será utilizada se a cor $h$ já estiver sendo, quebrando várias simetrias.
 
-# TODO Quais famílias de desigualdades?
-Eles também acrescentaram diversas famílias de desigualdades válidas ao politopo do novo modelo que são adicionadas ao algoritmo de /branch-and-cut/ para fortalecer a relaxação linear além de implementar a estratégia de ramificação proposta por [cite/text:@Brelaz1979Newmethodscolor] com resultados computacionais satisfatórios.
+Eles também acrescentaram diversas famílias de desigualdades válidas ao politopo do novo modelo que são adicionadas ao algoritmo de /Branch-and-Cut/ para fortalecer a relaxação linear além de implementar a estratégia de branching proposta por [cite/text:@Brelaz1979Newmethodscolor] com resultados computacionais satisfatórios.
 
-Um algoritmo de /branch-and-cut/ consiste em, durante a árvore de /branch-and-bound/, adicionar desigualdades e cortes válidos para diminuir o espaço de busca.
-Um corte válido é uma inequação que não elimina nenhuma solução inteira viável do modelo.
+Um algoritmo de /branch-and-bound/ consiste em, durante a árvore de /branch-and-bound/, adicionar desigualdades e cortes válidos para diminuir o espaço de busca. Um corte válido é uma inequação que não elimina nenhuma solução inteira viável do modelo.
 
 Já [cite/text:@MendezDiaz2008CuttingPlaneAlgorithm] apresentam mais duas variações da formulação ASS: uma onde a quantidade de vértices cuja cor $h+1$ é atribuída não pode ser maior que a quantidade atribuída a cor $h$ e outro onde conjuntos independentes são ordenados pelo menor índice e apenas a cor $h$ pode ser atribuída ao $h-\text{ésimo}$ conjunto.
 
 ** Representantes
 [cite/text:@Campelo2004CliquesHolesVertex] propuseram uma formulação baseada em representantes, em que cada cor é representada por um vértice.
-Para tal, utilizam a variável binária $x_{vu}$, para todo $u, v \in V$ não adjacentes, a fim de representar se o vértice $v$ é representante da cor de\nbsp$u$ e $x_{vv}$ se $v$ é o próprio representante de sua cor.
+Para tal, utilizam a variável binária $x_{vu}$, para todo $u, v \in V$ não adjacentes, a fim de representar se o vértice $v$ é representante da cor de $u$ e $x_{vv}$ se $v$ é o próprio representante de sua cor.
 Seja $\bar{N}(v)$ o conjunto de vértices não adjacentes de $v$, esta formulação pode ser escrita como
 \begin{alignat*}{4}
 \mathrm{(REP)} \quad & \omit\rlap{minimize  $\displaystyle \sum_{v \in V} x_{vv}$} \\
@@ -161,9 +150,8 @@ Seja $\bar{N}(v)$ o conjunto de vértices não adjacentes de $v$, esta formulaç
 \end{alignat*}
 O primeiro conjunto de restrições garante que todo vértice terá exatamente um representante enquanto o segundo garante que dois vértices adjacentes terão representantes diferentes.
 
-# TODO quais restrições?
 Como [cite/text:@Campelo2008AsymmetricRepresentativesFormulation] discutem, existem diversas soluções simétricas para tal modelo que apenas distinguem no representante das cores sem alterar efetivamente a solução.
-Eles propõem acrescentar uma ordenação para que apenas o menor vértice possa ser o representante, porém esta versão possui um número exponencial de variáveis e, portanto, requer técnicas como /branch-and-price/, abordada mais afundo na Seção [[conjuntos_independentes]].
+Eles propõem acrescentar uma ordenação para que apenas o menor vértice possa ser o representante, porém esta versão possui um número exponencial de variáveis e portanto requer técnicas como /branch-and-price/, abordada mais afundo na Seção [[conjuntos_independentes]].
 Os autores também apresentam diversas restrições válidas a fim de reforçar o modelo.
 
 Experimentos computacionais foram feitos por [cite/text:@Jabrayilov2018NewIntegerLinear] mostrando a capacidade deste modelo de competir com as demais formulações.
@@ -171,10 +159,8 @@ Experimentos computacionais foram feitos por [cite/text:@Jabrayilov2018NewIntege
 ** Conjuntos independentes
 <<conjuntos_independentes>>
 Proposto por [cite/text:@Mehrotra1996ColumnGenerationApproach], outra forma de entender o problema é imaginá-lo como um *problema de cobertura de conjuntos* (SC) onde os conjuntos disponíveis são os conjuntos independentes dos vértices.
-Nesta classe de problemas, desejamos escolher o menor número de conjuntos tais que todos os elementos apareçam ao menos uma vez em cada um deles.
 
-Assim, seja $S$ a família de conjuntos impendentes do grafo $G$, a variável binária $x_s$ representa se o conjunto $s \in S$ está sendo usado ou não na solução.
-Nossa formulação então se dá por:
+Assim, seja $S$ a família de conjuntos impendentes do grafo $G$, a variável binária $x_s$ representa se o conjunto $s \in S$ está sendo usado ou não na solução. Nossa formulação então se dá por:
 \begin{alignat}{4}
 \mathrm{(SC)} \quad & \omit\rlap{minimize  $\displaystyle \sum_{s \in S} x_s$} \nonumber \\
 & \mbox{sujeito a}&& \quad & \sum_{s \in S: i \in s} x_{s}&\geq 1 & \quad & i \in V \label{rest9} \\
@@ -183,9 +169,8 @@ Nossa formulação então se dá por:
 O primeiro conjunto de restrições garante que todos os vértices de $V$ estão contidos em algum conjunto independente escolhido.
 Apesar de poucas restrições, essa formulação sofre de ter um número exponencial de variáveis, o que a torna impraticável de implementá-la em resolvedores convencionais como /Gurobi/.
 
-# TODO será que ele quer uma descrição mais formal de branch-and-price?
 Por tal motivo, [cite/text:@Mehrotra1996ColumnGenerationApproach] propuseram um algoritmo de /branch-and-price/ baseado nesta modelagem.
-Essa abordagem permite lidar com um número exponencial de variáveis, já que iniciamos com um subconjunto destas e adicionamos as necessárias conforme as iterações.
+Essa abordagem permite lidar com um número exponencial de variáveis, já que iniciamos com um subconjunto destas e adicionamos com o passar do desenvolvimento da árvore de /branch-and-bound/.
 
 Neste algoritmo, a decisão de qual variável será adicionada é feita pelo subproblema de geração de coluna caracteriza um *Problema de Conjunto Independente de Peso Máximo*:
 \begin{alignat*}{4}
@@ -194,12 +179,10 @@ Neste algoritmo, a decisão de qual variável será adicionada é feita pelo sub
 &                 &&   & z_i       & \in \{0,1\} &    & i \in V
 \end{alignat*}
 onde $z_i$ é uma variável binária que indica se o vértice $i$ está incluso no conjunto independente e $\pi_i$ é o valor ótimo da variável dual associado à restrição eqref:rest9.
-Tal problema pode ser resolvido de forma heurística para encontrar a coluna de custo reduzido com valor negativo ou por técnicas como a proposta por [cite/text:@Held2012Maximumweightstable].
-Em caso de soluções fracionárias, [cite/text:@Mehrotra1996ColumnGenerationApproach] sugerem uma estratégia que garante que os subproblemas continuam a ser de coloração de vértices e apenas requer que o grafo original seja alterado.
-# TODO que estratégia?
+Tal problema pode ser resolvido de forma heurística para encontrar a coluna de custo reduzido com valor negativo.
+Em caso de soluções fracionárias, os autores sugerem uma estratégia que garante que os subproblemas continuam a ser de coloração de vértices e apenas requer que o grafo original seja alterado.
 
-Além disso, [cite/text:@Malaguti2011ExactApproachVertex] propõem meta-heurísticas para inicialização e geração de colunas bem como novos esquemas de ramificação.
-# TODO quais são tais meta-heurísticas e esquemas de ramificação
+Além disso, [cite/text:@Malaguti2011ExactApproachVertex] propõem meta-heurísticas para inicialização e geração de colunas bem como novos esquemas de branching.
 
 Similar a este último modelo, [cite/text:@Hansen2009Setcoveringpacking] propuseram a formulação chamada de *Empacotamento de conjunto* (SP)
 \begin{alignat*}{4}
@@ -210,10 +193,10 @@ Similar a este último modelo, [cite/text:@Hansen2009Setcoveringpacking] propuse
 em que $\Omega$ é a família de conjuntos independentes com mais de um elemento.
 Para essa formulação, seja $z$ o valor da solução, a quantidade de cores usadas é igual $k = n - z$.
 Além disso, [cite/text:@Hansen2009Setcoveringpacking] demonstram a equivalência das formulações de SC e SP, bem como apresentam diversas famílias de inequalidades válidas que definem facetas.
-# TODO quais essas famílias?
+Uma *faceta* pode ser definida como uma face própria maximal, ou seja, uma face própria que não está contida em nenhuma outra.
 
 Os autores também apresentam resultados computacionais que não demonstram superioridade entre o trabalho deles em relação à [cite/text:@Mehrotra1996ColumnGenerationApproach] bem como técnicas de pré-processamento e um algoritmo de planos-de-corte.
-Um algoritmo de *planos-de-corte* é aquele que parte de um modelo relaxado, resolve-se e iterativamente acrescenta-se inequações válidas, chamadas de planos-de-corte, para eliminar tal solução.
+Um algoritmo de *planos-de-corte* é aquele que parte de um modelo relaxado, resolve-se e iterativamente acrescenta-se inequações válidas, chamadas de planos-de-corte, de forma a eliminar tal solução.
 Repetimos o processo até encontrar uma solução para o problema original.
 
 Já [cite/text:@Morrison2014WideBranchingStrategy] apresentam outra forma de realizar a ramificação do processo de /branch-and-bound/.
@@ -242,10 +225,8 @@ A formulação segue:
 &                     &&   &
 \end{alignat*}
 O primeiro conjunto de restrições garante que nenhum vértice é maior que a cor H.
-Já o segundo e terceiro correlacionam as variáveis de ordenação parcial com as de atribuição, enquanto o quarto e quinto garantem que dois vértices adjacentes não são coloridos com a mesma cor.
+Já o segundo e terceiro correlacionam as variáveis de ordenação parcial com as de atribuição, enquanto que o quarto e quinto garantem que dois vértices adjacentes não são coloridos com a mesma cor.
 Por fim o sexto, força que $q$ seja o vértice com a maior cor que, juntamente com o sétimo, são utilizados para reforçar a formulação.
-
-Como demonstrado pelo autor, essa formulação apresenta-se também competitiva com as demais.
 
 ** Diagrama de decisões binárias ordenadas
 Por fim, mais recentemente, [cite/text:@Hoeve2021Graphcoloringdecision] aplica técnicas de diagrama de decisão.
@@ -256,40 +237,56 @@ O nível $i$ é um conjunto de nós associados à variável $x_i$ onde cada um d
 
 [cite/text:@Hoeve2021Graphcoloringdecision] utiliza a formulação de conjuntos independentes para aplicar tal técnica, onde cada variável indica o uso, ou não, de um vértice em um conjunto.
 Se conseguíssemos achar um diagrama de decisão que correspondesse exatamente ao problema de coloração, poderíamos resolver o problema por meio de uma formulação de fluxo, na qual cada $\{r,t\}-\text{caminho}$ seria um conjunto independente e, como demostrado pelos autores, a função objetivo seria nosso número cromático.
-Infelizmente, tal diagrama pode conter um número exponencial de nós, requerendo técnicas mais sofisticadas.
+Infelizmente, tal diagrama pode conter um número exponencial de nós, o que requer técnicas mais sofisticadas.
 Além disso, quando a solução não é exata, a qualidade da solução depende da ordenação das variáveis.
 
 Por exemplo, observe a Figura ref:fig:diagrama_decisao.
 Ao lado esquerdo está descrito um grafo e ao lado direito, um correspondente diagrama de decisão.
-Neste, os números dentro dos nós representam o conjunto de vértices disponíveis, ou seja, o estado, enquanto os arcos tracejados correspondem aos 0-arcos e os contínuos, os 1-arcos.
+Neste, os números dentro dos nós representam o conjunto de vértices disponíveis, ou seja o estado, enquanto os arcos tracejados correspondem aos 0-arcos e os contínuos, os 1-arcos.
 
-#+caption: Imagem original por [cite/t:@Hoeve2021Graphcoloringdecision]. Ao lado esquerdo, um grafo, e ao lado direito, um correspondente diagrama de decisão.
+#+caption: Imagem retirada de [cite:@Hoeve2021Graphcoloringdecision]. Ao lado esquerdo, um grafo, e ao lado direito, um correspondente diagrama de decisão.
 #+name: fig:diagrama_decisao
 #+attr_latex: :width 250px
-[[/home/ieremies/proj/mest/proposta/fapesp/diagrama_decisao.png]]
+[[./diagrama_decisao.png]]
 
 Os autores relatam ter obtido resultados competitivos com outros estados-da-arte utilizando estratégias específicas da literatura de diagrama de decisões para resolver as dificuldades apresentadas acima.
 
+** Enumeração :noexport:
+[[comment:talvez eu irei tirar essa seção]]
+[cite/text:@Brelaz1979Newmethodscolor] propôs o algoritmo guloso chamado de DSATUR, em que, a cada iteração, colorimos um vértice $v$ como uma cor válida.
+Dizemos que o *grau de saturação* [[comment:cromatico ou de saturação]] de um vértice $v$ numa coloração parcial é a quantidade de cores distintas na sua vizinhança aberta.
+O DSATUR utiliza essa ideia para escolher, como próximo vértice a ser colorido, aquele com maior grau de saturação.
+
+É possível utilizar essa ideia para melhorar nosso /branch-and-bound/.
+A cada ramificação, selecionamos o vértice com maior grau de saturação e criamos um problema para cada cor viável já utilizada, acrescentando uma ainda não utilizada.
+
+Apesar disso, muitas vezes, diversos vértices possuem o mesmo grau de saturação, fazendo-se necessário implementar regras de desempate.
+Dentre as propostas, temos:
+- [cite/text:@Brelaz1979Newmethodscolor] utiliza o grau do vértice.
+- [cite/text:@Sewell1996improvedalgorithmexact] utiliza o vértice que maximiza o número de cores disponíveis para todos os vértices ainda não coloridos.
+- [cite/text:@Segundo2012newDSATURbased] incrementa na ideia anterior, mas apenas utilizando os vértices que estão sendo desempatados.
+Em todos os casos acima, se mantiver algum empate, a ordenação lexigráfica é utilizada.
+
+[cite/text:@Ternier2017ExactAlgorithmsVertex] implementa essas variações mostra que o proposto por [cite/text:@Sewell1996improvedalgorithmexact], o qual se mostra o mais rápido, mesmo com maior complexidade computacional na regra de desempate, dado um bom limitante inferior inicial. O autor também apresenta novas variações para o algoritmo de /branch-and-bound/ usando DSATUR e novas regras de escolha de vértices com bons resultados em relação ao estado-da-arte.
+
 * Objetivos
-Recentemente, houve avanços significativos na abordagem de branch-and-price, resultando em vários trabalhos publicados para outros problemas que utilizam e melhoram essa técnica.
-Um exemplo notável é o trabalho de [cite/text:@Lima2022Exactsolutionnetwork], que apresenta técnicas fortes que melhoram o estado da arte para problemas como o Problema de Empacotamento.
+Recentemente, houve avanços significativos na abordagem de branch-and-price para o problema de coloração, resultando em vários trabalhos publicados para outros problemas que utilizam e melhoram essa técnica. Um exemplo notável é o trabalho de [cite/text:@Lima2022Exactsolutionnetwork], que apresenta técnicas fortes que melhoram o estado da arte para problemas como o Problema de Empacotamento.
 
 Os autores propõem um modelo baseado em fluxo de arcos para auxiliar em algoritmos de geração de colunas.
 Eles também comentam que qualquer problema de cobertura de conjunto consegue ser transformado em um problema de fluxo, o que indica que suas técnicas podem ser relevantes para o nosso problema.
 Além disso, eles utilizam *fixação de variáveis*, técnica na qual é possível provar que algumas variáveis nunca poderão entrar no modelo de /branch-and-pricing/ e tornar a solução melhor.
 A dificuldade reside em encontrar uma solução dual viável que possibilite computar o custo reduzido, necessário para provar esta afirmação.
-Um importante desenvolvimento proposto pelos autores é justamente um modelo linear capaz de encontrar eficientemente uma solução, mesmo que não seja ótima (o que, como argumentado por eles, é ainda mais eficiente).
+Um importante desenvolvimento proposto pelos autores é justamente um modelo linear capaz de encontrar eficientemente uma solução, mesmo que não seja ótima (o que, como argumentado por eles, é ainda mais eficiênte).
 
-Outro bom indicador do que pretendemos fazer é a semelhança de bons resultados recentes como [cite/text:@Hoeve2021Graphcoloringdecision] que utilizam ideias muito similares.
+Outro bom indicador do que pretendemos fazer é a semelhança de bons resultados recentes como [cite:@Hoeve2021Graphcoloringdecision] que utilizam ideias muito similares.
 
 Técnicas interessantes também foram propostas por [cite/text:@Pessoa2021SolvingBinPacking] que apresentam um modelo genérico para resolver problema de roteamento.
-Quando se adiciona um corte no /branch-cut-and-price/, isso corresponde a variáveis no dual dificultando o subproblema de geração de colunas.
+Quando adiciona-se um corte no /branch-cut-and-price/, isso corresponde a variáveis no dual o que dificulta o subproblema de geração de colunas.
 Os autores utilizam cortes de rank-$1$ com memória limitada para melhorar tal processo.
-Além disso, eles usam *propagação de etiquetas*, técnica comum na resolução de problemas de precificação que pode ser interessante para o nosso problema.
+Além disso, eles usam *propagação de etiquetas*, técnica comum na resolução de problemas de precificação e que pode ser interessante para o nosso problema.
 
-Tendo em vista que tais técnicas ainda não foram aplicadas ao problema de coloração, objetivamos principalmente aplicarmo-nas tais bem como desenvolver qualquer necessidade de modificação ou melhoria.
-Além disso, consideramos estudar a adição de algoritmos de planos de corte, algo que já foi estudado brevemente na literatura, mas que ainda não viu grande impacto prático. [cite/text:@Schindl2005Somecombinatorialoptimization] introduziu alguns resultados poliédricos sobre a formulação de cobertura de conjuntos, [cite/text:@Hansen2009Setcoveringpacking] tentaram aplicar alguns cortes (sem muito sucesso) mas [cite/text:@Hulst2021branchpricecut] mostrou em sua dissertação que ainda há o que estudar nessa vertente.
-
+Nosso principal objetivo é aplicarmos tais novas tecnologias ao problema de coloração.
+Além disso, estudaremos a possibilidade de novos cortes e limitantes para as formulações.
 Por fim, como apresentado no começo desse projeto, diversos são os problemas similares ou generalizações bem como as aplicações de tais.
 Assim, podemos também voltar nossas técnicas e implementações a tais variantes.
 
@@ -321,27 +318,21 @@ Refletimos o cronograma planejado na Tabela ref:tab:cron.
 | Desenvolvimento        |           |           | $\bullet$ | $\bullet$ | $\bullet$ | $\bullet$ | $\bullet$ | $\bullet$ |
 | Escrita                |           |           |           |           |           |           | $\bullet$ | $\bullet$ |
 Acrescido a isso, o beneficiário deste projeto ministra aulas de Introdução à Programação para alunos de ensino médio na modalidade de itinerários formativos desde $2022$ em colégio particular de Campinas, SP.
-Para o ano de $2023$, estão programadas $3$ aulas semanais, o que se mantém consoante a Portaria PR n° $05/2012$.
+Para o ano de $2023$, estão programadas $3$ aulas semanais, o que se mantém de acordo com a Portaria PR n° $05/2012$.
 Acreditamos que tal atividade muito acrescentará no desenvolvimento do aluno como acadêmico, transmitindo os conhecimentos adquiridos à comunidade e ajudando na divulgação científica.
 
 * Material e método
-Para o desenvolvimento do projeto, o aluno utilizar-se-á de artigos e materiais de consulta disponibilizados pela UNICAMP de maneira gratuita, grande parte desses de forma online ou por meio da Biblioteca do Instituto de Matemática, Estatística e Computação Científica.
+Para o desenvolvimento do projeto, o aluno utilizará-se de artigos e materiais de consulta disponibilizados pela UNICAMP de maneira gratuita, grande parte desses de forma online ou por meio da Biblioteca do Instituto de Matemática, Estatística e Computação Científica.
 
 Ademais, serão realizados encontros semanais entre o aluno e o orientador para debater os conteúdos estudados e acompanhar o progresso do projeto.
 
 * Avaliação dos resultados
-Os algoritmos e modelos propostos serão comparados com as instâncias presentes na literatura, como as instâncias do [cite/t:@DIMACSGraphColoringInstances] e, caso necessário, novas instâncias poderão ser geradas.
+Os algoritmos e modelos propostos serão comparados com as instâncias presentes na literatura, como as [cite/text:@GraphColoringInstances] e, caso necessário, novas instâncias poderão ser geradas.
 
 Os resultados dos experimentos computacionais serão comparados utilizando técnicas como *Performance Profile* apresentado por [cite/t:@Dolan2002Benchmarkingoptimizationsoftware].
 
-Além disso, pretendemos utilizar técnicas de análise estatística como apresentadas por [cite/t:@Derrac2011practicaltutorialuse] a fim de produzir comparações mais rigorosas entre as propostas desse projeto.
+Além disso, pretendemos utilizar técnicas de análise estatísica como apresentadas por [cite:@Derrac2011practicaltutorialuse] afim de produzir comparações mais rigorozas entre as propostas desse projeto.
 
-Por fim, como previsto, serão elaborados relatórios com os resultados obtidos bem como qualquer artigo que seja relevante.
+Por fim, como previsto, serão elaborados relatórios com os resultados obtidos bem como qualquer artigo que venha a ser relevante.
 
-# Remover espaçamento duplo/coluna dupla
 #+PRINT_BIBLIOGRAPHY:
-
-# Local Variables:
-# jinx-languages: "pt_BR"
-# languagetool-local-disabled-rules: ("SEMICOLON_COLON_SPACING" "WHITESPACE_RULE")
-# End:
