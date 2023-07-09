@@ -1,0 +1,23 @@
+#+Title: Artigos, livros e outras fontes
+
+
+** Gualandi 2012 - Exact Solution of GCP via Constraint Programming and Column Generation
+[cite:@Gualandi2012ExactSolutionGraph]
+** Pessoa 2021 - Solving Bin Packing Problems Using VRPSolver Models
+[cite:@Pessoa2021SolvingBinPacking]
+** Lima 2022 - Exact solution of network flow models with strong relaxations [0%]
+:LOGBOOK:
+CLOCK: [2023-02-28 ter 15:45]--[2023-02-28 ter 16:40] =>  0:55
+:END:
+[cite:@Lima2022Exactsolutionnetwork]
+** Desrosiers 2005
+[cite:@Desrosiers2005ColumnGenerationGerad]
+Citado por [cite:@Lima2018ExactAlgorithmsGraph] como referência para geração de colunas.
+** DW decompositions
+[cite:@AndradeUmalgoritmoexato]
+** Paper do Renan
+** Conferir sobre a ferramenta [[https://matilda.unimelb.edu.au/matilda/our-methodology][Matilda]]
+Renan falou que na oficina que ele tava comentaram sobre a ferramenta.
+Parace ser algo para analizar a dificuldade de instâncias.
+** https://drops.dagstuhl.de/opus/volltexte/2022/16655/
+** https://link.springer.com/chapter/10.1007/978-3-030-45771-6_31
