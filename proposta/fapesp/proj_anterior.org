@@ -1,8 +1,0 @@
-#+Title: Projetos Anteriores
-#+Subtitle: Programação Linear Inteira aplicada a problemas de Coloração em Grafos
-#+options: toc:nil date:nil num:nil
-
-O beneficiário deste projeto, Ieremies V. F. Romero, participou do projeto de Iniciação Científica de número 2019/14492-9 e de título "Aplicações de Teoria dos Jogos Algorítmica a Problemas de Transporte" financiado pela Fundação de Amparo à Pesquisa do Estado de São Paulo (FAPESP).
-Tal projeto teve início em agosto de 2019 e encerrou-se em julho do ano seguinte, durante este foi produzido o artigo [cite/title/b:@Silva2020TightBoundsPrice] já submetido.
-
-#+print_bibliography:

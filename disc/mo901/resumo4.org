@@ -1,9 +1,0 @@
-#+title: Um relato de experiências de cooperação academia/empresas no tecnológico do Brasil
-#+subtitle: Seminário 4
-#+options: toc:nil num:nil date:nil
-
-A palestra "Um relato de experiências de cooperação academia/empresas no tecnológico do Brasil" apresentou as vivências do palestrante em criar empresas dentro da universidade e colaborar com start-ups. Para superar as dificuldades de envolver empresas na universidade pública, foi necessário convencer a comunidade interna e externa e lidar com questões legais. Eles utilizam incubadoras da UFMA, mas professores com dedicação exclusiva precisam pedir afastamento. Para promover a colaboração, o palestrante sugere identificar problemas acadêmicos interessantes e buscar gerar resultados academicamente relevantes.
-
-Além disso, o palestrante mencionou outras duas formas de interação universidade-empresa. A primeira é através do projeto de P&D pela lei de informática, mas segundo ele, não foi uma boa experiência. A segunda é por meio da Embrapii, uma empresa brasileira de pesquisa e inovação semelhante à EMBRAPA de tecnologia. Em resumo, a palestra apresentou as estratégias adotadas para incentivar a colaboração entre academia e empresas no Brasil, destacando a importância de buscar soluções conjuntas para problemas relevantes e enfrentar as dificuldades impostas pela legislação e estrutura universitária.
-
-Por fim, o palestrante entrou em diversos detalhes específicos sobre perspectivas pessoais sobre a legislação e organização da universidade, bem como alguns lucros que ele obteve com essas cooperações.
