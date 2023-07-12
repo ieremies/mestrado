@@ -1,0 +1,63 @@
+#+Title: Tarefas do mestrado
+
+* TODO https://arxiv.org/pdf/2108.09329.pdf
+Eu já não sei mais onde salvar as coisas
+* TODO [cite:@Hansen2009Setcoveringpacking]
+* TODO O repositório do rafael de informações
+- minha estrutura de projeto
+- referências / organização
+* TODO Artigo de branch-and-bound do Bernado
+* TODO Github classroom
+Me preocupa o gasto de "minutos". São 2.000 minutos por org por mês.
+Dá para usar um git hook e impedir que o aluno fique fazendo muitos commits sem necessidade?
+Ou forçar eles usar uma branch de dev e [[https://stackoverflow.com/questions/58139406/only-run-job-on-specific-branch-with-github-actions][Only run job on specific branch with GitHub Actions - Stack Overflow]]
+* TODO Escrever como fica a questão dos cortes do renan.
+Então, dado três vertices i, j e k , eu computo se isso induz um corte violado C na solução da relaxaçao atual S. O independent set P aparece no corte se pelo menos dois dos três vertices aparecer em P. E isso será um corte violado se a soma dos valores de todas das variáveis de S que aparecem em C for maior que 1.
+
+Daí na hora do pricing, seja C* um corte com valor dual diferente de 0.
+Toda vez que você enumerar um independent set que tem pelo menos dois vertices de C*, tu precisa incluir o valor dual de C* no custo reduzido do independent set (editado)
+Daí sei lá, eu enumero todos os cortes e se tiver mais que 20 cortes violados, eu coloco só os 20 mais violados.
+E tem a questão da afinidade, que um corte só pode estar violado se d_ij + d_jk + d_ki > 1
+Onde d_ij é a afinidade dos vertices i e j, ou seja, isso é a soma dos valores das variáveis de S em que i e j aparecem juntos.
+Isso economiza processamento, porque é mais barato discartar um candidato a corte assim, do que iterando sobre todos os padrões dos três vertices para computar os coeficientes (isso obviamente considerando que você fará um preprocessamento dessa matriz de afinidade) (editado)
+* TODO Dodecahedron
+essa instância varia muito os resultados e eu acho que ela quebra quando build com release.
+{'solution': 4.0, 'time': 0.0, 'type': 'dsatur'}
+{'lower': 2.5, 'upper': 0.0, 'time': 6.513}
+{'created': 185, 'branched': 292, 'contracts': 146, 'conflicts': 146}
+
+* TODO Olhar a bibliografia de WMSS
+- Quero suporte a cortes
+- Múltiplos conjuntos
+
+O gurobi tem uma função para pegar mais soluções do que só a ótima.
+[[https://www.sciencedirect.com/science/article/pii/S0890540117300950?via%3Dihub][Exact algorithms for maximum independent set - ScienceDirect]]
+
+A página da wikipedia refere-se a decomposições modulares.
+
+O principal objetivo é achar conjuntos estáveis que passam de peso 1.
+A quantidade de conjuntos independentes que um vértice pertence é inversamente proporcional a quantidade de vizinhos.
+
+Algo que fica batendo na minha cabeça é "quais são os conjuntos que eu preciso colocar?". Sabemos que precisamos "conduzir" o PL a um estado onde nenhum conjunto independentes viola, mas isso não significa que precisamos colocar todos.
+Por exemplo, se todos os conjuntos maximais estão presentes, sabemos que nenhum outro pode estar violado (já que todos eles são a eliminação de algum subconjunto de vértices e os pesos dos vértices são não negativos).
+
+Quando resolvemos o dual, temos um conjunto de pesos para os vértices tais que aqueles conjuntos independentes não são violados (pesos menores que 1).
+Um vértice com poucos vizinhos aparece em mais conjuntos independentes.
+Um vértice com peso alto tem mais chance de violar a restrição.
+Conjuntos independentes grandes (em tamanho) são compostos por vértices com poucos vizinhos.
+O vértice que possui uma alta proporção peso/vizinho, muito provavelmente está num conjunto que viola.
+Posso deixar essa restrição mais forte se levar em conta o peso dos vizinhos:
+Para cada vértice, o custo induzido pela vizinhança é o peso dele menos o peso dos vizinhos.
+# Eu acho que essa última é bem mais forte que o anterior e é o que o held2012 usa
+
+A wikipedia (sim, eu sei) comenta [[https://doi.org/10.1016%2Fj.ic.2017.06.001]] como uma boa forma de achar o maximo, mas também fala que todos os maximais podem ser encontrados em menos tempo usando o algoritmo guloso https://doi.org/10.1137%2F0215074.
+Também fala sobre decomposição modular.
+https://www.sciencedirect.com/science/article/pii/S0166218X17300902
+https://www.sciencedirect.com/science/article/pii/0012365X9200057X?ref=pdf_download&fr=RR-2&rr=7e2893cb88462800
+https://sop.ior.kit.edu/downloads/diplomaThesis.pdf
+https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
+https://pure.tue.nl/ws/files/2499168/Metis196442.pdf
+* TODO Script
+- [ ] Validar a solução
+- [ ] Comparar com outros resultados
+  - [ ] Compilar os resultados da literatura
