@@ -4,24 +4,24 @@
 mest
 ├── code (git)
 │   ├── Makefile
-│   ├── readme.org :: Descrições específicas sobre a implementação / código
+│   ├── readme.org   :: Descrições específicas sobre a implementação / código
 │   ├── src
 │   └── ...
-├── disc (git) :: Atividades das disciplinas
+├── disc (git)       :: Atividades das disciplinas
 │   ├── mo443
 │   ├── mo901
-│   └── readme.org :: Descrição das disciplinas e planejamento
-├── docs :: outras formas de documentação
-│   ├── papers.org :: track dos papers (e outras fontes) que tenho que ler
-│   ├── diary.org :: diário de pesquisa, descrever cada um dos meus dias de pesquisa
-│   ├── meets.org :: diário das reuniões com o orientador
-│   └── todo.org :: track das tarefas relacionadas ao mestrado
+│   └── readme.org   :: Descrição das disciplinas e planejamento
+├── docs             :: outras formas de documentação
+│   ├── papers.org   :: track dos papers (e outras fontes) que tenho que ler
+│   ├── diary.org    :: diário de pesquisa, descrever cada um dos meus dias de pesquisa
+│   ├── meets.org    :: diário das reuniões com o orientador
+│   └── todo.org     :: track das tarefas relacionadas ao mestrado
 ├── readme.org
-├── script (git) :: Scripts para auxiliar na execução de experimentos
+├── script (git)     :: Scripts para auxiliar na execução de experimentos
 │   ├── readme.org
 │   ├── runner.py
 │   └── stats.py
-└── write (git) :: documentos que eu preciso escrever, como relatórios, propostas, papers e dissertação
+└── write (git)      :: documentos que eu preciso escrever, como relatórios, propostas, papers e dissertação
     ├── fapesp
     ├── ic
     └── santander
