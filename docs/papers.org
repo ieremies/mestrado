@@ -1,23 +1,54 @@
 #+Title: Artigos, livros e outras fontes
 
-
-** Gualandi 2012 - Exact Solution of GCP via Constraint Programming and Column Generation
-[cite:@Gualandi2012ExactSolutionGraph]
-** Pessoa 2021 - Solving Bin Packing Problems Using VRPSolver Models
-[cite:@Pessoa2021SolvingBinPacking]
-** Lima 2022 - Exact solution of network flow models with strong relaxations [0%]
+* STRT Hansen 2009 - Set covering packing
 :LOGBOOK:
-CLOCK: [2023-02-28 ter 15:45]--[2023-02-28 ter 16:40] =>  0:55
+CLOCK: [2023-07-31 seg 11:33]--[2023-07-31 seg 12:15] =>  0:42
+CLOCK: [2023-07-28 sex 10:38]--[2023-07-28 sex 11:40] =>  1:02
 :END:
+[cite:@Hansen2009Setcoveringpacking]
+Aparenta ser um artigo super importante, preciso entendê-lo bem.
+
+* TODO Morrison 2016 - Recent advances in branch-and-bounds
+:LOGBOOK:
+CLOCK: [2023-08-04 sex 13:53]--[2023-08-04 sex 14:26] =>  0:33
+:END:
+[cite/title:@Morrison2016Branchboundalgorithms]
+Artigo que o Bernado apresentou.
+
+* Gualandi 2012 - Exact Solution of GCP via Constraint Programming and Column Generation
+:LOGBOOK:
+CLOCK: [2023-07-31 seg 13:53]--[2023-07-31 seg 13:58] =>  0:05
+:END:
+[cite:@Gualandi2012ExactSolutionGraph]
+
+* Pessoa 2021 - Solving Bin Packing Problems Using VRPSolver Models
+[cite:@Pessoa2021SolvingBinPacking]
+
+* Lima 2022 - Exact solution of network flow models with strong relaxations
 [cite:@Lima2022Exactsolutionnetwork]
-** Desrosiers 2005
-[cite:@Desrosiers2005ColumnGenerationGerad]
+
+* Desrosiers 2005
+[cite/title:@Desrosiers2005ColumnGenerationGerad]
 Citado por [cite:@Lima2018ExactAlgorithmsGraph] como referência para geração de colunas.
-** DW decompositions
-[cite:@AndradeUmalgoritmoexato]
-** Paper do Renan
-** Conferir sobre a ferramenta [[https://matilda.unimelb.edu.au/matilda/our-methodology][Matilda]]
-Renan falou que na oficina que ele tava comentaram sobre a ferramenta.
-Parace ser algo para analizar a dificuldade de instâncias.
-** https://drops.dagstuhl.de/opus/volltexte/2022/16655/
-** https://link.springer.com/chapter/10.1007/978-3-030-45771-6_31
+
+* DW decompositions
+[cite/title:@AndradeUmalgoritmoexato]
+Citado como boa referência para DW decompositions
+
+* Paper do Renan
+Em especial os cortes de clique-3
+
+* [[https://matilda.unimelb.edu.au/matilda/our-methodology][Matilda]]
+Ferramenta de análise das instâncias referentes ao quanto elas são representativas do espaço de busca.
+Tem muita análise que eu não exatamente entendo, mas, quando o código estiver mais maduro, talvez seja algo de ver e adicionar as instâncias sugeridas na análise
+
+* Heule 2022 - From cliques to colorings and back again
+[cite/title:@Heule2022CliquesColoringsBack]
+Fazem uso de CT e SAT para resolver o problema de coloração e clique máximo conjuntamente.
+Para isso desenvolvem uma forma de comunicação entre os solvers.
+Afirmam ser o estado da arte neste quesito.
+
+* Mac 2021 - Wave function collapse heuristic
+[cite/title:@Mac2021WaveFunctionCollapse]
+Afirma ser uma heurística super rápida com bounds comparáveis ou melhores.
+Parace ser especialmente interessante para novas branchs da nossa árvore.

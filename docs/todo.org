@@ -1,4 +1,5 @@
 #+Title: Tarefas do mestrado
+#+CATEGORY: mest
 
 * TODO O repositório do rafael de informações
 - minha estrutura de projeto
@@ -47,16 +48,28 @@ Para cada vértice, o "peso induzido" é o peso dele menos o peso dos vizinhos.
 # Eu acho que essa última é bem mais forte que o anterior e é o que o held2012 usa
 
 - https://en.wikipedia.org/wiki/Independent_set_(graph_theory)
-[cite/text:@Tarjan1985Decompositioncliqueseparators] :: utiliza cliques para decompor o grafo em componentes conexas.
-A wikipedia (sim, eu sei) comenta [[https://doi.org/10.1016%2Fj.ic.2017.06.001]] como uma boa forma de achar o maximo.
-[cite/text:@Luby1986SimpleParallelAlgorithm] :: list all maximal independent set in polynomial time.
-[cite/text:@Correa2018Generalcutgenerating] :: cortes para o politopo de conjunto independente.
+[cite/title:@Tarjan1985Decompositioncliqueseparators] :: utiliza cliques para decompor o grafo em componentes conexas.
+[cite/title:@Correa2018Generalcutgenerating] :: cortes para o politopo de conjunto independente.
 MWSS parece ser "simples" quando o grafo é claw-free.
-https://sop.ior.kit.edu/downloads/diplomaThesis.pdf :: Maximum Stable Set Problem:
-A Branch & Cut Solver
+https://sop.ior.kit.edu/downloads/diplomaThesis.pdf :: Maximum Stable Set Problem: A Branch & Cut Solver
 [[https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm][Bron–Kerbosch algorithm]] :: find all maximal cliques, exatamente o que foi utilizado pelo [cite:@Held2012Maximumweightstable].
-[cite:@Lawler1980GeneratingAllMaximal] :: !
-[cite:@Busygin2002HeuristicMaximumIndependent] aparenta ser a melhor técnica heurística...
+[cite/title:@Lawler1980GeneratingAllMaximal] :: !
+[cite/title:@Busygin2002HeuristicMaximumIndependent] aparenta ser a melhor técnica heurística...
+[cite/title:@Xiao2021EfficientReductionsFast]
+[cite:@Akiba2016Branchreduceexponential/FPT]
+[cite/title:@Rebennack2012tutorialbranchcut] Conferir o que este fala sobre branch-and-cut para MWSS
+[cite:@Grossmann2022FindingOptimalWeight] Apesar desse texto falar sobre grafos largos, ele comenta sobre algoritmos de branch and bound bons
+#+begin_quote
+traditional branch-and-bound methods [20, 26, 32, 44, 45, 53]
+may often solve small graphs with hundreds to thousands of ver-
+#+end_quote
+Em especial [cite:@Gellner2021BoostingDataReduction].
+
+* TODO Oficina do LOCo
+Preciso conferir qual paper irei apresentar.
+Há uma lista que a Carol me passou.
+
+* TODO EQM
 
 * TODO Script
 - [ ] Validar a solução

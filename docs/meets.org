@@ -129,3 +129,14 @@ Talvez multiplicar os valores e desabilitar o scaling
 Branch and bound combinatório
 * 21 de Junho
 Profiler de funções
+
+* 16 de Agosto
+- EQM
+  Doodle da banca
+  Mandar email com o cronograma, focando na banca
+  Meia hora de apresentação.
+  O texto não precisa mudar tanto, caso tenha algum resultado perto de bom pode ser.
+  Talvez rever o cronograma e contar o que foi feito.
+  Modificações mínimas.
+- [cite:@Xiao2021EfficientReductionsFast]
+  testar só plugar
