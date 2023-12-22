@@ -140,3 +140,12 @@ Profiler de funções
   Modificações mínimas.
 - [cite:@Xiao2021EfficientReductionsFast]
   testar só plugar
+
+
+* 9 de Novembro
+script -> não preciso ver tudo, coletar sim
+Revisão literária.
+
+Lower bound na redução
+subset row cut de ordem 3
+como cortes se encaixam na tecnica do xiao.

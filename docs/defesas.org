@@ -1,0 +1,7 @@
+#+title: Defesas
+
+Apresentou algoritmo, coloca a complexidade.
+Quando falamos de resultados, é imporante valorizar o que foi dito que antes seria importante.
+Numa dissertação, é importante ser didático.
+Conferir que siglas são práviamente definidas.
+Comparar a demora em achar uma boa solução e o tempo que ele gasta só para provar a otimalidade.

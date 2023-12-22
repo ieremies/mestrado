@@ -75,3 +75,9 @@ Há uma lista que a Carol me passou.
 - [ ] Validar a solução
 - [ ] Comparar com outros resultados
   - [ ] Compilar os resultados da literatura
+
+* TODO Separação por clique
+Eu posso achar um separador por clique, coloro cada um dos lados e eu sei que eu posso juntar.
+
+* TODO Procurar por maximum weighted clique
+https://www.scopus.com/results/results.uri?sort=cp-f&src=s&sid=49c900bd2d61d3d918198954e6750619&sot=a&sdt=a&sl=97&s=TITLE-ABS-KEY%28maximum+AND+%28weighted+OR+weight%29+AND+clique%29+AND+NOT+%28TITLE-ABS-KEY%28approximation%29%29&origin=searchadvanced&editSaveSearch=&txGid=6627f505a5159fa07bb62a60785baf53&sessionSearchId=49c900bd2d61d3d918198954e6750619&limit=10
