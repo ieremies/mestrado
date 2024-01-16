@@ -1,0 +1,12 @@
+#+title: Pricing
+
+No nosso caso, nosso problema de precificação é um problema de [[id:4d544bcc-524b-4c9f-b34b-ad88d6a8d58b][conjunto independente de peso máximo]].
+Desejamos que nosso algoritmo consiga encontrar múltiplos conjuntos de peso superior a $1$ (quando existir) e suporte cortes.
+
+Para cortes, o que parece ser eficiente é utilizar ciclos ímpares no grafo de conflitos entre conjuntos independentes.
+Assim, qualquer novo conjunto independente gerado que contenha ao menos 2 dos 3 vértices envolvidos nesse ciclo, deve ser descontado o valor da variável dual associada ao ciclo.
+
+* 2021 - [cite/title/b:@Xiao2021EfficientReductionsFast]
+Descreve um algoritmo de branch-and-reduce com algumas regras interessantes para manter conjuntos de peso máximo.
+* 2023 - [cite/title/b:@Erhardt2023ImprovedExactHeuristic]
+Descreve ideias muito similares à [cite:@Xiao2021EfficientReductionsFast], mas realiza reduções apenas na raíz.
