@@ -1,0 +1,10 @@
+#+title: Stable
+
+In order to keep the algorithm numeric stable, we can solve the MWIS in a graph with integer weights:
+\begin{equation*}
+\pi_{int} := \floor{K \pi_{float}}.
+\end{equation*}
+To avoid overflow, we define $K := ulong_{max} / n$.
+
+As mentioned by [cite:@Held12], the dual variables might exceed the interval $[0,1]$.
+To combat this, we shift then into the interval before scaling.

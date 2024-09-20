@@ -307,3 +307,7 @@ TSWLatexianTemp*
 #*Notes.bib
 /*.org_archive
 /write/
+/.disc/
+/logs/
+/inst/
+/*.csv

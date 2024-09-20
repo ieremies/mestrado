@@ -1,0 +1,296 @@
+#+title: Oh Code, My Code!
+#+subtitle: at least my variables are readable, I guess?
+#+options: author:nil
+
+#+latex: \doublespacing
+
+* In the begging, there was the =main.cpp= <<main>>
+
+Given an instance, we create a graph and do the following:
+- If it is not connected, we solve each component. The solution for the coloring should be maximum solution of the components. While solving each component, we might have a better starting lower bound given by the previous solved components, and, sometimes, solve it by simply applying the k-core reduction (see cref:k-core).
+- Otherwise, if its complement is not connected, we get the subgraphs in the original induced by each connect component of the complement. We solve the coloring problem in each subgraph, adding the solutions.
+- If no above conditions apply, we just solve the graph as one component.
+
+#+begin_info
+Some ideas that might be useful here:
+- Use the Bron-Kerbosh algorithm or CLIQUER to find cliques as lower bounds.
+- Use the Independence Number to find a lower bound.
+- Ordering the components on the "original graph not connected" might speed up since the higher lower bound and k-core reductions make the graphs more dense, which is better for our formulation.
+#+end_info
+
+** Solving a component
+
+As explained in cref:main, in this case we suppose a connected graph.
+If a lower bound is provided, we can apply the k-core reduction, keeping in mind to undo it latter.
+In any case, we simply call the Branch and Price algorithm with DSATUR as an upper bound.
+
+** K-core reduction <<k-core>>
+
+Given a lower bound $k$ to the coloring number, we can find the k-core to the graph as a subgraph with all vertex with degree greater than or equal to $k$.
+Since we know the coloring number cannot be lower than $k$, any vertex omitted from that subgraph has less than $k$ neighbors and so can be added to a color class in a coloring of the subgraph.
+
+To find a k-core, we remove vertexes that have degree lower than $k$  interactively until there are no one left to match the condition.
+To undo it, we follow the order of deletion, adding to a color class that has no neighbors of the vertex being re-inserted.
+
+** The solutions
+
+For both the coloring and the maximum weighted independent set, I have created a solution class which contains the information about a solution to the problem and the ability to undo the modifications that were made in the graph.
+They both go through the list of modifications applying the corresponding change to make then self valid.
+
+* Coloring
+
+The entry point for our coloring algorithm is the *Branch and Price*, to which we give a connected graph, a starting upper bound solution and, optionally, a global lower bound.
+We start by initializing our formulation (cref:formulation) and the branching tree (cref:branch).
+
+While there is a branching node to be explored, we do the following:
+- Call the cref:color_solver to obtain a solution for the linear relaxation.
+- If that is an integral solution, we try to update our incumbent.
+- Since the ceiling of the solution is a lower bound to all subsequent subproblems, we can check if there is any node that could be removed by the [[k-core]] reduction. If there is, we do so.
+- Then, given the "frequency" of each heuristic (DSATUR or Relax and Fix), we apply when relevant. In this context, frequency is given by "at what heights in the branch tree" we should apply the heuristics. Since DSATUR is so much faster, we apply at every node.
+- If our incumbent has become smaller than the global lower bound, reducing it further will not change the coloring found for the original graph, so we can stop and return the current incumbent.
+- If there is still a gap between the upper and the lower bound, we branch into new subproblems and try to get the next branch node to work on.
+
+
+#+begin_warn
+As of right now, we can apply the k-core reductions since it breaks the formulation while undoing a branch.
+#+end_warn
+
+** The Formulation Class <<formulation>>
+
+#+begin_warn
+I am not happy about this class.
+It seems important and eases up so many parts of my code, but it is asymptotically so expensive...
+#+end_warn
+
+Since we are using the set cover formulation, this class is used to store all independent sets found during the solving of a connected component.
+Each independent set is store alongside a boolean which marks if the independent set is still valid or not.
+An independent set can become invalid if any node on it has become deactivated or if any edge connecting two nodes on it has been added.
+
+While keeping track of all independent sets generated, we also keep a list of what sets a node is on and a matrix of which set contains each pair of nodes (this is useful while computing the similarity).
+In both cases, we do all of this using magic of *smart pointers*.
+
+Every time someone needs to change anything about the graph, it has to be done through the formulation class, since it needs to keep track of the valid independent sets.
+This means, when the branch class needs the graph to change to move on to another problem, it calls here.
+By doing so, we invalidate any set that becomes invalid by going thought our lists.
+
+#+begin_info
+I think there is a world where, while invalidating a set, we try to savage what is left.
+If node $v$ is being deactivated, instead of trowing all the set away, we can just add a new one without $v$.
+Unfortunately, as of right now, this would break my code if two identical sets would be added to the formulation.
+#+end_info
+
+Undoing a branch is not so straight forward... for any node that have to change (either by being re-activated or by splitting into two), we have to re-check if each independent set will return to valid or not.
+We do this way hoping to not have to regenerate the set during pricing.
+
+*** Set expansion
+
+One other thing the formulation class is responsible is for a method to, given an independent set, expanding it to be maximal.
+As an effort to keep coverage of all nodes, we do so by interactively adding those that appear in the least number of sets in our formulation.
+
+#+begin_info
+A long time ago, in a far way galaxy, I tested with and without expanding the sets.
+Back then, It seems, although not by much, to be an improvement.
+We caress of further inquiry about this.
+#+end_info
+
+** Solver <<color_solver>>
+
+The solver class is responsible for dealing with Gurobi.
+While being created, we start the model with the sets in the current formulation, disabling the presolve and setting to primal simplex method.
+
+While solving it, we repeat the process:
+- =grb.optimize()= and hope we don't get an exception.
+- For each node, retrieve the dual value of each constrain as the weight of the nodes.
+- Call the [[pricing]] with the weights we got.
+- Add any given new sets to the model, if none were given, we stop.
+
+It would be nice to call it a day, but since we have numeric imprecision, we need to do some rounding to have a correct lower bound: the solution will be composed by the variable values given by the last Gurobi's solution, but its value will be
+\begin{equation*}
+sol.c = \sum \frac{w_v}{ 1 + \eps }.
+\end{equation*}
+This comes from the fact that we know there isn't a violated constrain by an amount greater than $\eps$, so $-\eps$ is also our greatest reduced cost, and, by that guy in the 90s, we can round it up like that.
+
+#+begin_info
+Yes, the sum of the values in the solution will be greater than its value, and yes, that is a nightmare to deal with in terms of all my checks.
+#+end_info
+
+** Pricing <<pricing>>
+
+#+begin_src c++
+vector<node_set> pricing::solve(const graph::weighted& g)
+#+end_src
+
+We receive an weighted graph and aim to return violated constraints.
+Those are weighted independent set (see cref:mwis) with weight greater than $1$.
+Since that is our objective, we can treat any node that have weight $0$ as deactivated and ignore it for now (cref:formulation will add it while expanding if needed).
+
+We first split the graph into each connected component (this is most useful on the first pricings, where plenty of nodes have weight $0$).
+For each connected component, we call the *Maximum Weighted Independent Set* (MWSS) solver (see cref:MWIS) and it will return a list of independent set containing the maximum one.
+Since we split the problem into each connected component, when we gather all the returned solutions, we combine then to try to find those with total weight greater than $1$.
+
+This process would (usually) create too many solutions, which is not that useful.
+To prevent that, we cap the number of generated solutions at $10\%$ of the number of vertex on the graph and randomize its combinations.
+
+#+begin_warn
+Personally, I am not happy about this one.
+Its code is a mess, I don't think it is neither as fast as it could be nor it generates good violated sets...
+#+end_warn
+
+** Branch <<branch>>
+
+The branch class keeps track of the subproblems we still have to solve in order to close the gap.
+We do so with a tree represented by a stack (DFS approach) of *branch nodes*.
+Those nodes keep track of which modification (branches) were already done, which vertexes they act on and the lower bound to this problem.
+
+#+begin_src c++
+void branching::branch(const formulation& f, const color::sol& s)
+#+end_src
+When we branch a problem into two subproblems, we do so by selecting to vertexes and assuming the following possibilities:
+- conflict :: either they are in different color classes (add an edge between then).
+- contract :: or they are in the same color classes (they fuse into one vertex in the graph).
+
+We define the two vertexes to branch on by selecting the pair which have their *similarity* closest to $0.5$.
+The similarity of two vertexes is defined as
+\begin{equation*}
+sim[u][v] = \sum \limits_{ s \in \cals | \set{u,v} \in s } x_s.
+ \end{equation*}
+
+#+begin_src c++
+bool branching::next(formulation& f, ulong ub)
+#+end_src
+ When we finish solving a subproblem, we ask for the next one by passing an upper bound.
+ The next one will be the first branch node on the stack to still have some branch to explore and to have a gap between their lower bound and the current incumbent.
+ While traversing the stack, we will find branch nodes that are either done or not worthy of exploring (the gap is smaller than $1$).
+ When we encounter such nodes, we call the formulation to undo the last modification made by that branch and remove it from the stack.
+ By the time we have the next subproblem to solve, we have also changed the formulation (and, consequently, the graph) to correspond to that subproblem.
+ If, at any point, the branch tree becomes empty, it means we explored all the nodes we needed.
+
+ #+begin_info
+ There are two other selection rules for the pair of nodes that I want to try:
+ - First one was proposed by [cite/text:@Mehrotra96]: choose a vertex $v$ on the most fractional column $S1$, select a column $S2$ which covers $v$ and then select a node $w \in (S1 \setminus S2) \cap (S2 \setminus S1)$.
+ - The second one is used by [cite/text:@Held12]: Define $p(v,w)$ as the sum of variables that contain $v$ and $w$, divided by half of the sum of the variables containing $v$ plus half of the variables containing $w$. Chose the one closest to $0.55$.
+
+We can also try one that tries to maximize the number of triangles or something...
+ #+end_info
+** Heuristics
+#+begin_info
+I am still missing the rounding heuristics.
+#+end_info
+
+For the DSATUR heuristics, we keep it simple, traditional:
+- find the node with the greatest saturation degree (number of colors already used in its neighbors)
+- find the first color to which it could be assigned, and just do it\texttrademark.
+
+As of the *Relax and fix*, we start from a fractional primal solution and fixate some variables.
+To fix a variable, we add it to our solution we are building and remove the nodes on it from the graph.
+We then do the following:
+- at each interaction, we compute the gap, defined as $GAP := x_{inc} - x_{frac} - 1$, which is the maximum I can augment each variable.
+- we then select variables $x_{fix}$, in decreasing value order, for as long as $\sum (1 - x_fix) \leq GAP$.
+- we then re-optimize using the same solver described in cref:color_solver and repeat until either the gap is lower than zero or the graph is empty.
+
+* Maximum Weighted Independent Set <<mwis>>
+
+Given a weighted graph, we aim to find the independent set with maximum weight.
+For simplicity, we assume the graph is connected, and all weights are greater than zero.
+We use a branch-and-bound approach with some reductions.
+
+** Solver
+While the =tree= is not empty:
+- We check if we could stop preemptively (cref:limiter)
+- We try to reduce the current graph (cref:reduce)
+- We try to enumerate all possible solutions (cref:small)
+- We run the heuristic to find a solution (cref:mwis-heu-greedy) and add it to the list of solutions
+- We check if there is enough gap (cref:mwis-heu-ub) to justify a branch (cref:mwis-branch)
+
+Keep in mind that not all solutions in the list of solutions have weight greater than $1$.
+Since we work with only connected graphs, that might be a component of a greater graph, to which the combination of solutions in different components might become a violated set.
+
+*** Limiter <<limiter>>
+When calling the solver, we might specify a =target= value.
+If we have found a solution with value greater or equal to =target=, we might consider ending early then searching all the branch-and-bound tree.
+- =ITERACTION_AFTER_FOUND= limits the number of branch nodes solved after finding the first solution matching the =target= value.
+- if the number of (different) solutions found is greater than half the number of vertex on the original graph.
+
+After finding a solution with the required =target=, we can change the strategy:
+- Remove vertexes that appear in a great number of already found solutions.
+- Change to DFS approach.
+- Limit the height of the tree to the same height where the =target= was found.
+
+All those changes are made with the intent of diversifying the solutions.
+
+*** Branching <<mwis-branch>>
+Using the idea of [[org:../mest/code/docs/mwis/rules.org::Rule 5][Rule 5]], we iterate over the vertexes to find a confined one (any unconfined vertex are removed from the graph), let's call it $v$ and its confined set $conf_v$.
+Remember that $v \in conf_v$, if $v$ is confined ($conf_v$ would be empty otherwise).
+
+We generate two branch-nodes (which are processed in this order):
+- One with $conf_v$ add to the solution and all its neighbors removed.
+- One with $v$ removed from the graph.
+
+** Reduce <<reduce>>
+
+On this class, we keep track of which reduction steps should be applied and to which nodes they should be applied to.
+
+As stated by [cite/text:@Xiao21], we do the following steps:
+1. Rule 1 and Rule 10 on nodes of degree 1 (both check neighborhoods)
+2. Rule 9 and Rule 10, both on nodes of degree 2
+3. (only after a $10\%$ reduction) Rule 7
+4. Rule 2, Rule 9 by lemma 3.11 and Rule 10 (when checking the condition of rule 2, we can also check the independent and clique neighborhood).
+5. (only after a $10\%$ reduction) Rule 5 and Rule 8 (both check confinement)
+6. Rule 4 (time-consuming, excluded)
+7. Rule 3 heavy set of size 2 (time-consuming, excluded)
+
+Once a node has changed, all its neighbors are re-added to (if they are not already in) the queue for steps 1, 2 and 4.
+
+** Rules
+
+#+begin_info
+Explaining all the rules and why they work is the hole purpose of [cite:@Xiao21] paper..
+To keep it concise (and limit the amount of work this text would consume me), I will skip it for now.
+#+end_info
+
+
+** Directly solving the problem <<small>>
+#+begin_src c++
+vector<mwis::sol> direct_solve(graph g);
+#+end_src
+
+Since we reduce the graph so many times, it might become small enough to solve it directly.
+In this case, "small enough" is having, at most, =DIRECT_SOLVE_CUTTOFF= vertexes with degree greater than $2$.
+[cite:@Xiao21] uses =DIRECT_SOLVE_CUTTOFF= as $8$.
+
+If that is the case, we can enumerate all possible combinations +(recursion baby!)+ of those higher degree vertexes and, since the remaining vertexes all have degree at most $2$, we can solve using a Dynamic Programming approach.
+
+Each connect component of the resulting graph is either a path or a cycle. We can solve the path case by using the following DP:
+\begin{equation*}
+dp_i = \max \set{dp_{i - 1}, dp_{i - 2} + weight(path_{i})}
+\end{equation*}
+As of the cycle case, we can divide it into two paths cases: starting from a vertex $v$ or a neighbor of it.
+
+** Heuristics <<mwis-heuristics>>
+
+My advisor said to not start a section with a subsection, but as I got no creativity left at this time, I will leave you with this message from our sponsor:
+This message was made possible by Squarespace. Squarespace is the absolute easiest way to make your website. I've used them for a few different sites. I basically bought that domain to be sure nobody else could. I didn't really have the time or need to create a fancy website, so I just spent about 15 minutes to throw together a landing page. It was incredibly easy with the Squarespace template and, in my opinion at least, it looks great. Now I can give people one link that takes them to a page with the link to all my different social media profiles. You can really create a landing page like this, a blog, a store, really anything with Squarespace and what's best is that you can get 10% off your first order by using the code "lmao" over at squarespace.com/lmao. That also helps you help the message. So please do go check out Squarespace at squarespace.com/lmao.
+
+*** Greedy <<mwis-heu-greedy>>
+#+begin_src c++
+mwis::sol heuristic(graph g);
+#+end_src
+Just a standard greedy heuristic to produce a maximal solution.
+There might be better heuristics, but this the one [cite:@Xiao21] uses.
+
+*** Upper Bound Heuristic <<mwis-heu-ub>>
+#+begin_src c++
+cost ub_heuristic(graph g);
+#+end_src
+
+[cite:@Xiao21] indicates the algorithm of /Lamm2018/ for *Weighted Clique Cover* as an upper bound to MWIS.
+#+begin_quote
+"We begin by sorting the vertices in descending order of their weight
+(ties are broken by selecting the vertex with higher degree). Next,
+we initiate an empty set of cliques C. We then iterate over the sorted
+vertices and search for the clique with maximum weight which it can
+be added to. If there are no candidates for insertion, we insert a new
+single vertex clique to C and assign it the weight of the vertex.
+Afterward the vertex is marked as processed, and we continue with the
+next one." -- Lamm2018, page 6
+#+end_quote

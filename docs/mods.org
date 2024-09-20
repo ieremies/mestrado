@@ -1,0 +1,28 @@
+#+title: Mods
+
+* Conflict
+
+Adicionar um conflito entre $u$ e $v$ é adicionar uma aresta entre eles.
+
+Conjuntos que contém $u$ e $v$ devem ser desativados e podemos gerar dois novos conjuntos: um com apenas $u$ e outro com apenas $v$.
+
+Se utilizarmos ideias similares ao [[id:bb3611e7-cfd8-41fc-935c-f3043c970f52][Diagrama de Hasse]], podemos construir uma árvore para evitar conjuntos que já estejam contidos em outros.
+
+* Contract
+
+Fazer a contração de $u$ e $v$ significa:
+- desativar $v$
+- a vizinhança de $u$ passa a ser =adj[u] + adj[v]=
+
+Conjuntos que contenham $u$ e $v$: remover $v$.
+Conjuntos que contenham apenas $u$: conferir se há algum vizinho de $v$ no conjunto. Caso haja, desativar o conjunto e criar um novo sem os vizinhos de $v$.
+Conjuntos que contenham apenas $v$: conferir se há algum vizinho de $u$ no conjunto. Caso haja, desativar o conjunto e criar um novo sem os vizinhos de $u$.
+
+Seguindo o [[id:bb3611e7-cfd8-41fc-935c-f3043c970f52][Diagrama de Hasse]], apenas folhas seriam os conjuntos ativos no momento.
+
+* k-core
+
+Um nó ser desativado pelo k-core faz com que ele seja omitido de qualquer conjunto que ele esteja.
+
+Se eu não me engano, o único momento que uso realmente quem está nos conjuntos é na hora de fazer a restrição de cobertura.
+Talvez eu possa alterar a formulation de tal forma a apenas ignorar.
