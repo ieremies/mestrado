@@ -58,29 +58,52 @@ As of right now, we can apply the k-core reductions since it breaks the formulat
 ** The Formulation Class <<formulation>>
 
 #+begin_warn
-I am not happy about this class.
-It seems important and eases up so many parts of my code, but it is asymptotically so expensive...
+Not everything in here is yet implemented.
 #+end_warn
 
 Since we are using the set cover formulation, this class is used to store all independent sets found during the solving of a connected component.
-Each independent set is store alongside a boolean which marks if the independent set is still valid or not.
-An independent set can become invalid if any node on it has become deactivated or if any edge connecting two nodes on it has been added.
+Each independent set is store alongside a boolean which marks if the independent set is still active or not.
+An independent set is said to be active if there isn't any pair of nodes in it such they are adjacent (nodes which are deactivated are adjacent to no one).
 
-While keeping track of all independent sets generated, we also keep a list of what sets a node is on and a matrix of which set contains each pair of nodes (this is useful while computing the similarity).
-In both cases, we do all of this using magic of *smart pointers*.
+We supose those which will use the independent sets will ignore those nodes which are deactivated
+As of today, the only acess to the member of each set is made by the [[color_solver]].
+In the case of [[k_core]], the [[color_solver]] class can simply not add a constraint to vertexes which are not on it.
 
-Every time someone needs to change anything about the graph, it has to be done through the formulation class, since it needs to keep track of the valid independent sets.
-This means, when the branch class needs the graph to change to move on to another problem, it calls here.
-By doing so, we invalidate any set that becomes invalid by going thought our lists.
+To speed up some queries, we keep track of:
+- the independent sets which contain vertex $v$, we will call it $sets_v$
+- the independent sets which contain vertexes $v$ and $u$, we will call that list as $sets_{v,u}$.
+
+The graph (multigraph) can be changed in two ways:
+- ~conflict(u,v)~ : an edge will be added between $u$ and $v$.
+- ~contract(u,v)~ : vertex $v$ will be deactivated and $N(u) = N(u) \cup N(v)$.
+
+Lets see what we need to change in the formulation in each case
+
+*** Conflict
+
+*Doing a conflict.*
+For each active set $S$ in $sets_{v,u}$, we deactivate $S$ and add $S \setminus \set{u}$ and $S \setminus \sets{v}$.
+We return those two list (of deactivated and added sets) to the branching class in order to be kept with the branch-nodes.
+
+*Undoing a conflict*
+We get the lists above mentioned, reactivate those which were deactivated and /remove/ those that were added.
+
+*** Contract
+
+*Doing a contract.*
+Let us define some sets beforehand: $only_v = N(v) \setminus N(u)$ and $only_u = N(u) \setminus N(v)$.
+For those sets that contain $u$ and $v$, we don't need to change (and they keep being maximal).
+For those sets which contain only $v$, we don't need to change (they might not still be maximal).
+For those sets which contain only $u$, we need to search for each vertex $w \in only_v$ and do the same process as of ~conflict(u,w)~
+We return the list of affected sets the same way we have done for the conflict.
+
+*Undoing a contract.*
+We get the lists above mentioned, reactivate those which were deactivated and /remove/ those that were added.
 
 #+begin_info
-I think there is a world where, while invalidating a set, we try to savage what is left.
-If node $v$ is being deactivated, instead of trowing all the set away, we can just add a new one without $v$.
-Unfortunately, as of right now, this would break my code if two identical sets would be added to the formulation.
+In the case of doing a contract, we can deactivated those sets $S$ that contains only $v$, create $S \setminus \set{v}$, make it maximal (using the set expansion explained bellow) and added it.
+But I don't think it will be very common, so it will be skipped for now.
 #+end_info
-
-Undoing a branch is not so straight forward... for any node that have to change (either by being re-activated or by splitting into two), we have to re-check if each independent set will return to valid or not.
-We do this way hoping to not have to regenerate the set during pricing.
 
 *** Set expansion
 
@@ -243,10 +266,102 @@ Once a node has changed, all its neighbors are re-added to (if they are not alre
 
 ** Rules
 
-#+begin_info
-Explaining all the rules and why they work is the hole purpose of [cite:@Xiao21] paper..
-To keep it concise (and limit the amount of work this text would consume me), I will skip it for now.
-#+end_info
+I might just make all changes in the graph be ~g.set_weight(node v, ll new_weight)~, where setting the weight to zero would deactivate.
+This would make the graph class decide when to put each vertex back on queue.
+
+*** Step 1
+
+*Rule 10, degree 1.*
+For every node $v$ of degree $1$, remove its neighbor $u$ if $w(u) \leq w(v)$; otherwise update $w(u) := w(u) - w(v)$, remove $v$ and add its weight to the solution.
+We need to add a translation rule 1 $(v, u)$.
+
+*Rule 1.*
+If there is a node $v$ such that $w(v) > w(N(v))$, then add $v$ to the solution (and remove $N[v]$ from the graph).
+- I can save the value of $w(N(v))$ and, when $u$ is changed, for all $w \in N(u)$, update it with $w(u)$.
+
+*** Step 2
+
+All the rules in this step work on nodes with degree $2$.
+We will call those $v$ and their neighbors $u$ and $w$.
+
+*Fold operation (v)*
+Let $S = \set{v}$ be an alternative set.
+To fold is to remove $N[S]$ will be removed and $v^*$ will be added.
+We will need to register a translation rule 2 $(v^*, v, N(s))$.
+
+*Rule 10, degree 2.*
+If $u$ and $w$ are adjacent, remove $u$ if $w(u) \leq w(v)$; otherwise update $w(u) := w(u) - w(v)$, remove $v$ and add its weight to the solution.
+Do the same for $w$.
+We need to add a translation rule 3 $(v, S)$, where $S$ is the set of nodes removed this way..
+
+*Rule 9.*
+Let $S$ be an independent set.
+If there is a maximum weighted independent set containing either $S$ or the open neighborhood of $S$, then we say $S$ is an *alternative set*.
+In that case, we can ~fold(S)~.
+
+#+begin_lemma [Xiao21, Lemma 3.12]
+Let $(v_1, v_2, v_3, v_4)$ be a path such that $d(v_2) = d(v_3) = 2$.
+If $w(v_i) \geq w(v_{i+1})$ for all $i \in \set{1, 2, 3}$, then $\set{v_2}$ is alternative.
+#+end_lemma
+
+#+begin_lemma [Xiao21, Lemma 3.13]
+Let $(v_1, v_2, v_3, v_4)$ be a cycle such that $d(v_2) = d(v_3) = 2$.
+If $w(v_i) \geq w(v_{i+1})$ for all $i \in \set{1, 2}$, then $\set{v_2}$ is alternative.
+#+end_lemma
+
+
+*** Step 3
+
+I can keep a ~map<node_set,node>~ in order to find nodes with the
+
+*Merge operation (S)*
+Let $S$ be a node set.
+To merge then is to create a new vertex $v^*$,make it so $N(v^*) = N(S)$ and $w(v^*) = \sum_{v \in S} w(v)$.
+We then need to register a translation rule 4 $(v^*, S)$.
+
+*Rule 7.*
+If a node set $S$ is independent and all nodes in $S$ have the same neighborhood, then ~merge(S)~..
+
+*** Step 4
+
+*Rule 10.*
+Let $v$ be a vertex such that $G[N(v)]$ is a clique.
+Then, remove all $u \in N(v)$ such that $w(u) \leq w(v)$.
+For the remaining nodes, update $w(u):= w(u) - w(v)$.
+We then need to register a translation rule 3 $(v, N(v))$.
+
+*Rule 9, lemma 11.*
+Let $v$ be a vertex such that $N(v)$ is independent and $u$ be its neighbor with minimum weight in $N(v)$.
+If $w(N(v)) - w(u) \leq w(v) < w(N(v))$, then ~fold(v)~.
+
+*Rule 2.*
+If there is a node $v$ of degree less then or equal to $8$, such that $w(v) /geq \alpha(N(V))$, then add $v$ to the solution and delete $N[v]$ from the graph.
+We can get the $\alpha(N(V))$ by enumerating all possible independent sets.
+
+*** Step 5
+
+*Rule 5.*
+If a vertex is unconfined, remove it from the graph.
+
+*Rule 8.*
+If there are two confined vertexes $v$ and $u$ by $S_v$ and $S_u$ respectively, and $v \in S_u$ and $u \in S_u$, then ~merge({u,w})~.
+
+*** Translation rules
+
+Some reductions will need to be altered later when a solution is found to match one in the original graph.
+We identified $4$ types of those so called translations and they can be found bellow.
+
+*Translation rule 1 (v, u).*
+If $u$ is not in the solution, add $v$ (its weight is already in).
+
+*Translation rule 2 (v, u, S).*
+If $v$ is not in the solution, add $u$, otherwise, add $S$.
+
+*Translation rule 3 (v, S).*
+If no one in $S$ is in the solution, add $v$.
+
+*Translation rule 4 (v, S).*
+If $v$ is in the solution, add $S$ to the solution.
 
 
 ** Directly solving the problem <<small>>
