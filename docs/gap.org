@@ -1,0 +1,61 @@
+#+title: Gap
+#+options: nun:nil
+
+* Sobre o conjunto de isntâncias
+
+Ele deu uma reduzida, tinha algumas instâncias do MATILDA que aceitava uma 2 coloração que eu não havia tirado.
+Atualmente, são 137 instâncias DIMACS e 6632 instâncias MATILDA.
+
+* Sobre conseguir resolver a raiz
+Só para ficar claro, aqui estou falando de conseguir resolver a relaxação da raiz, não de fechar a instância apenas com a raiz.
+** Sobre aquelas que nem resolveram a raiz
+Apenas 53 instâncias não conseguimos para resolver a raiz em 1h, todas estas são do DIMACS.
+Eu acabei deixando o limitante de 100 conjuntos adicionados por pricing, mas ainda sim o tempo do gurobi é até 3 ordens de grandeza menor que o pricing, devo tirar esse limitante.
+
+Todas as instâncias do MATILDA terminaram de resolver a raiz, acredito que pelo fato de serem apenas 100 vértices, principalmente.
+
+** Das que a raiz foi resolvida, as que foram repartidas em componentes
+Componentes que aceitam uma coloração de 2 ou menos foram desconsiderados.
+Apenas 3 instâncias do DIMACS foram partidas em componentes que precisaram ser resolvidos enquanto que 219 instâncias do MATILDA foram partidas.
+Todas as instâncias que foram partidas foram tiveram a raiz resolvida.
+
+Por enquanto, só faço partição no inicio e ainda não implementei a heurística de clique máximo.
+
+* Sobre conseguir fechar a instância
+Olhemos agora para quem conseguiu, ou não, fechar a instância na raiz, sem precisar de branch.
+
+** Das instâncias que foram fechadas
+56 instâncias do DIMACS foram fechadas na raiz (gap zero).
+4177 instâncias do MATILDA foram fechadas na raiz.
+
+** Da diferença entre LB e UB
+
+Uma instância do DIMACS, DSJC250.5, ficou com a diferença em 4, ($LB = 25$ e $UB= 29$), o que é um UB melhor que o [cite:@Held12], mas um LB pior (ambos por uma unidade).
+| DIMACS | MATILDA | UB - LB |
+|--------+---------+---------|
+|      6 |     144 |       3 |
+|      9 |     723 |       2 |
+|     19 |    1289 |       1 |
+** Do gap para o OPT
+Das 2190 instâncias não fechadas na raiz, 721 não sabe-se ainda o ótimo.
+
+Nas seguintes tabelas, consideraremos apenas aquelas instâncias que ainda ficaram abertas após a resolvermos a raiz e sabemos o ótimo.
+| DIMACS | MATILDA | UB - OPT |
+|--------+---------+----------|
+|      0 |      20 |        2 |
+|      7 |     817 |        1 |
+|     22 |     603 |        0 |
+
+| DIMACS | MATILDA | OPT - LB |
+|--------+---------+----------|
+|      3 |       0 |        3 |
+|      9 |     250 |        2 |
+|     11 |     839 |        1 |
+|      5 |     352 |        0 |
+
+Algo interessante a se notar é que, 357 instâncias podem ser resolvidas apenas com incubentes melhores, destas, 10 estão a 2 do ótimo.
+259 instâncias (9 do DIMACS) possuem um gap para o ótimo de 2, menção honrosa para as instâncias Mycielskian.
+Além disso, 3 instâncias do DIMACS possuem um gap para o ótimo de 3, sendo elas 1-Insertions_5 e Mycielskian 6 e 7.
+
+
+#+print_bibliography:

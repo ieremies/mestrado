@@ -154,10 +154,19 @@ Since we split the problem into each connected component, when we gather all the
 This process would (usually) create too many solutions, which is not that useful.
 To prevent that, we cap the number of generated solutions at $10\%$ of the number of vertex on the graph and randomize its combinations.
 
-#+begin_warn
-Personally, I am not happy about this one.
-Its code is a mess, I don't think it is neither as fast as it could be nor it generates good violated sets...
-#+end_warn
+
+# ===================================
+
+As done by [cite:@Held12], we avoid the problems of numeric imprecision by changing to fixed point arithmetics.
+Each node will have its weight given by the value of the corresponding dual variable, $\pi^{float}$.
+We can scale each value by a factor $K > 0$ to create the integer weight $\pi^{int} := \floor{K \pi^{float}}$, thus obtaining the following aproximation:
+# equation
+
+We can choose $K := \text{MAX LONG LONG} / n$
+
+On the ealier iterations of solving the linear relaxation, a good percentage of nodes will have weight zero.
+This will cause the corresponding graph to be disconected.
+We can solve the MWIS to each connected component and combine the solutions found.
 
 ** Branch <<branch>>
 
@@ -362,7 +371,6 @@ If no one in $S$ is in the solution, add $v$.
 
 *Translation rule 4 (v, S).*
 If $v$ is in the solution, add $S$ to the solution.
-
 
 ** Directly solving the problem <<small>>
 #+begin_src c++
